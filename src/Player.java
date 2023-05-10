@@ -96,7 +96,11 @@ public class Player extends Entity implements ActionListener
 		}
 		else if(keyH.upPressed==true||keyH.downPressed==true||keyH.leftPressed==true||keyH.rightPressed==true||keyH.swordPressed==true)
 		{
-			
+			if(keyH.swordPressed==true)
+			{
+				speed=0;
+				attacking=true;
+			}
 			if(keyH.upPressed==true)
 			{
 				speed=4;
@@ -120,10 +124,6 @@ public class Player extends Entity implements ActionListener
 				speed=4;
 				direction="right";
 				x+=speed;
-			}
-			else if(keyH.swordPressed==true)
-			{
-				attacking=true;
 			}
 			spriteCounter++;
 			if(spriteCounter>12) {
@@ -201,9 +201,19 @@ public class Player extends Entity implements ActionListener
 			break;
 		}
 		
+		if(direction=="left"&&attacking)
+		{
+			g2.drawImage(image,x-40,y,null);
 			
-		g2.drawImage(image,x,y,null);
-	
+		}
+		else if(direction=="up"&&attacking)
+		{
+			g2.drawImage(image,x,y-40,null);
+		}
+		else
+		{
+			g2.drawImage(image,x,y,null);
+		}
 	}
 	public BufferedImage setup(String imagePath,int width,int height)
 	{
