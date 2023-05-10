@@ -27,18 +27,33 @@ public class Player extends Entity implements ActionListener
 		this.gp=gp;
 		this.keyH=keyH;
 		setDefaultValue();
-		try {
+		timer=new Timer(60,this);
+	
+		try 
+		{
 			getPlayerImage();
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
+		}
+		catch (IOException e1) 
+		{
+			
 			e1.printStackTrace();
 		}
-		timer=new Timer(60,this);
-		try {
+		try 
+		{
 			getPlayerAttackImage();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
+		} 
+		catch (IOException e)
+		{
+			
 			e.printStackTrace();
+		}
+		try 
+		{
+			getBItemImage();
+		}
+		catch(IOException e2)
+		{
+			e2.printStackTrace();
 		}
 	}
 	public void setDefaultValue()
@@ -78,12 +93,14 @@ public class Player extends Entity implements ActionListener
 		itemUp = setup("/player/useItemUp",gp.tileSize,gp.tileSize);
 		itemRight = setup("/player/useItemRight",gp.tileSize,gp.tileSize);
 		itemDown = setup("/player/useItemDown",gp.tileSize,gp.tileSize);
+		
+		bomb = setup("/objects/Bomb",gp.tileSize,gp.tileSize);
 		//if(something about which item is being used)
 		
 	}
 	public void attacking()
 	{
-		timer.start();
+	
 		spriteCounter++;
 		if(spriteCounter<=5)
 		{
@@ -101,6 +118,24 @@ public class Player extends Entity implements ActionListener
 		}
 	
 	}
+	public void item()
+	{
+		spriteCounter++;
+		if(spriteCounter<=5)
+		{
+			spriteNum=1;
+		}
+		if(spriteCounter>5&&spriteCounter<=25)
+		{
+			spriteNum=2;
+		}
+		if(spriteCounter>25)
+		{
+			spriteNum=1;
+			spriteCounter=0;
+			bombUse = false;
+		}
+	}
 	
 	public void update()
 	{
@@ -110,44 +145,66 @@ public class Player extends Entity implements ActionListener
 			timer.start();
 			attacking();
 		}
-		else if(keyH.upPressed==true||keyH.downPressed==true
+		if(bombUse == true)
+		{
+			item();
+		}
+		else if(keyH.upPressed==true
+				||keyH.downPressed==true
 				||keyH.leftPressed==true
 				||keyH.rightPressed==true
 				||keyH.swordPressed==true
 				||keyH.bItem == true)//For now, bItem is only bomb, we need to finish UI to implement multiple items
 		{
-			if(keyH.swordPressed==true)
+			
+			if(keyH.swordPressed ==true)
 			{
 				speed=0;
 				attacking=true;
 			}
+			if(keyH.bItem == true)
+			{
+				bombUse = true;
+			}
 			if(keyH.upPressed==true)
 			{
+				if (keyH.bItem == true)
+				{
+					bombUse = true;
+				}
 				speed=4;
 				direction="up";
 				y-=speed;
 			}
 			else if(keyH.downPressed==true)
 			{
+				if (keyH.bItem == true)
+				{
+					bombUse = true;
+				}
 				speed=4;
 				direction="down";
 				y+=speed;
 			}
 			else if(keyH.leftPressed==true)
 			{
+				if (keyH.bItem == true)
+				{
+					bombUse = true;
+				}
 				speed=4;
 				direction="left";
 				x-=speed;
 			}
 			else if(keyH.rightPressed==true)
 			{
+				if (keyH.bItem == true)
+				{
+					bombUse = true;
+				}
 				speed=4;
 				direction="right";
 				x+=speed;
-			}
-			else if (keyH.bItem == true)
-			{
-				bomb = true;
 			}
 			spriteCounter++;
 			if(spriteCounter>12) {
@@ -163,9 +220,7 @@ public class Player extends Entity implements ActionListener
 			}
 		}
 		
-		}
-	
-		
+	}
 	public void draw(Graphics2D g2)
 	{
 		//animation
@@ -175,13 +230,12 @@ public class Player extends Entity implements ActionListener
 			if(attacking==false)
 			{
 				timer.stop();
-				if(bomb)
+				if(bombUse)
 				{
 					image = itemUp;
 				}
 				else
 				{
-				
 				if(spriteNum==1){image=up1;}
 				if(spriteNum==2){image=up2;}
 				}
@@ -194,17 +248,11 @@ public class Player extends Entity implements ActionListener
 			break;
 		case "down":
 			if(attacking==false)
-			{timer.stop();
-				if(bomb)
+			{
+				timer.stop();
+				if(bombUse)
 				{
-					if(spriteNum == 1)
-					{
-						image = itemDown;
-					}
-					if(spriteNum == 2)
-					{
-						image = down1;
-					}
+					image = itemDown;
 				}
 				else
 				{
@@ -221,14 +269,14 @@ public class Player extends Entity implements ActionListener
 			break;
 		case "left":
 			if(attacking==false)
-			{timer.stop();
-				if(bomb)
+			{
+				timer.stop();
+				if(bombUse)
 				{
 					image = itemLeft;
 				}
 				else
 				{
-				
 				if(spriteNum==1){image=left1;}
 				if(spriteNum==2){image=left2;}
 				}
@@ -241,14 +289,14 @@ public class Player extends Entity implements ActionListener
 			break;
 		case "right":
 			if(attacking==false)
-			{timer.stop();
-				if(bomb)
+			{
+				
+				if(bombUse)
 				{
 					image = itemRight;
 				}
 				else
 				{
-				
 				if(spriteNum==1){image=right1;}
 				if(spriteNum==2){image=right2;}
 				}

@@ -7,9 +7,10 @@ public class Entity {
 	public BufferedImage swordUp,swordUp1,swordLeft,swordLeft1,swordRight,swordRight1,swordDown,swordDown1, itemLeft, itemRight, itemUp, itemDown;
 	public String direction;
 	
+	public BufferedImage bomb;
 	public int spriteCounter=0;
 	public int spriteNum=1;
 	boolean attacking=false;
-	boolean bomb = false;
+	boolean bombUse = false;
 	
 }
