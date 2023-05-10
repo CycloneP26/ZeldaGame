@@ -16,10 +16,14 @@ public class GamePanel extends JPanel implements Runnable
 	final int screenWidth=tileSize*maxScreenCol;
 	final int screenHeight=tileSize*maxScreenRow;
 	private Timer timer;
+	private int currentRoomRow;
+	private int currentRoomColumn;
 	
 	int FPS=60;
 	
-	TileManager tileM = new TileManager(this);
+	
+	
+	RoomManager rooms = new RoomManager(this, 3, 3);
 	KeyHandler keyH=new KeyHandler();
 	Thread gameThread;
 	Player player=new Player(this,keyH);
@@ -37,6 +41,8 @@ public class GamePanel extends JPanel implements Runnable
 		this.setDoubleBuffered(true);
 		this.addKeyListener(keyH);
 		this.setFocusable(true);
+		currentRoomRow = 1;
+		currentRoomColumn = 1;
 	}
 	
 	public void startGameThread()
@@ -87,7 +93,7 @@ public class GamePanel extends JPanel implements Runnable
 		
 		Graphics2D g2=(Graphics2D)g;
 		
-		tileM.draw(g2);
+		rooms.getRoomArray().get(currentRoomRow).get(currentRoomColumn).draw(g2);
 		player.draw(g2);
 		g2.dispose();
 		
