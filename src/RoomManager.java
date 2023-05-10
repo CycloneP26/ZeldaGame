@@ -1,3 +1,4 @@
+
 import java.util.ArrayList;
 
 public class RoomManager {
@@ -28,5 +29,31 @@ public class RoomManager {
 		return rooms;
 	}
 	
-	
+	public boolean isRoomAvailable(int row, int column)
+	{
+		if(row<0)
+		{
+			return false;
+		}
+		if(column<0)
+		{
+			return false;
+		}
+		System.out.println(row);
+		System.out.println(rooms.size());
+		if(row>=rooms.size())
+		{
+			return false;
+		}
+		if(column>=rooms.get(0).size())
+		{
+			return false;
+		}
+		if(rooms.get(row).get(column).equals(null))
+		{
+			return false;
+		}
+		
+		return true;
+	}
 }

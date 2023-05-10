@@ -27,11 +27,7 @@ public class GamePanel extends JPanel implements Runnable
 	KeyHandler keyH=new KeyHandler();
 	Thread gameThread;
 	Player player=new Player(this,keyH);
-	
-	
-//	int playerX=100;
-//	int playerY=100;
-//	int playerSpeed=4;
+
 	
 	
 	public GamePanel()
@@ -59,6 +55,40 @@ public class GamePanel extends JPanel implements Runnable
 		while(gameThread!=null)
 		{
 			update();
+			
+			
+			if(player.getY()<0)
+			{
+				player.setY(screenHeight-40);
+				if(rooms.isRoomAvailable(currentRoomRow-1, currentRoomColumn))
+				{
+					currentRoomRow--;
+				}
+			}
+			else if(player.getX()<0)
+			{
+				player.setX(screenWidth-40);
+				if(rooms.isRoomAvailable(currentRoomRow, currentRoomColumn-1))
+				{
+					currentRoomColumn--;
+				}
+			}
+			else if(player.getY()+40>screenHeight)
+			{
+				player.setY(0);
+				if(rooms.isRoomAvailable(currentRoomRow+1, currentRoomColumn))
+				{
+					currentRoomRow++;
+				}
+			}
+			else if(player.getX()+40>screenWidth)
+			{
+				player.setX(0);
+				if(rooms.isRoomAvailable(currentRoomRow, currentRoomColumn+1))
+				{
+					currentRoomColumn++;
+				}
+			}
 			
 			repaint();
 			
