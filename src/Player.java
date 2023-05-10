@@ -19,7 +19,12 @@ public class Player extends Entity implements ActionListener
 		this.gp=gp;
 		this.keyH=keyH;
 		setDefaultValue();
-		getPlayerImage();
+		try {
+			getPlayerImage();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		timer=new Timer(60,this);
 		try {
 			getPlayerAttackImage();
@@ -36,53 +41,33 @@ public class Player extends Entity implements ActionListener
 		direction="down";
 	}
 	
-	public void getPlayerImage()
+	public void getPlayerImage() throws IOException
 	{
 		
-		try {
-			up1=ImageIO.read(getClass().getResourceAsStream("/player/linkMovingBack.png"));
-			up2=ImageIO.read(getClass().getResourceAsStream("/player/linkMovingBack1.png"));
-			down1=ImageIO.read(getClass().getResourceAsStream("/player/linkMovingDown.png"));
-			down2=ImageIO.read(getClass().getResourceAsStream("/player/linkMovingDown1.png"));
-			left1=ImageIO.read(getClass().getResourceAsStream("/player/linkMovingHorizontal.png"));
-			left2=ImageIO.read(getClass().getResourceAsStream("/player/linkMovingHorizontal1.png"));
-			right1=ImageIO.read(getClass().getResourceAsStream("/player/linkMovingRight.png"));
-			right2=ImageIO.read(getClass().getResourceAsStream("/player/linkMovingRight1.png"));
-			
-			
-			
-		}catch(IOException e) {
-			e.printStackTrace();
-		}
+		up1=setup("/player/linkMovingBack",gp.tileSize,gp.tileSize);
+		up2=setup("/player/linkMovingBack1",gp.tileSize,gp.tileSize);
+		down1=setup("/player/linkMovingDown",gp.tileSize,gp.tileSize);
+		down2=setup("/player/linkMovingDown1",gp.tileSize,gp.tileSize);
+		left1=setup("/player/linkMovingLeft",gp.tileSize,gp.tileSize);
+		left2=setup("/player/linkMovingLeft1",gp.tileSize,gp.tileSize);
+		right1=setup("/player/linkMovingRight",gp.tileSize,gp.tileSize);
+		right2=setup("/player/linkMovingRight1",gp.tileSize,gp.tileSize);
 	}
 	public void getPlayerAttackImage() throws IOException
 	{
-		try { 
-			swordUp=ImageIO.read(getClass().getResourceAsStream("/player/linkSwordUp1.png"));
-		
-			swordLeft=ImageIO.read(getClass().getResourceAsStream("/player/linkSwordLeft1.png"));
-		
-			swordRight=ImageIO.read(getClass().getResourceAsStream("/player/linkSwordRight1.png"));
-		
-			swordDown=ImageIO.read(getClass().getResourceAsStream("/player/linkSwordDown1.png"));
-			
-			swordUp1=ImageIO.read(getClass().getResourceAsStream("/player/linkSwordUp.png"));
-			
-			swordLeft1=ImageIO.read(getClass().getResourceAsStream("/player/linkSwordLeft.png"));
-			
-			swordRight1=ImageIO.read(getClass().getResourceAsStream("/player/linkSwordRight.png"));
-			
-			swordDown1=ImageIO.read(getClass().getResourceAsStream("/player/linkSwordDown.png"));
-		
-		}
-		catch(IOException e)
-		{
-			e.printStackTrace();
-		}
+			swordUp=setup("/player/linkSwordUp1",gp.tileSize,gp.tileSize*2);
+			swordLeft=setup("/player/linkSwordLeft1",gp.tileSize*2,gp.tileSize);
+			swordRight=setup("/player/linkSwordRight1",gp.tileSize*2,gp.tileSize);
+			swordDown=setup("/player/linkSwordDown1",gp.tileSize,gp.tileSize*2);
+			swordUp1=setup("/player/linkSwordUp",gp.tileSize,gp.tileSize*2);
+			swordLeft1=setup("/player/linkSwordLeft",gp.tileSize*2,gp.tileSize);
+			swordRight1=setup("/player/linkSwordRight",gp.tileSize*2,gp.tileSize);
+			swordDown1=setup("/player/linkSwordDown",gp.tileSize,gp.tileSize*2);
 	}
 	
 	public void attacking()
 	{
+		timer.start();
 		spriteCounter++;
 		if(spriteCounter<=5)
 		{
@@ -98,22 +83,20 @@ public class Player extends Entity implements ActionListener
 			spriteCounter=0;
 			attacking=false;
 		}
+	
 	}
 	
 	public void update()
 	{
+		//movement and attacking
 		if(attacking==true)
 		{
 			timer.start();
 			attacking();
 		}
-		if(keyH.upPressed==true||keyH.downPressed==true||keyH.leftPressed==true||keyH.rightPressed==true||keyH.swordPressed==true)
+		else if(keyH.upPressed==true||keyH.downPressed==true||keyH.leftPressed==true||keyH.rightPressed==true||keyH.swordPressed==true)
 		{
-			if(keyH.swordPressed==true)
-			{
-				speed=0;
-				attacking=true;
-			}
+			
 			if(keyH.upPressed==true)
 			{
 				speed=4;
@@ -138,7 +121,10 @@ public class Player extends Entity implements ActionListener
 				direction="right";
 				x+=speed;
 			}
-			gp.keyH.swordPressed=false;
+			else if(keyH.swordPressed==true)
+			{
+				attacking=true;
+			}
 			spriteCounter++;
 			if(spriteCounter>12) {
 				if(spriteNum==1)
@@ -152,10 +138,13 @@ public class Player extends Entity implements ActionListener
 				spriteCounter=0;
 			}
 		}
-	}
+		
+		}
+	
 		
 	public void draw(Graphics2D g2)
 	{
+		//animation
 		BufferedImage image=null;
 		switch(direction) {
 		case "up":
@@ -213,14 +202,29 @@ public class Player extends Entity implements ActionListener
 		}
 		
 			
-		g2.drawImage(image,x,y,gp.tileSize,gp.tileSize,null);
-		
-		
+		g2.drawImage(image,x,y,null);
+	
+	}
+	public BufferedImage setup(String imagePath,int width,int height)
+	{
+		UtilityTool uTool=new UtilityTool();
+		BufferedImage image=null;
+		try
+		{
+			image=ImageIO.read(getClass().getResourceAsStream(imagePath+".png"));
+			image=uTool.scaleImage(image,width,height);
+		}
+		catch(IOException e)
+		{
+			e.printStackTrace();
+		}
+		return image;
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		
 	}
+	
 
 }
