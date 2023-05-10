@@ -74,6 +74,10 @@ public class Player extends Entity implements ActionListener
 	}
 	public void getBItemImage() throws IOException
 	{
+		itemLeft = setup("/player/useItemLeft",gp.tileSize,gp.tileSize);
+		itemUp = setup("/player/useItemUp",gp.tileSize,gp.tileSize);
+		itemRight = setup("/player/useItemRight",gp.tileSize,gp.tileSize);
+		itemDown = setup("/player/useItemDown",gp.tileSize,gp.tileSize);
 		//if(something about which item is being used)
 		
 	}
@@ -171,8 +175,16 @@ public class Player extends Entity implements ActionListener
 			if(attacking==false)
 			{
 				timer.stop();
+				if(bomb)
+				{
+					image = itemUp;
+				}
+				else
+				{
+				
 				if(spriteNum==1){image=up1;}
 				if(spriteNum==2){image=up2;}
+				}
 			}
 			if(attacking==true)
 			{
@@ -182,10 +194,24 @@ public class Player extends Entity implements ActionListener
 			break;
 		case "down":
 			if(attacking==false)
-			{
-				timer.stop();
+			{timer.stop();
+				if(bomb)
+				{
+					if(spriteNum == 1)
+					{
+						image = itemDown;
+					}
+					if(spriteNum == 2)
+					{
+						image = down1;
+					}
+				}
+				else
+				{
+				
 				if(spriteNum==1){image=down1;}
 				if(spriteNum==2){image=down2;}
+				}
 			}
 			if(attacking==true)
 			{
@@ -195,10 +221,17 @@ public class Player extends Entity implements ActionListener
 			break;
 		case "left":
 			if(attacking==false)
-			{
-				timer.stop();
+			{timer.stop();
+				if(bomb)
+				{
+					image = itemLeft;
+				}
+				else
+				{
+				
 				if(spriteNum==1){image=left1;}
 				if(spriteNum==2){image=left2;}
+				}
 			}
 			if(attacking==true)
 			{
@@ -208,10 +241,17 @@ public class Player extends Entity implements ActionListener
 			break;
 		case "right":
 			if(attacking==false)
-			{
-				timer.stop();
+			{timer.stop();
+				if(bomb)
+				{
+					image = itemRight;
+				}
+				else
+				{
+				
 				if(spriteNum==1){image=right1;}
 				if(spriteNum==2){image=right2;}
+				}
 			}
 			if(attacking==true)
 			{
@@ -255,8 +295,6 @@ public class Player extends Entity implements ActionListener
 		// TODO Auto-generated method stub
 		
 	}
-	
-	
 	
 
 }
