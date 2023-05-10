@@ -4,18 +4,26 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.Timer;
+
+import object.Bomb;
+import object.ObjectMain;
 
 public class Player extends Entity implements ActionListener 
 {
 	GamePanel gp;
 	KeyHandler keyH;
 	private Timer timer;
+	private ArrayList<ObjectMain> bombs; //bombs
+	
 	
 	public Player(GamePanel gp, KeyHandler keyH)
 	{
+		bombs = new ArrayList<ObjectMain>();
+		bombs.add(new Bomb());
 		this.gp=gp;
 		this.keyH=keyH;
 		setDefaultValue();
@@ -64,7 +72,11 @@ public class Player extends Entity implements ActionListener
 			swordRight1=setup("/player/linkSwordRight",gp.tileSize*2,gp.tileSize);
 			swordDown1=setup("/player/linkSwordDown",gp.tileSize,gp.tileSize*2);
 	}
-	
+	public void getBItemImage() throws IOException
+	{
+		//if(something about which item is being used)
+		
+	}
 	public void attacking()
 	{
 		timer.start();
@@ -94,7 +106,11 @@ public class Player extends Entity implements ActionListener
 			timer.start();
 			attacking();
 		}
-		else if(keyH.upPressed==true||keyH.downPressed==true||keyH.leftPressed==true||keyH.rightPressed==true||keyH.swordPressed==true)
+		else if(keyH.upPressed==true||keyH.downPressed==true
+				||keyH.leftPressed==true
+				||keyH.rightPressed==true
+				||keyH.swordPressed==true
+				||keyH.bItem == true)//For now, bItem is only bomb, we need to finish UI to implement multiple items
 		{
 			if(keyH.swordPressed==true)
 			{
@@ -124,6 +140,10 @@ public class Player extends Entity implements ActionListener
 				speed=4;
 				direction="right";
 				x+=speed;
+			}
+			else if (keyH.bItem == true)
+			{
+				bomb = true;
 			}
 			spriteCounter++;
 			if(spriteCounter>12) {
