@@ -1,5 +1,4 @@
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.io.IOException;
 
@@ -8,7 +7,7 @@ public class Room {
 	
 	GamePanel gp;
 	Tile[] tile;
-	int[][] tileLayout = new int[16][16]; //creates the tile layout, 16x16
+	int[][] tileLayout = new int[12][16];
 	
 	public Room(GamePanel gp)
 	{
@@ -18,8 +17,7 @@ public class Room {
 		
 		getTileImage();
 		
-		//adds images to the bottom 
-		for(int i = 4; i<tileLayout.length; i++)
+		for(int i = 0; i<tileLayout.length; i++)
 		{
 			for(int j = 0; j<tileLayout[0].length; j++)
 			{
@@ -33,7 +31,6 @@ public class Room {
 	{
 		try
 		{
-			//gets tile images
 			tile[0] = new Tile();
 			tile[0].image = ImageIO.read(getClass().getResourceAsStream("/tiles/groundWithDots.png"));
 			
@@ -59,18 +56,12 @@ public class Room {
 	
 	public void draw(Graphics2D g2)
 	{
-	    // Fill the top section with black color, for the hud
-	    g2.setColor(Color.BLACK);
-	    g2.fillRect(0, 0, gp.getWidth(), 4*gp.tileSize);
-	    
-	    // Draw the tiles
-	    for(int i = 4; i<tileLayout.length; i++)
-	    {
-	        for(int j = 0; j<tileLayout[0].length; j++)
-	        {
-	            g2.drawImage(tile[tileLayout[i][j]].image, j*48, i*48, gp.tileSize, gp.tileSize, null);
-	        }
-	    }
+		for(int i = 0; i<tileLayout.length; i++)
+		{
+			for(int j = 0; j<tileLayout[0].length; j++)
+			{
+				g2.drawImage(tile[tileLayout[i][j]].image, j*48, i*48, gp.tileSize, gp.tileSize, null);
+			}
+		}
 	}
-
 }

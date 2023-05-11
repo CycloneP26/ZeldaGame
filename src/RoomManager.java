@@ -5,12 +5,12 @@ public class RoomManager {
 	
 	//A 2D arraylist of rooms
 	private ArrayList<ArrayList<Room>> rooms = new ArrayList<ArrayList<Room>>();
-	private GamePanel gp; //game panel
-	private int rows; //rows of the room
-	private int columns; //columns of the room
+	private GamePanel gp;
+	private int currentRoomRow;
+	private int currentRoomColumn;
 	
 	
-	//adds rooms
+	
 	public RoomManager(GamePanel gp, int r, int c)
 	{
 		for(int i=0; i<r; i++)
@@ -22,6 +22,11 @@ public class RoomManager {
 			}
 			rooms.add(temp);
 		}
+		
+		currentRoomRow = 1;
+		currentRoomColumn = 1;
+		
+		this.gp = gp;
 	}
 	
 	public ArrayList<ArrayList<Room>> getRoomArray()
@@ -29,8 +34,66 @@ public class RoomManager {
 		return rooms;
 	}
 	
+	public void update()
+	{
+		
+		Player player = gp.getPlayer();
+		CollisionChecker cChecker = gp.getCollision();
+		
+		
+		if(player.getY()<0)
+		{
+			player.setY(gp.screenHeight-40);
+			if(isRoomAvailable(currentRoomRow-1, currentRoomColumn))
+			{
+				currentRoomRow--;
+				cChecker.setCurRow(currentRoomRow);
+			}
+		}
+		else if(player.getX()<0)
+		{
+			player.setX(gp.screenWidth-40);
+			if(isRoomAvailable(currentRoomRow, currentRoomColumn-1))
+			{
+				currentRoomColumn--;
+				cChecker.setCurCol(currentRoomColumn);
+			}
+		}
+		else if(player.getY() + 40>gp.screenHeight)
+		{
+			player.setY(0);
+			if(isRoomAvailable(currentRoomRow+1, currentRoomColumn))
+			{
+				currentRoomRow++;
+				cChecker.setCurRow(currentRoomRow);
+			}
+		}
+		else if(player.getX()+40>gp.screenWidth)
+		{
+			player.setX(0);
+			if(isRoomAvailable(currentRoomRow, currentRoomColumn+1))
+			{
+				currentRoomColumn++;
+				cChecker.setCurCol(currentRoomColumn);
+			}
+		}
+		
+	}
 	
-	//checks if there is a room there in the direction Link is moving to
+	public int getRoomRow()
+	{
+		
+		return currentRoomRow;
+		
+	}
+	
+	public int getRoomColumn()
+	{
+		
+		return currentRoomColumn;
+		
+	}
+	
 	public boolean isRoomAvailable(int row, int column)
 	{
 		if(row<0)
