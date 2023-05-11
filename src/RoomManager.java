@@ -5,12 +5,12 @@ public class RoomManager {
 	
 	//A 2D arraylist of rooms
 	private ArrayList<ArrayList<Room>> rooms = new ArrayList<ArrayList<Room>>();
-	private GamePanel gp;
-	private int rows;
-	private int columns;
+	private GamePanel gp; //game panel
+	private int rows; //rows of the room
+	private int columns; //columns of the room
 	
 	
-	
+	//adds rooms
 	public RoomManager(GamePanel gp, int r, int c)
 	{
 		for(int i=0; i<r; i++)
@@ -29,6 +29,8 @@ public class RoomManager {
 		return rooms;
 	}
 	
+	
+	//checks if there is a room there in the direction Link is moving to
 	public boolean isRoomAvailable(int row, int column)
 	{
 		if(row<0)
