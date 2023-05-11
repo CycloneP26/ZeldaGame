@@ -40,6 +40,14 @@ public class Player extends Entity implements ActionListener
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		try 
+		{
+			getBItemImage();
+		}
+		catch(IOException e2)
+		{
+			e2.printStackTrace();
+		}
 	}
 	public void setDefaultValue()
 	{
@@ -74,6 +82,12 @@ public class Player extends Entity implements ActionListener
 	}
 	public void getBItemImage() throws IOException
 	{
+		itemLeft = setup("/player/useItemLeft", gp.tileSize, gp.tileSize);
+		itemUp = setup("/player/useItemUp",gp.tileSize,gp.tileSize);
+		itemRight = setup("/player/useItemRight",gp.tileSize,gp.tileSize);
+		itemDown = setup("/player/useItemDown",gp.tileSize,gp.tileSize);
+		
+		bomb = setup("/objects/Bomb",gp.tileSize,gp.tileSize);
 		//if(something about which item is being used)
 		
 	}
@@ -97,7 +111,24 @@ public class Player extends Entity implements ActionListener
 		}
 	
 	}
-	
+	public void item()
+	{
+		spriteCounter++;
+		if(spriteCounter<=5)
+		{
+			spriteNum=1;
+		}
+		if(spriteCounter>5&&spriteCounter<=25)
+		{
+			spriteNum=2;
+		}
+		if(spriteCounter>25)
+		{
+			spriteNum=1;
+			spriteCounter=0;
+			bombUse =false;
+		}
+	}
 	public void update()
 	{
 		//movement and attacking
@@ -106,45 +137,67 @@ public class Player extends Entity implements ActionListener
 			timer.start();
 			attacking();
 		}
-		else if(keyH.upPressed==true||keyH.downPressed==true
+		else if(bombUse == true)
+		{
+			item();
+		}
+		else if(keyH.upPressed==true
+				||keyH.downPressed==true
 				||keyH.leftPressed==true
 				||keyH.rightPressed==true
 				||keyH.swordPressed==true
-				||keyH.bItem == true)//For now, bItem is only bomb, we need to finish UI to implement multiple items
+				||keyH.bItem == true)
 		{
 			if(keyH.swordPressed==true)
 			{
 				speed=0;
 				attacking=true;
 			}
+			if(keyH.bItem == true)
+			{
+				bombUse = true;
+			}
 			if(keyH.upPressed==true)
 			{
+				if (keyH.bItem == true)
+				{
+					bombUse = true;
+				}
 				speed=4;
 				direction="up";
 				y-=speed;
 			}
 			else if(keyH.downPressed==true)
 			{
+				if (keyH.bItem == true)
+				{
+					bombUse = true;
+				}
 				speed=4;
 				direction="down";
 				y+=speed;
 			}
 			else if(keyH.leftPressed==true)
 			{
+				if (keyH.bItem == true)
+				{
+					bombUse = true;
+				}
 				speed=4;
 				direction="left";
 				x-=speed;
 			}
 			else if(keyH.rightPressed==true)
 			{
+				if (keyH.bItem == true)
+				{
+					bombUse = true;
+				}
 				speed=4;
 				direction="right";
 				x+=speed;
 			}
-			else if (keyH.bItem == true)
-			{
-				bomb = true;
-			}
+			
 			spriteCounter++;
 			if(spriteCounter>12) {
 				if(spriteNum==1)
@@ -171,8 +224,15 @@ public class Player extends Entity implements ActionListener
 			if(attacking==false)
 			{
 				timer.stop();
+				if(bombUse)
+				{
+					image = itemUp;
+				}
+				else
+				{
 				if(spriteNum==1){image=up1;}
 				if(spriteNum==2){image=up2;}
+				}
 			}
 			if(attacking==true)
 			{
@@ -184,8 +244,14 @@ public class Player extends Entity implements ActionListener
 			if(attacking==false)
 			{
 				timer.stop();
+				if(bombUse)
+				{
+					image = itemDown;
+				}
+				else {
 				if(spriteNum==1){image=down1;}
 				if(spriteNum==2){image=down2;}
+				}
 			}
 			if(attacking==true)
 			{
@@ -197,8 +263,14 @@ public class Player extends Entity implements ActionListener
 			if(attacking==false)
 			{
 				timer.stop();
+				if(bombUse)
+				{
+					image = itemLeft;
+				}
+				else {
 				if(spriteNum==1){image=left1;}
 				if(spriteNum==2){image=left2;}
+				}
 			}
 			if(attacking==true)
 			{
@@ -210,8 +282,13 @@ public class Player extends Entity implements ActionListener
 			if(attacking==false)
 			{
 				timer.stop();
+				if(bombUse)
+				{
+					image = itemRight;
+				}
+				else {
 				if(spriteNum==1){image=right1;}
-				if(spriteNum==2){image=right2;}
+				if(spriteNum==2){image=right2;}}
 			}
 			if(attacking==true)
 			{
