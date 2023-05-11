@@ -2,10 +2,10 @@
 public class CollisionChecker 
 {
 
-	GamePanel gp;
-	RoomManager rooms;
-	int curRow;
-	int curCol;
+	private GamePanel gp;
+	private RoomManager rooms;
+	private int curRow;
+	private int curCol;
 	
 	public CollisionChecker(GamePanel gp, RoomManager rooms, int curRow, int curCol)
 	{
@@ -14,8 +14,21 @@ public class CollisionChecker
 		this.rooms = rooms;
 		this.curRow = curRow;
 		this.curCol = curCol;
+		System.out.println(curRow);
+		System.out.println(curCol);
 		
 	}
+	
+	public void setCurRow(int n)
+	{
+		curRow = n;
+	}
+	
+	public void setCurCol(int n)
+	{
+		curCol = n;
+	}
+	
 	
 	public void checkTile(Entity entity)
 	{
@@ -34,7 +47,7 @@ public class CollisionChecker
 		int tileNum2;
 	
 		
-		Room curRoom =rooms.getRoomArray().get(1).get(1);
+		Room curRoom =rooms.getRoomArray().get(curRow).get(curCol);
 		
 		switch(entity.direction)
 		{

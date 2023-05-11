@@ -140,7 +140,7 @@ public class Player extends Entity implements ActionListener
 			}
 			
 			collisionOn = false;
-			gp.cChecker.checkTile(this);
+			gp.getCollision().checkTile(this);
 			
 			if(collisionOn == false)
 			{

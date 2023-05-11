@@ -23,25 +23,33 @@ public class GamePanel extends JPanel implements Runnable
 	
 	
 	
-	RoomManager rooms = new RoomManager(this, 3, 3);
-	KeyHandler keyH=new KeyHandler();
-	Thread gameThread;
-	Player player=new Player(this,keyH);
-
+	private RoomManager rooms;
+	private KeyHandler keyH;
+	private Thread gameThread;
+	private Player player;
+	private CollisionChecker cChecker;
 	
 	
 	public GamePanel()
 	{
+		keyH=new KeyHandler();
+		rooms = new RoomManager(this, 3, 3);
+		player=new Player(this,keyH);
+		currentRoomRow = 1;
+		currentRoomColumn = 1;
+		cChecker = new CollisionChecker(this, rooms, currentRoomRow, currentRoomColumn);
 		this.setPreferredSize(new Dimension(screenWidth, screenHeight));
 		this.setBackground(Color.white);
 		this.setDoubleBuffered(true);
 		this.addKeyListener(keyH);
 		this.setFocusable(true);
-		currentRoomRow = 1;
-		currentRoomColumn = 1;
 	}
 	
-	public CollisionChecker cChecker = new CollisionChecker(this, rooms, currentRoomRow, currentRoomColumn);
+	public CollisionChecker getCollision()
+	{
+		return cChecker;
+	}
+	
 	
 	public void startGameThread()
 	{
@@ -66,6 +74,7 @@ public class GamePanel extends JPanel implements Runnable
 				if(rooms.isRoomAvailable(currentRoomRow-1, currentRoomColumn))
 				{
 					currentRoomRow--;
+					cChecker.setCurRow(currentRoomRow);
 				}
 			}
 			else if(player.getX()<0)
@@ -74,6 +83,7 @@ public class GamePanel extends JPanel implements Runnable
 				if(rooms.isRoomAvailable(currentRoomRow, currentRoomColumn-1))
 				{
 					currentRoomColumn--;
+					cChecker.setCurCol(currentRoomColumn);
 				}
 			}
 			else if(player.getY() + 40>screenHeight)
@@ -82,6 +92,7 @@ public class GamePanel extends JPanel implements Runnable
 				if(rooms.isRoomAvailable(currentRoomRow+1, currentRoomColumn))
 				{
 					currentRoomRow++;
+					cChecker.setCurRow(currentRoomRow);
 				}
 			}
 			else if(player.getX()+40>screenWidth)
@@ -90,6 +101,7 @@ public class GamePanel extends JPanel implements Runnable
 				if(rooms.isRoomAvailable(currentRoomRow, currentRoomColumn+1))
 				{
 					currentRoomColumn++;
+					cChecker.setCurCol(currentRoomColumn);
 				}
 			}
 			
