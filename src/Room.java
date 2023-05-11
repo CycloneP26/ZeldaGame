@@ -36,6 +36,7 @@ public class Room {
 			
 			tile[1] = new Tile();
 			tile[1].image = ImageIO.read(getClass().getResourceAsStream("/tiles/download.png"));
+			tile[1].collision = true;
 			
 			tile[2] = new Tile();
 			tile[2].image = ImageIO.read(getClass().getResourceAsStream("/tiles/water.png"));
@@ -44,6 +45,13 @@ public class Room {
 		{
 			e.printStackTrace();
 		}
+	}
+	
+	public int[][] getTileLayout()
+	{
+		
+		return tileLayout;
+		
 	}
 	
 	public void draw(Graphics2D g2)

@@ -41,11 +41,14 @@ public class GamePanel extends JPanel implements Runnable
 		currentRoomColumn = 1;
 	}
 	
+	public CollisionChecker cChecker = new CollisionChecker(this, rooms, currentRoomRow, currentRoomColumn);
+	
 	public void startGameThread()
 	{
 		gameThread=new Thread(this);
 		gameThread.start();
 	}
+	
 	
 	public void run()
 	{
@@ -73,7 +76,7 @@ public class GamePanel extends JPanel implements Runnable
 					currentRoomColumn--;
 				}
 			}
-			else if(player.getY()+40>screenHeight)
+			else if(player.getY() + 40>screenHeight)
 			{
 				player.setY(0);
 				if(rooms.isRoomAvailable(currentRoomRow+1, currentRoomColumn))

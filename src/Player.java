@@ -1,5 +1,6 @@
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -16,7 +17,6 @@ public class Player extends Entity implements ActionListener
 {
 	GamePanel gp;
 	KeyHandler keyH;
-	private Timer timer;
 	private ArrayList<ObjectMain> bombs; //bombs
 	
 	
@@ -26,6 +26,10 @@ public class Player extends Entity implements ActionListener
 		bombs.add(new Bomb());
 		this.gp=gp;
 		this.keyH=keyH;
+		
+		solidArea = new Rectangle(8, 16, 32, 28);
+		
+		
 		setDefaultValue();
 		try {
 			getPlayerImage();
@@ -33,20 +37,11 @@ public class Player extends Entity implements ActionListener
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		timer=new Timer(60,this);
 		try {
 			getPlayerAttackImage();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		try 
-		{
-			getBItemImage();
-		}
-		catch(IOException e2)
-		{
-			e2.printStackTrace();
 		}
 	}
 	public void setDefaultValue()
@@ -82,124 +77,97 @@ public class Player extends Entity implements ActionListener
 	}
 	public void getBItemImage() throws IOException
 	{
-		itemLeft = setup("/player/useItemLeft", gp.tileSize, gp.tileSize);
-		itemUp = setup("/player/useItemUp",gp.tileSize,gp.tileSize);
-		itemRight = setup("/player/useItemRight",gp.tileSize,gp.tileSize);
-		itemDown = setup("/player/useItemDown",gp.tileSize,gp.tileSize);
-		
-		bomb = setup("/objects/Bomb",gp.tileSize,gp.tileSize);
 		//if(something about which item is being used)
 		
 	}
 	public void attacking()
 	{
-		timer.start();
 		spriteCounter++;
-		if(spriteCounter<=5)
-		{
-			spriteNum=1;
-		}
 		if(spriteCounter>5&&spriteCounter<=25)
 		{
 			spriteNum=2;
 		}
 		if(spriteCounter>25)
 		{
-			spriteNum=1;
+			spriteNum=2;
 			spriteCounter=0;
 			attacking=false;
 		}
 	
 	}
-	public void item()
-	{
-		spriteCounter++;
-		if(spriteCounter<=5)
-		{
-			spriteNum=1;
-		}
-		if(spriteCounter>5&&spriteCounter<=25)
-		{
-			spriteNum=2;
-		}
-		if(spriteCounter>25)
-		{
-			spriteNum=1;
-			spriteCounter=0;
-			bombUse =false;
-		}
-	}
+	
 	public void update()
 	{
 		//movement and attacking
 		if(attacking==true)
 		{
-			timer.start();
 			attacking();
 		}
-		else if(bombUse == true)
-		{
-			item();
-		}
-		else if(keyH.upPressed==true
-				||keyH.downPressed==true
+		else if(keyH.upPressed==true||keyH.downPressed==true
 				||keyH.leftPressed==true
 				||keyH.rightPressed==true
 				||keyH.swordPressed==true
-				||keyH.bItem == true)
+				||keyH.bItem == true)//For now, bItem is only bomb, we need to finish UI to implement multiple items
 		{
 			if(keyH.swordPressed==true)
 			{
 				speed=0;
 				attacking=true;
 			}
-			if(keyH.bItem == true)
-			{
-				bombUse = true;
-			}
 			if(keyH.upPressed==true)
 			{
-				if (keyH.bItem == true)
-				{
-					bombUse = true;
-				}
 				speed=4;
 				direction="up";
-				y-=speed;
 			}
 			else if(keyH.downPressed==true)
 			{
-				if (keyH.bItem == true)
-				{
-					bombUse = true;
-				}
 				speed=4;
 				direction="down";
-				y+=speed;
 			}
 			else if(keyH.leftPressed==true)
 			{
-				if (keyH.bItem == true)
-				{
-					bombUse = true;
-				}
 				speed=4;
 				direction="left";
-				x-=speed;
 			}
 			else if(keyH.rightPressed==true)
 			{
-				if (keyH.bItem == true)
-				{
-					bombUse = true;
-				}
 				speed=4;
 				direction="right";
-				x+=speed;
+			}
+			else if (keyH.bItem == true)
+			{
+				bomb = true;
+			}
+			
+			collisionOn = false;
+			gp.cChecker.checkTile(this);
+			
+			if(collisionOn == false)
+			{
+				
+				switch(direction)
+				{
+				
+				case "up":
+					y-=speed;
+					break;
+				case "down":
+					y+=speed;
+					break;
+				case "left":
+					x-=speed;
+					break;
+				case "right":
+					x+=speed;
+					break;
+				
+				}
+				
 			}
 			
 			spriteCounter++;
-			if(spriteCounter>12) {
+			if(spriteCounter>12) 
+			{
 				if(spriteNum==1)
 				{
 					spriteNum=2;
@@ -212,7 +180,7 @@ public class Player extends Entity implements ActionListener
 			}
 		}
 		
-		}
+	}
 	
 		
 	public void draw(Graphics2D g2)
@@ -223,16 +191,8 @@ public class Player extends Entity implements ActionListener
 		case "up":
 			if(attacking==false)
 			{
-				timer.stop();
-				if(bombUse)
-				{
-					image = itemUp;
-				}
-				else
-				{
 				if(spriteNum==1){image=up1;}
 				if(spriteNum==2){image=up2;}
-				}
 			}
 			if(attacking==true)
 			{
@@ -243,15 +203,8 @@ public class Player extends Entity implements ActionListener
 		case "down":
 			if(attacking==false)
 			{
-				timer.stop();
-				if(bombUse)
-				{
-					image = itemDown;
-				}
-				else {
 				if(spriteNum==1){image=down1;}
 				if(spriteNum==2){image=down2;}
-				}
 			}
 			if(attacking==true)
 			{
@@ -262,15 +215,8 @@ public class Player extends Entity implements ActionListener
 		case "left":
 			if(attacking==false)
 			{
-				timer.stop();
-				if(bombUse)
-				{
-					image = itemLeft;
-				}
-				else {
 				if(spriteNum==1){image=left1;}
 				if(spriteNum==2){image=left2;}
-				}
 			}
 			if(attacking==true)
 			{
@@ -281,14 +227,8 @@ public class Player extends Entity implements ActionListener
 		case "right":
 			if(attacking==false)
 			{
-				timer.stop();
-				if(bombUse)
-				{
-					image = itemRight;
-				}
-				else {
 				if(spriteNum==1){image=right1;}
-				if(spriteNum==2){image=right2;}}
+				if(spriteNum==2){image=right2;}
 			}
 			if(attacking==true)
 			{
