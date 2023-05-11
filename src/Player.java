@@ -47,7 +47,7 @@ public class Player extends Entity implements ActionListener
 	public void setDefaultValue()
 	{
 		x=100;
-		y=100;
+		y=300;
 		speed=4;
 		direction="down";
 	}
