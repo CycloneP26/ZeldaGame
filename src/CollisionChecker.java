@@ -33,10 +33,10 @@ public class CollisionChecker
 	public void checkTile(Entity entity)
 	{
 		
-		int entityLeftX = entity.getX() + entity.solidArea.x;
-		int entityRightX = entity.getX() + entity.solidArea.x + entity.solidArea.width;
-		int entityTopY = entity.getY() + entity.solidArea.y;
-		int entityBottomY = entity.getY() + entity.solidArea.y + entity.solidArea.height;
+		int entityLeftX = entity.x + entity.solidArea.x;
+		int entityRightX = entity.x + entity.solidArea.x + entity.solidArea.width;
+		int entityTopY = entity.y + entity.solidArea.y;
+		int entityBottomY = entity.y + entity.solidArea.y + entity.solidArea.height;
 		
 		int entityLeftCol = entityLeftX / gp.tileSize;
 		int entityRightCol = entityRightX / gp.tileSize;
@@ -49,17 +49,18 @@ public class CollisionChecker
 		
 		Room curRoom =rooms.getRoomArray().get(curRow).get(curCol);
 		
-		switch(entity.getDirection())
+		switch(entity.direction)
 		{
 		
 		case "up":
 			if(entityRightCol < 16)
 			{
 				
-				entityTopRow = (entityTopY - entity.getSpeed()) / gp.tileSize;
+				entityTopRow = (entityTopY - entity.speed) / gp.tileSize;
+				System.out.println(entityTopRow);
 				tileNum1 = curRoom.getTileLayout()[entityTopRow][entityLeftCol];
 				tileNum2 = curRoom.getTileLayout()[entityTopRow][entityRightCol];
-				if(curRoom.getTile()[tileNum1].isCollision() == true || curRoom.getTile()[tileNum2].isCollision() == true)
+				if(curRoom.tile[tileNum1].collision == true || curRoom.tile[tileNum2].collision == true)
 				{
 					
 					entity.collisionOn = true;
@@ -71,14 +72,14 @@ public class CollisionChecker
 			
 			break;
 		case "down":
-			entityBottomRow = (entityBottomY + entity.getSpeed()) / gp.tileSize;
+			entityBottomRow = (entityBottomY + entity.speed) / gp.tileSize;
 			if(entityBottomRow < 12 && entityRightCol < 16)
 			{
 				
 				System.out.println(entityBottomRow);
 				tileNum1 = curRoom.getTileLayout()[entityBottomRow][entityLeftCol];
 				tileNum2 = curRoom.getTileLayout()[entityBottomRow][entityRightCol];
-				if(curRoom.getTile()[tileNum1].isCollision() == true || curRoom.getTile()[tileNum2].isCollision() == true)
+				if(curRoom.tile[tileNum1].collision == true || curRoom.tile[tileNum2].collision == true)
 				{
 					
 					entity.collisionOn = true;
@@ -93,10 +94,10 @@ public class CollisionChecker
 			if(entityBottomRow < 12)
 			{
 				
-				entityLeftCol = (entityLeftX - entity.getSpeed()) / gp.tileSize;
+				entityLeftCol = (entityLeftX - entity.speed) / gp.tileSize;
 				tileNum1 = curRoom.getTileLayout()[entityTopRow][entityLeftCol];
 				tileNum2 = curRoom.getTileLayout()[entityBottomRow][entityLeftCol];
-				if(curRoom.getTile()[tileNum1].isCollision() == true || curRoom.getTile()[tileNum2].isCollision() == true)
+				if(curRoom.tile[tileNum1].collision == true || curRoom.tile[tileNum2].collision == true)
 				{
 					
 					entity.collisionOn = true;
@@ -109,13 +110,13 @@ public class CollisionChecker
 			break;
 			
 		case "right":
-			entityRightCol = (entityRightX + entity.getSpeed()) / gp.tileSize;
+			entityRightCol = (entityRightX + entity.speed) / gp.tileSize;
 			if(entityRightCol < 16 && entityBottomRow < 12)
 			{
 				
 				tileNum1 = curRoom.getTileLayout()[entityTopRow][entityRightCol];
 				tileNum2 = curRoom.getTileLayout()[entityBottomRow][entityRightCol];
-				if(curRoom.getTile()[tileNum1].isCollision() || curRoom.getTile()[tileNum2].isCollision() == true)
+				if(curRoom.tile[tileNum1].collision == true || curRoom.tile[tileNum2].collision == true)
 				{
 					
 					entity.collisionOn = true;
