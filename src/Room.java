@@ -26,6 +26,34 @@ public class Room {
 		}
 		
 	}
+	public Room(GamePanel gp, String str)
+	{
+		this.gp = gp;
+		
+		tile = new Tile[10];
+		tileLayout = new int[12][16];
+		getTileImage();
+		
+		tileLayout = strToMap(str);
+		
+	}
+	
+	public int[][] strToMap(String str)
+	{
+		int[][] retArray = new int[12][16];
+		int count = 0;
+		for(int i = 0; i<12; i++)
+		{
+			for(int j = 0; j<16; j++)
+			{
+				retArray[i][j]+=Integer.parseInt(str.substring(count, count+1));
+				count++;
+			}
+		}
+		
+		
+		return retArray;
+	}
 	
 	public void getTileImage()
 	{
