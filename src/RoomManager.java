@@ -18,7 +18,14 @@ public class RoomManager {
 			ArrayList<Room> temp = new ArrayList<Room>();
 			for(int j = 0; j<c; j++)
 			{
-				temp.add(new Room(gp));
+				if(j==1 && i==1)
+				{
+					temp.add(new Room(gp, "111111100111111110000000000000011000000000000001100000000000000110000000000000010000000000000000000000000000000010000000000000011000000000000001100000000000000110000000000000011111111001111111"));
+				}
+				else
+				{
+					temp.add(new Room(gp));
+				}
 			}
 			rooms.add(temp);
 		}
