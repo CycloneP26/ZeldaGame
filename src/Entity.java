@@ -5,14 +5,13 @@ public class Entity {
 	private int x,y;
 	private int speed;
 	private BufferedImage up1, up2, down1, down2, left1, left2, right1, right2;
-	private BufferedImage swordUp,swordUp1,swordLeft,swordLeft1,swordRight,swordRight1,
-	swordDown,swordDown1, itemUp, itemDown, itemRight, itemLeft;
+	private BufferedImage swordUp,swordUp1,swordLeft,swordLeft1,swordRight,swordRight1,swordDown,swordDown1;
 	private String direction;
 	
 	public int spriteCounter=0;
 	public int spriteNum=1;
 	boolean attacking=false;
-	boolean itemUse = false;
+	boolean bomb = false;
 	
 	public Rectangle solidArea;
 	public boolean collisionOn = false;
@@ -141,13 +140,4 @@ public class Entity {
 	public void setDirection(String direction) {
 		this.direction = direction;
 	}
-	public BufferedImage getItemUp(){return itemUp;}
-	public BufferedImage getItemDown(){return itemDown;}
-	public BufferedImage getItemLeft(){return itemLeft;}
-	public BufferedImage getItemRight(){return itemRight;}
-	public void setItemUp(BufferedImage img) {this.itemUp = img;}
-	public void setItemDown(BufferedImage img) {this.itemDown = img;}
-	public void setItemLeft(BufferedImage img) {this.itemLeft = img;}
-	public void setItemRight(BufferedImage img) {this.itemRight = img;}
-	
 }
