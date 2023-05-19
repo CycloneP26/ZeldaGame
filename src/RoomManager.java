@@ -36,6 +36,32 @@ public class RoomManager {
 		this.gp = gp;
 	}
 	
+	public RoomManager(GamePanel gp, int r, int c, String[][] maps)
+	{
+		for(int i=0; i<r; i++)
+		{
+			ArrayList<Room> temp = new ArrayList<Room>();
+			for(int j = 0; j<c; j++)
+			{
+				if(maps[r][c].equals("X"))
+				{
+					temp.add(null);
+				}
+				else
+				{
+					temp.add(new Room(gp, maps[r][c]));
+				}
+				
+			}
+			rooms.add(temp);
+		}
+		
+		currentRoomRow = 1;
+		currentRoomColumn = 1;
+		
+		this.gp = gp;
+	}
+	
 	public ArrayList<ArrayList<Room>> getRoomArray()
 	{
 		return rooms;
