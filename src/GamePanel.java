@@ -32,7 +32,7 @@ public class GamePanel extends JPanel implements Runnable
 		
 		rooms = new RoomManager(this, 3, 3);
 		
-		player=new Player(this,keyH);
+		player=new Player(this, keyH, rooms);
 		
 		cChecker = new CollisionChecker(this, rooms, rooms.getRoomRow(), rooms.getRoomColumn());
 		
