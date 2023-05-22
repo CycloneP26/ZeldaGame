@@ -8,6 +8,7 @@ public class Room {
 	private GamePanel gp;
 	private Tile[] tile;
 	private int[][] tileLayout;
+	private String str;
 	
 	public Room(GamePanel gp)
 	{
@@ -29,6 +30,7 @@ public class Room {
 	public Room(GamePanel gp, String str)
 	{
 		this.gp = gp;
+		this.str = str;
 		
 		tile = new Tile[10];
 		tileLayout = new int[12][16];
@@ -82,6 +84,8 @@ public class Room {
 		
 	}
 	
+	
+	
 	public Tile[] getTile()
 	{
 		return tile;
@@ -96,5 +100,11 @@ public class Room {
 				g2.drawImage(tile[tileLayout[i][j]].getImage(), j*48, i*48, gp.tileSize, gp.tileSize, null);
 			}
 		}
+	}
+	public String getStr() {
+		return str;
+	}
+	public void setStr(String str) {
+		this.str = str;
 	}
 }

@@ -113,6 +113,29 @@ public class RoomManager {
 		
 	}
 	
+	public Room getSwitchedRoom(Room rOne, Room rTwo, int num, String direction)
+	{
+		int subNum = 0;
+		String str = "";
+		switch(direction)
+		{
+		case "up":
+			subNum = 16*num;
+			str += rTwo.getStr().substring(192-subNum-1);
+			str += rOne.getStr().substring(0, 192-subNum);
+		case "down":
+			subNum = 16*num;
+			str += rOne.getStr().substring(subNum);
+			str += rTwo.getStr().substring(0, subNum);
+			
+		}
+		
+		
+		
+		Room temp = new Room(gp);
+		return temp;
+	}
+	
 	public int getRoomRow()
 	{
 		
