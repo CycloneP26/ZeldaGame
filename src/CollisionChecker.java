@@ -6,7 +6,7 @@ public class CollisionChecker
 	private RoomManager rooms;
 	private int curRow;
 	private int curCol;
-	
+	//To check the position 
 	public CollisionChecker(GamePanel gp, RoomManager rooms, int curRow, int curCol)
 	{
 		
@@ -16,7 +16,7 @@ public class CollisionChecker
 		this.curCol = curCol;
 		System.out.println(curRow);
 		System.out.println(curCol);
-		
+		//Make sure to get rid of this later 
 	}
 	
 	public void setCurRow(int n)
@@ -34,24 +34,32 @@ public class CollisionChecker
 	{
 		
 		int entityLeftX = entity.getX() + entity.solidArea.x;
+		//find where the left most side is 
 		int entityRightX = entity.getX() + entity.solidArea.x + entity.solidArea.width;
+		//finds where the right most side is 
 		int entityTopY = entity.getY() + entity.solidArea.y;
+		//finds top 
 		int entityBottomY = entity.getY() + entity.solidArea.y + entity.solidArea.height;
+		//finds bottom 
 		
 		int entityLeftCol = entityLeftX / gp.tileSize;
+		//finds the leftmost column of the character
 		int entityRightCol = entityRightX / gp.tileSize;
+		//finds the right most column
 		int entityTopRow = entityTopY / gp.tileSize;
+		//finds the top row 
 		int entityBottomRow = entityBottomY / gp.tileSize;
+		//finds the bottom row
 		
 		int tileNum1;
 		int tileNum2;
 	
 		
 		Room curRoom =rooms.getRoomArray().get(curRow).get(curCol);
-		
+		//which room you are in 
 		switch(entity.getDirection())
 		{
-		
+		//checks the collision for the correct direction 
 		case "up":
 			if(entityRightCol < 16)
 			{
