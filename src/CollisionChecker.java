@@ -14,8 +14,7 @@ public class CollisionChecker
 		this.rooms = rooms;
 		this.curRow = curRow;
 		this.curCol = curCol;
-		System.out.println(curRow);
-		System.out.println(curCol);
+		
 		
 	}
 	
@@ -75,7 +74,6 @@ public class CollisionChecker
 			if(entityBottomRow < 12 && entityRightCol < 16)
 			{
 				
-				System.out.println(entityBottomRow);
 				tileNum1 = curRoom.getTileLayout()[entityBottomRow][entityLeftCol];
 				tileNum2 = curRoom.getTileLayout()[entityBottomRow][entityRightCol];
 				if(curRoom.getTile()[tileNum1].isCollision() == true || curRoom.getTile()[tileNum2].isCollision() == true)

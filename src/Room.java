@@ -25,6 +25,8 @@ public class Room {
 				tileLayout[i][j] = (int)(Math.random()*3);
 			}
 		}
+
+		str = mapToStr(tileLayout);
 		
 	}
 	public Room(GamePanel gp, String str)
@@ -55,6 +57,19 @@ public class Room {
 		
 		
 		return retArray;
+	}
+
+	public String mapToStr(int[][] map)
+	{
+		String retStr = "";
+		for(int i = 0; i<map.length; i++)
+		{
+			for(int j = 0; j<map[0].length; j++)
+			{
+				retStr += map[i][j];
+			}
+		}
+		return retStr;
 	}
 	
 	public void getTileImage()

@@ -1,4 +1,4 @@
-import java.awt.Color;
+
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
-import javax.swing.Timer;
 
 import object.Bomb;
 import object.ObjectMain;
