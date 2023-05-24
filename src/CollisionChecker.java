@@ -6,7 +6,7 @@ public class CollisionChecker
 	private RoomManager rooms;
 	private int curRow;
 	private int curCol;
-	//To check the position 
+	
 	public CollisionChecker(GamePanel gp, RoomManager rooms, int curRow, int curCol)
 	{
 		
@@ -16,7 +16,7 @@ public class CollisionChecker
 		this.curCol = curCol;
 		System.out.println(curRow);
 		System.out.println(curCol);
-		//Make sure to get rid of this later 
+		
 	}
 	
 	public void setCurRow(int n)
@@ -33,41 +33,34 @@ public class CollisionChecker
 	public void checkTile(Entity entity)
 	{
 		
-		int entityLeftX = entity.getX() + entity.solidArea.x;
-		//find where the left most side is 
-		int entityRightX = entity.getX() + entity.solidArea.x + entity.solidArea.width;
-		//finds where the right most side is 
-		int entityTopY = entity.getY() + entity.solidArea.y;
-		//finds top 
-		int entityBottomY = entity.getY() + entity.solidArea.y + entity.solidArea.height;
-		//finds bottom 
+		int entityLeftX = entity.x + entity.solidArea.x;
+		int entityRightX = entity.x + entity.solidArea.x + entity.solidArea.width;
+		int entityTopY = entity.y + entity.solidArea.y;
+		int entityBottomY = entity.y + entity.solidArea.y + entity.solidArea.height;
 		
 		int entityLeftCol = entityLeftX / gp.tileSize;
-		//finds the leftmost column of the character
 		int entityRightCol = entityRightX / gp.tileSize;
-		//finds the right most column
 		int entityTopRow = entityTopY / gp.tileSize;
-		//finds the top row 
 		int entityBottomRow = entityBottomY / gp.tileSize;
-		//finds the bottom row
 		
 		int tileNum1;
 		int tileNum2;
 	
 		
 		Room curRoom =rooms.getRoomArray().get(curRow).get(curCol);
-		//which room you are in 
-		switch(entity.getDirection())
+		
+		switch(entity.direction)
 		{
-		//checks the collision for the correct direction 
+		
 		case "up":
-			if(entityRightCol < 16)
+			entityTopRow = (entityTopY - entity.speed) / gp.tileSize;
+			
+			if(entityBottomRow < 12 && entityRightCol < 16 && entityTopRow > -1 && entityLeftCol > -1)
 			{
-				
-				entityTopRow = (entityTopY - entity.getSpeed()) / gp.tileSize;
+				System.out.println(entityTopRow);
 				tileNum1 = curRoom.getTileLayout()[entityTopRow][entityLeftCol];
 				tileNum2 = curRoom.getTileLayout()[entityTopRow][entityRightCol];
-				if(curRoom.getTile()[tileNum1].isCollision() == true || curRoom.getTile()[tileNum2].isCollision() == true)
+				if(curRoom.tile[tileNum1].collision == true || curRoom.tile[tileNum2].collision == true)
 				{
 					
 					entity.collisionOn = true;
@@ -79,14 +72,14 @@ public class CollisionChecker
 			
 			break;
 		case "down":
-			entityBottomRow = (entityBottomY + entity.getSpeed()) / gp.tileSize;
-			if(entityBottomRow < 12 && entityRightCol < 16)
+			entityBottomRow = (entityBottomY + entity.speed) / gp.tileSize;
+			
+			if(entityBottomRow < 12 && entityRightCol < 16 && entityTopRow > -1 && entityLeftCol > -1)
 			{
-				
 				System.out.println(entityBottomRow);
 				tileNum1 = curRoom.getTileLayout()[entityBottomRow][entityLeftCol];
 				tileNum2 = curRoom.getTileLayout()[entityBottomRow][entityRightCol];
-				if(curRoom.getTile()[tileNum1].isCollision() == true || curRoom.getTile()[tileNum2].isCollision() == true)
+				if(curRoom.tile[tileNum1].collision == true || curRoom.tile[tileNum2].collision == true)
 				{
 					
 					entity.collisionOn = true;
@@ -98,13 +91,13 @@ public class CollisionChecker
 			break;
 			
 		case "left":
-			if(entityBottomRow < 12)
+			entityLeftCol = (entityLeftX - entity.speed) / gp.tileSize;
+			
+			if(entityBottomRow < 12 && entityRightCol < 16 && entityTopRow > -1 && entityLeftCol > -1)
 			{
-				
-				entityLeftCol = (entityLeftX - entity.getSpeed()) / gp.tileSize;
 				tileNum1 = curRoom.getTileLayout()[entityTopRow][entityLeftCol];
 				tileNum2 = curRoom.getTileLayout()[entityBottomRow][entityLeftCol];
-				if(curRoom.getTile()[tileNum1].isCollision() == true || curRoom.getTile()[tileNum2].isCollision() == true)
+				if(curRoom.tile[tileNum1].collision == true || curRoom.tile[tileNum2].collision == true)
 				{
 					
 					entity.collisionOn = true;
@@ -117,13 +110,13 @@ public class CollisionChecker
 			break;
 			
 		case "right":
-			entityRightCol = (entityRightX + entity.getSpeed()) / gp.tileSize;
-			if(entityRightCol < 16 && entityBottomRow < 12)
+			entityRightCol = (entityRightX + entity.speed) / gp.tileSize;
+			
+			if(entityBottomRow < 12 && entityRightCol < 16 && entityTopRow > -1 && entityLeftCol > -1)
 			{
-				
 				tileNum1 = curRoom.getTileLayout()[entityTopRow][entityRightCol];
 				tileNum2 = curRoom.getTileLayout()[entityBottomRow][entityRightCol];
-				if(curRoom.getTile()[tileNum1].isCollision() || curRoom.getTile()[tileNum2].isCollision() == true)
+				if(curRoom.tile[tileNum1].collision == true || curRoom.tile[tileNum2].collision == true)
 				{
 					
 					entity.collisionOn = true;

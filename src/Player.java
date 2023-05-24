@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.security.DrbgParameters;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
@@ -15,17 +16,18 @@ import object.ObjectMain;
 
 public class Player extends Entity implements ActionListener 
 {
-	GamePanel gp;
-	KeyHandler keyH;
-	private ArrayList<ObjectMain> bombs; //bombs
+	private GamePanel gp;
+	private KeyHandler keyH;
+	private RoomManager rooms;
+	private BufferedImage up1, up2, down1, down2, left1, left2, right1, right2;
+	private BufferedImage swordUp,swordUp1,swordLeft,swordLeft1,swordRight,swordRight1,swordDown,swordDown1;
 	
 	
-	public Player(GamePanel gp, KeyHandler keyH)
+	public Player(GamePanel gp, KeyHandler keyH, RoomManager rooms)
 	{
-		bombs = new ArrayList<ObjectMain>();
-		bombs.add(new Bomb());
 		this.gp=gp;
 		this.keyH=keyH;
+		this.rooms = rooms;
 		
 		solidArea = new Rectangle(8, 16, 32, 28);
 		
@@ -43,52 +45,42 @@ public class Player extends Entity implements ActionListener
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		try 
-		{
-			getBItemImage();
-		}
-		catch(IOException e2)
-		{
-			e2.printStackTrace();
-		}
 	}
 	public void setDefaultValue()
 	{
-		setX(100);
-		setY(100);
-		setSpeed(4);
-		setDirection("down");
+		x=100;
+		y=100;
+		speed=4;
+		direction="down";
 	}
 	
 	public void getPlayerImage() throws IOException
 	{
 		
-		setUp1(setup("/player/linkMovingBack",gp.tileSize,gp.tileSize));
-		setUp2(setup("/player/linkMovingBack1",gp.tileSize,gp.tileSize));
-		setDown1(setup("/player/linkMovingDown",gp.tileSize,gp.tileSize));
-		setDown2(setup("/player/linkMovingDown1",gp.tileSize,gp.tileSize));
-		setLeft1(setup("/player/linkMovingLeft",gp.tileSize,gp.tileSize));
-		setLeft2(setup("/player/linkMovingLeft1",gp.tileSize,gp.tileSize));
-		setRight1(setup("/player/linkMovingRight",gp.tileSize,gp.tileSize));
-		setRight2(setup("/player/linkMovingRight1",gp.tileSize,gp.tileSize));
+		up1=setup("/player/linkMovingBack",gp.tileSize,gp.tileSize);
+		up2=setup("/player/linkMovingBack1",gp.tileSize,gp.tileSize);
+		down1=setup("/player/linkMovingDown",gp.tileSize,gp.tileSize);
+		down2=setup("/player/linkMovingDown1",gp.tileSize,gp.tileSize);
+		left1=setup("/player/linkMovingLeft",gp.tileSize,gp.tileSize);
+		left2=setup("/player/linkMovingLeft1",gp.tileSize,gp.tileSize);
+		right1=setup("/player/linkMovingRight",gp.tileSize,gp.tileSize);
+		right2=setup("/player/linkMovingRight1",gp.tileSize,gp.tileSize);
 	}
 	public void getPlayerAttackImage() throws IOException
 	{
-			setSwordUp(setup("/player/linkSwordUp1",gp.tileSize,gp.tileSize*2));
-			setSwordLeft(setup("/player/linkSwordLeft1",gp.tileSize*2,gp.tileSize));
-			setSwordRight(setup("/player/linkSwordRight1",gp.tileSize*2,gp.tileSize));
-			setSwordDown(setup("/player/linkSwordDown1",gp.tileSize,gp.tileSize*2));
-			setSwordUp1(setup("/player/linkSwordUp",gp.tileSize,gp.tileSize*2));
-			setSwordLeft1(setup("/player/linkSwordLeft",gp.tileSize*2,gp.tileSize));
-			setSwordRight1(setup("/player/linkSwordRight",gp.tileSize*2,gp.tileSize));
-			setSwordDown1(setup("/player/linkSwordDown",gp.tileSize,gp.tileSize*2));
+			swordUp=setup("/player/linkSwordUp1",gp.tileSize,gp.tileSize*2);
+			swordLeft=setup("/player/linkSwordLeft1",gp.tileSize*2,gp.tileSize);
+			swordRight=setup("/player/linkSwordRight1",gp.tileSize*2,gp.tileSize);
+			swordDown=setup("/player/linkSwordDown1",gp.tileSize,gp.tileSize*2);
+			swordUp1=setup("/player/linkSwordUp",gp.tileSize,gp.tileSize*2);
+			swordLeft1=setup("/player/linkSwordLeft",gp.tileSize*2,gp.tileSize);
+			swordRight1=setup("/player/linkSwordRight",gp.tileSize*2,gp.tileSize);
+			swordDown1=setup("/player/linkSwordDown",gp.tileSize,gp.tileSize*2);
 	}
 	public void getBItemImage() throws IOException
 	{
-		setItemLeft (setup("/player/useItemLeft", gp.tileSize, gp.tileSize));
-		setItemUp  (setup("/player/useItemUp",gp.tileSize,gp.tileSize));
-		setItemRight  (setup("/player/useItemRight",gp.tileSize,gp.tileSize));
-		setItemDown  (setup("/player/useItemDown",gp.tileSize,gp.tileSize));
+		//if(something about which item is being used)
+		
 	}
 	public void attacking()
 	{
@@ -105,25 +97,7 @@ public class Player extends Entity implements ActionListener
 		}
 	
 	}
-	public void item()
-	{
-		//Makes sure useItem animation turns off
-		spriteCounter++;
-		if(spriteCounter<=5)
-		{
-			spriteNum=1;
-		}
-		if(spriteCounter>5&&spriteCounter<=25)
-		{
-			spriteNum=2;
-		}
-		if(spriteCounter>45)
-		{
-			spriteNum=1;
-			spriteCounter=0;
-			itemUse =false;
-		}
-	}
+	
 	public void update()
 	{
 		//movement and attacking
@@ -131,84 +105,119 @@ public class Player extends Entity implements ActionListener
 		{
 			attacking();
 		}
-		else if (itemUse == true)
+		else if(keyH.upPressed==true||keyH.downPressed==true
+				||keyH.leftPressed==true
+				||keyH.rightPressed==true
+				||keyH.swordPressed==true
+				||keyH.bItem == true)//For now, bItem is only bomb, we need to finish UI to implement multiple items
 		{
-			item();
-		}
-		else if(keyH.isUpPressed()==true||keyH.isDownPressed()==true
-				||keyH.isLeftPressed()==true
-				||keyH.isRightPressed()==true
-				||keyH.isSwordPressed()==true
-				||keyH.isbItem() == true)//For now, bItem is only bomb, we need to finish UI to implement multiple items
-		{
-			if(keyH.isSwordPressed()==true)
+			if(keyH.swordPressed==true)
 			{
-				setSpeed(0);
+				speed=0;
 				attacking=true;
 			}
-			if(keyH.isbItem() == true)
+			if(keyH.upPressed==true)
 			{
-				itemUse = true;
+				speed=4;
+				direction="up";
 			}
-			if(keyH.isUpPressed()==true)
+			else if(keyH.downPressed==true)
 			{
-				if (keyH.isbItem() == true)
-				{
-					itemUse = true;
-				}
-				setSpeed(4);
-				setDirection("up");
+				speed=4;
+				direction="down";
 			}
-			else if(keyH.isDownPressed()==true)
+			else if(keyH.leftPressed==true)
 			{
-				if (keyH.isbItem() == true)
-				{
-					itemUse = true;
-				}
-				setSpeed(4);
-				setDirection("down");
+				speed=4;
+				direction="left";
 			}
-			else if(keyH.isLeftPressed()==true)
+			else if(keyH.rightPressed==true)
 			{
-				if (keyH.isbItem() == true)
-				{
-					itemUse = true;
-				}
-				setSpeed(4);
-				setDirection("left");
+				speed=4;
+				direction="right";
 			}
-			else if(keyH.isRightPressed()==true)
+			else if (keyH.bItem == true)
 			{
-				if (keyH.isbItem() == true)
-				{
-					itemUse = true;
-				}
-				setSpeed(4);
-				setDirection("right");
+				bomb = true;
 			}
+			
 			collisionOn = false;
 			gp.getCollision().checkTile(this);
 			
 			if(collisionOn == false)
 			{
-				
-				switch(getDirection())
-				{
-				
-				case "up":
-					setY(getY()-getSpeed());
-					break;
-				case "down":
-					setY(getY()+getSpeed());
-					break;
-				case "left":
-					setX(getX()-getSpeed());
-					break;
-				case "right":
-					setX(getX()+getSpeed());
-					break;
-				
-				}
+					
+					switch(direction)
+					{
+					
+					case "up":
+						
+						if(!rooms.isRoomAvailable(rooms.getRoomRow() - 1, rooms.getRoomColumn()))
+						{
+							if(y > 0)
+							{
+								y-=speed;
+							}
+						}
+						else
+						{
+							
+							y-=speed;
+							
+						}
+						break;
+					case "down":
+						
+						if(!rooms.isRoomAvailable(rooms.getRoomRow() + 1, rooms.getRoomColumn()))
+						{
+							if(y < gp.screenHeight - 50)
+							{
+								y+=speed;
+							}
+						}
+						else
+						{
+							
+							y+=speed;
+							
+						}
+						
+						break;
+					case "left":
+						
+						if(!rooms.isRoomAvailable(rooms.getRoomRow(), rooms.getRoomColumn() - 1))
+						{
+							if(x > 0)
+							{
+								x-=speed;
+							}
+						}
+						else
+						{
+							
+							x-=speed;
+							
+						}
+						
+						break;
+					case "right":
+						if(!rooms.isRoomAvailable(rooms.getRoomRow(), rooms.getRoomColumn() + 1))
+						{
+							if(x < gp.screenWidth - 45)
+							{
+								x+=speed;
+							}
+						}
+						else
+						{
+							
+							x+=speed;
+							
+						}
+						
+						break;
+					
+					}
 				
 			}
 			
@@ -234,100 +243,69 @@ public class Player extends Entity implements ActionListener
 	{
 		//animation
 		BufferedImage image=null;
-		switch(getDirection()) {
+		switch(direction) {
 		case "up":
 			if(attacking==false)
 			{
-				if(itemUse)
-				{
-					image = getItemUp();
-	
-				}
-				else
-				{
-					if(spriteNum==1){image=getUp1();}
-					if(spriteNum==2){image=getUp2();}
-				}	
+				if(spriteNum==1){image=up1;}
+				if(spriteNum==2){image=up2;}
 			}
 			if(attacking==true)
 			{
-				if(spriteNum==1) {image=getSwordUp();}
-				if(spriteNum==2) {image=getSwordUp1();}
+				if(spriteNum==1) {image=swordUp;}
+				if(spriteNum==2) {image=swordUp1;}
 			}
 			break;
 		case "down":
 			if(attacking==false)
 			{
-				if(itemUse)
-				{
-					image = getItemDown();
-	
-				}
-				else
-				{
-				if(spriteNum==1){image=getDown1();}
-				if(spriteNum==2){image=getDown2();}
-				}
+				if(spriteNum==1){image=down1;}
+				if(spriteNum==2){image=down2;}
 			}
 			if(attacking==true)
 			{
-				if(spriteNum==1) {image=getSwordDown();}
-				if(spriteNum==2) {image=getSwordDown1();}
+				if(spriteNum==1) {image=swordDown;}
+				if(spriteNum==2) {image=swordDown1;}
 			}
 			break;
 		case "left":
 			if(attacking==false)
 			{
-				if(itemUse)
-				{
-					image = getItemLeft();
-	
-				}
-				else 
-				{
-				if(spriteNum==1){image=getLeft1();}
-				if(spriteNum==2){image=getLeft2();}
-				}
+				if(spriteNum==1){image=left1;}
+				if(spriteNum==2){image=left2;}
 			}
 			if(attacking==true)
 			{
-				if(spriteNum==1) {image=getSwordLeft();}
-				if(spriteNum==2) {image=getSwordLeft1();}
+				if(spriteNum==1) {image=swordLeft;}
+				if(spriteNum==2) {image=swordLeft1;}
 			}
 			break;
 		case "right":
 			if(attacking==false)
 			{
-				if(itemUse)
-				{
-					image = getItemRight();
-				}
-				else
-				{
-				if(spriteNum==1){image=getRight1();}
-				if(spriteNum==2){image=getRight2();}
-				}
+				if(spriteNum==1){image=right1;}
+				if(spriteNum==2){image=right2;}
 			}
 			if(attacking==true)
 			{
-				if(spriteNum==1) {image=getSwordRight();}
-				if(spriteNum==2) {image=getSwordRight1();}
+				if(spriteNum==1) {image=swordRight;}
+				if(spriteNum==2) {image=swordRight1;}
 			}
 			break;
 		}
 		
-		if(getDirection()=="left"&&attacking)
+		if(direction=="left"&&attacking)
 		{
-			g2.drawImage(image,super.getX()-40,super.getY(),null);
+			g2.drawImage(image,x-40,y,null);
 			
 		}
-		else if(getDirection()=="up"&&attacking)
+		else if(direction=="up"&&attacking)
 		{
-			g2.drawImage(image,super.getX(),super.getY()-40,null);
+			g2.drawImage(image,x,y-40,null);
 		}
 		else
 		{
-			g2.drawImage(image,super.getX(),super.getY(),null);
+			g2.drawImage(image,x,y,null);
 		}
 	}
 	public BufferedImage setup(String imagePath,int width,int height)
@@ -350,7 +328,6 @@ public class Player extends Entity implements ActionListener
 		// TODO Auto-generated method stub
 		
 	}
-	
 	
 	
 

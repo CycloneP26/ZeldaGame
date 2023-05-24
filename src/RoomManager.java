@@ -18,40 +18,7 @@ public class RoomManager {
 			ArrayList<Room> temp = new ArrayList<Room>();
 			for(int j = 0; j<c; j++)
 			{
-				if(j==1 && i==1)
-				{
-					temp.add(new Room(gp, "111111100111111110000000000000011000000000000001100000000000000110000000000000010000000000000000000000000000000010000000000000011000000000000001100000000000000110000000000000011111111001111111"));
-				}
-				else
-				{
-					temp.add(new Room(gp));
-				}
-			}
-			rooms.add(temp);
-		}
-		
-		currentRoomRow = 1;
-		currentRoomColumn = 1;
-		
-		this.gp = gp;
-	}
-	
-	public RoomManager(GamePanel gp, int r, int c, String[][] maps)
-	{
-		for(int i=0; i<r; i++)
-		{
-			ArrayList<Room> temp = new ArrayList<Room>();
-			for(int j = 0; j<c; j++)
-			{
-				if(maps[r][c].equals("X"))
-				{
-					temp.add(null);
-				}
-				else
-				{
-					temp.add(new Room(gp, maps[r][c]));
-				}
-				
+				temp.add(new Room(gp));
 			}
 			rooms.add(temp);
 		}
@@ -73,39 +40,39 @@ public class RoomManager {
 		Player player = gp.getPlayer();
 		CollisionChecker cChecker = gp.getCollision();
 		
-		
 		if(player.getY()<0)
 		{
-			player.setY(gp.screenHeight-40);
 			if(isRoomAvailable(currentRoomRow-1, currentRoomColumn))
 			{
+				player.setY(gp.screenHeight-40);
 				currentRoomRow--;
 				cChecker.setCurRow(currentRoomRow);
 			}
+			
 		}
 		else if(player.getX()<0)
 		{
-			player.setX(gp.screenWidth-40);
 			if(isRoomAvailable(currentRoomRow, currentRoomColumn-1))
 			{
+				player.setX(gp.screenWidth-40);
 				currentRoomColumn--;
 				cChecker.setCurCol(currentRoomColumn);
 			}
 		}
 		else if(player.getY() + 40>gp.screenHeight)
 		{
-			player.setY(0);
 			if(isRoomAvailable(currentRoomRow+1, currentRoomColumn))
 			{
+				player.setY(0);
 				currentRoomRow++;
 				cChecker.setCurRow(currentRoomRow);
 			}
 		}
 		else if(player.getX()+40>gp.screenWidth)
 		{
-			player.setX(0);
 			if(isRoomAvailable(currentRoomRow, currentRoomColumn+1))
 			{
+				player.setX(0);
 				currentRoomColumn++;
 				cChecker.setCurCol(currentRoomColumn);
 			}
@@ -137,8 +104,6 @@ public class RoomManager {
 		{
 			return false;
 		}
-		System.out.println(row);
-		System.out.println(rooms.size());
 		if(row>=rooms.size())
 		{
 			return false;
