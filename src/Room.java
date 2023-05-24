@@ -5,9 +5,10 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 public class Room {
 	
-	GamePanel gp;
-	Tile[] tile;
-	int[][] tileLayout = new int[12][16];
+	private GamePanel gp;
+	private Tile[] tile;
+	private int[][] tileLayout;
+	private String str;
 	
 	public Room(GamePanel gp)
 	{
@@ -24,7 +25,55 @@ public class Room {
 				tileLayout[i][j] = (int)(Math.random()*3);
 			}
 		}
+
+		str = mapToStr(tileLayout);
 		
+	}
+	public Room(GamePanel gp, String str)
+	{
+		this.gp = gp;
+		this.str = str;
+		
+		tile = new Tile[10];
+		tileLayout = new int[12][16];
+		getTileImage();
+		
+		tileLayout = strToMap(str);
+		
+	}
+	
+	public int[][] strToMap(String str)
+	{
+		int[][] retArray = new int[12][16];
+		int count = 0;
+		for(int i = 0; i<12; i++)
+		{
+			for(int j = 0; j<16; j++)
+			{
+				if(str.substring(count, count+1) != "\n" || str.substring(count, count+1) != "\r")
+				{
+					retArray[i][j]+=Integer.parseInt(str.substring(count, count+1));
+				}
+				
+				count++;
+			}
+		}
+		
+		
+		return retArray;
+	}
+
+	public String mapToStr(int[][] map)
+	{
+		String retStr = "";
+		for(int i = 0; i<map.length; i++)
+		{
+			for(int j = 0; j<map[0].length; j++)
+			{
+				retStr += map[i][j];
+			}
+		}
+		return retStr;
 	}
 	
 	public void getTileImage()
@@ -54,6 +103,13 @@ public class Room {
 		
 	}
 	
+	
+	
+	public Tile[] getTile()
+	{
+		return tile;
+	}
+	
 	public void draw(Graphics2D g2)
 	{
 		for(int i = 0; i<tileLayout.length; i++)
@@ -63,5 +119,11 @@ public class Room {
 				g2.drawImage(tile[tileLayout[i][j]].image, j*48, i*48, gp.tileSize, gp.tileSize, null);
 			}
 		}
+	}
+	public String getStr() {
+		return str;
+	}
+	public void setStr(String str) {
+		this.str = str;
 	}
 }

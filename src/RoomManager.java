@@ -1,6 +1,5 @@
 
 import java.util.ArrayList;
-
 public class RoomManager {
 	
 	//A 2D arraylist of rooms
@@ -8,6 +7,7 @@ public class RoomManager {
 	private GamePanel gp;
 	private int currentRoomRow;
 	private int currentRoomColumn;
+	private Room currentRoom;
 	
 	
 	
@@ -18,14 +18,48 @@ public class RoomManager {
 			ArrayList<Room> temp = new ArrayList<Room>();
 			for(int j = 0; j<c; j++)
 			{
-				temp.add(new Room(gp));
+				if(j==1 && i==1)
+				{
+					temp.add(new Room(gp, "111111100111111110000000000000011000000000000001100000000000000110000000000000010000000000000000000000000000000010000000000000011000000000000001100000000000000110000000000000011111111001111111"));
+				}
+				else
+				{
+					temp.add(new Room(gp, "111111100111111110000000000000011000000000000001100000000000000110000000000000010000000000000000000000000000000010000000000000011000000000000001100000000000000110000000000000011111111001111111"));
+				}
 			}
 			rooms.add(temp);
 		}
 		
 		currentRoomRow = 1;
 		currentRoomColumn = 1;
+		this.currentRoom = getRoomArray().get(currentRoomRow).get(currentRoomColumn);
+
+		this.gp = gp;
+	}
+	
+	public RoomManager(GamePanel gp, int r, int c, String[][] maps)
+	{
+		for(int i=0; i<r; i++)
+		{
+			ArrayList<Room> temp = new ArrayList<Room>();
+			for(int j = 0; j<c; j++)
+			{
+				if(maps[r][c].equals("X"))
+				{
+					temp.add(null);
+				}
+				else
+				{
+					temp.add(new Room(gp, maps[r][c]));
+				}
+				
+			}
+			rooms.add(temp);
+		}
 		
+		currentRoomRow = 1;
+		currentRoomColumn = 1;
+		this.currentRoom = getRoomArray().get(currentRoomRow).get(currentRoomColumn);
 		this.gp = gp;
 	}
 	
@@ -44,7 +78,12 @@ public class RoomManager {
 		{
 			if(isRoomAvailable(currentRoomRow-1, currentRoomColumn))
 			{
-				player.setY(gp.screenHeight-40);
+				for(int i = 0; i<12; i++)
+				{
+					currentRoom = getSwitchedRoom(getRoomArray().get(currentRoomRow).get(currentRoomColumn), getRoomArray().get(currentRoomRow-1).get(currentRoomColumn), i, "up");  
+					gp.repaint();
+					gp.waitThread(125);
+				}
 				currentRoomRow--;
 				cChecker.setCurRow(currentRoomRow);
 			}
@@ -63,7 +102,12 @@ public class RoomManager {
 		{
 			if(isRoomAvailable(currentRoomRow+1, currentRoomColumn))
 			{
-				player.setY(0);
+				for(int i = 0; i<12; i++)
+				{
+					currentRoom = getSwitchedRoom(getRoomArray().get(currentRoomRow).get(currentRoomColumn), getRoomArray().get(currentRoomRow+1).get(currentRoomColumn), i, "down");  
+					gp.repaint();
+					gp.waitThread(125);
+				}
 				currentRoomRow++;
 				cChecker.setCurRow(currentRoomRow);
 			}
@@ -77,7 +121,43 @@ public class RoomManager {
 				cChecker.setCurCol(currentRoomColumn);
 			}
 		}
+
+		currentRoom = getRoomArray().get(currentRoomRow).get(currentRoomColumn);
 		
+	}
+	
+	public Room getSwitchedRoom(Room rOne, Room rTwo, int num, String direction)
+	{
+		int subNum = 0;
+		String str = "";
+		switch(direction)
+		{
+		case "up":
+			subNum = 16*num;
+			str += rTwo.getStr().substring(192-subNum);
+			str += rOne.getStr().substring(0, 192-subNum);
+			break;
+		case "down":
+			subNum = 16*num;
+			str += rOne.getStr().substring(subNum);
+			str += rTwo.getStr().substring(0, subNum);
+			break;
+		case "left":
+		}
+		
+		
+		Room temp = new Room(gp, str);
+		return temp;
+	}
+
+	public Room getCurrentRoom()
+	{
+		return currentRoom;
+	}
+	
+	public void setCurrentRoom(Room cRoom)
+	{
+		currentRoom = cRoom;
 	}
 	
 	public int getRoomRow()

@@ -3,7 +3,6 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import javax.swing.JPanel;
-import javax.swing.Timer;
 
 public class GamePanel extends JPanel implements Runnable
 {
@@ -14,7 +13,6 @@ public class GamePanel extends JPanel implements Runnable
 	final int maxScreenRow=12;
 	final int screenWidth=tileSize*maxScreenCol;
 	final int screenHeight=tileSize*maxScreenRow;
-	private Timer timer;
 	private int FPS = 60;
 	
 	
@@ -50,6 +48,16 @@ public class GamePanel extends JPanel implements Runnable
 		gameThread=new Thread(this);
 		gameThread.start();
 		
+	}
+	
+	public void waitThread(int s)
+	{
+		try {
+			Thread.sleep(s);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public CollisionChecker getCollision()
@@ -93,6 +101,7 @@ public class GamePanel extends JPanel implements Runnable
 	}
 	
 	
+
 	public void update()
 	{
 		
@@ -115,7 +124,7 @@ public class GamePanel extends JPanel implements Runnable
 		
 		Graphics2D g2=(Graphics2D)g;
 		
-		rooms.getRoomArray().get(rooms.getRoomRow()).get(rooms.getRoomColumn()).draw(g2);
+		rooms.getCurrentRoom().draw(g2);
 		player.draw(g2);
 		g2.dispose();
 		
