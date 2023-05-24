@@ -56,10 +56,10 @@ public class CollisionChecker
 			
 			if(entityBottomRow < 12 && entityRightCol < 16 && entityTopRow > -1 && entityLeftCol > -1)
 			{
-				System.out.println(entityTopRow);
+				
 				tileNum1 = curRoom.getTileLayout()[entityTopRow][entityLeftCol];
 				tileNum2 = curRoom.getTileLayout()[entityTopRow][entityRightCol];
-				if(curRoom.tile[tileNum1].collision == true || curRoom.tile[tileNum2].collision == true)
+				if(curRoom.getTile()[tileNum1].collision == true || curRoom.getTile()[tileNum2].collision == true)
 				{
 					
 					entity.collisionOn = true;
@@ -77,7 +77,7 @@ public class CollisionChecker
 			{
 				tileNum1 = curRoom.getTileLayout()[entityBottomRow][entityLeftCol];
 				tileNum2 = curRoom.getTileLayout()[entityBottomRow][entityRightCol];
-				if(curRoom.tile[tileNum1].collision == true || curRoom.tile[tileNum2].collision == true)
+				if(curRoom.getTile()[tileNum1].collision == true || curRoom.getTile()[tileNum2].collision == true)
 				{
 					
 					entity.collisionOn = true;
@@ -95,7 +95,7 @@ public class CollisionChecker
 			{
 				tileNum1 = curRoom.getTileLayout()[entityTopRow][entityLeftCol];
 				tileNum2 = curRoom.getTileLayout()[entityBottomRow][entityLeftCol];
-				if(curRoom.tile[tileNum1].collision == true || curRoom.tile[tileNum2].collision == true)
+				if(curRoom.getTile()[tileNum1].collision == true || curRoom.getTile()[tileNum2].collision == true)
 				{
 					
 					entity.collisionOn = true;
@@ -114,7 +114,7 @@ public class CollisionChecker
 			{
 				tileNum1 = curRoom.getTileLayout()[entityTopRow][entityRightCol];
 				tileNum2 = curRoom.getTileLayout()[entityBottomRow][entityRightCol];
-				if(curRoom.tile[tileNum1].collision == true || curRoom.tile[tileNum2].collision == true)
+				if(curRoom.getTile()[tileNum1].collision == true || curRoom.getTile()[tileNum2].collision == true)
 				{
 					
 					entity.collisionOn = true;

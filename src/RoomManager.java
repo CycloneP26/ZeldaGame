@@ -78,6 +78,7 @@ public class RoomManager {
 		{
 			if(isRoomAvailable(currentRoomRow-1, currentRoomColumn))
 			{
+				player.setY(gp.screenHeight-50);
 				for(int i = 0; i<12; i++)
 				{
 					currentRoom = getSwitchedRoom(getRoomArray().get(currentRoomRow).get(currentRoomColumn), getRoomArray().get(currentRoomRow-1).get(currentRoomColumn), i, "up");  
@@ -102,6 +103,7 @@ public class RoomManager {
 		{
 			if(isRoomAvailable(currentRoomRow+1, currentRoomColumn))
 			{
+				player.setY(0);
 				for(int i = 0; i<12; i++)
 				{
 					currentRoom = getSwitchedRoom(getRoomArray().get(currentRoomRow).get(currentRoomColumn), getRoomArray().get(currentRoomRow+1).get(currentRoomColumn), i, "down");  
