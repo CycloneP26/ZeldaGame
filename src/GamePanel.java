@@ -50,6 +50,16 @@ public class GamePanel extends JPanel implements Runnable
 		
 	}
 	
+	public void waitThread(int s)
+	{
+		try {
+			Thread.sleep(s);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	public CollisionChecker getCollision()
 	{
 		

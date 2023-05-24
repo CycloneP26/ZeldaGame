@@ -1,6 +1,5 @@
 
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
 public class RoomManager {
 	
 	//A 2D arraylist of rooms
@@ -25,7 +24,7 @@ public class RoomManager {
 				}
 				else
 				{
-					temp.add(new Room(gp));
+					temp.add(new Room(gp, "111111100111111110000000000000011000000000000001100000000000000110000000000000010000000000000000000000000000000010000000000000011000000000000001100000000000000110000000000000011111111001111111"));
 				}
 			}
 			rooms.add(temp);
@@ -84,6 +83,8 @@ public class RoomManager {
 				for(int i = 0; i<12; i++)
 				{
 					currentRoom = getSwitchedRoom(getRoomArray().get(currentRoomRow).get(currentRoomColumn), getRoomArray().get(currentRoomRow-1).get(currentRoomColumn), i, "up");  
+					gp.repaint();
+					gp.waitThread(125);
 				}
 				currentRoomRow--;
 				cChecker.setCurRow(currentRoomRow);
@@ -103,6 +104,12 @@ public class RoomManager {
 			player.setY(0);
 			if(isRoomAvailable(currentRoomRow+1, currentRoomColumn))
 			{
+				for(int i = 0; i<12; i++)
+				{
+					currentRoom = getSwitchedRoom(getRoomArray().get(currentRoomRow).get(currentRoomColumn), getRoomArray().get(currentRoomRow+1).get(currentRoomColumn), i, "down");  
+					gp.repaint();
+					gp.waitThread(125);
+				}
 				currentRoomRow++;
 				cChecker.setCurRow(currentRoomRow);
 			}
@@ -129,12 +136,15 @@ public class RoomManager {
 		{
 		case "up":
 			subNum = 16*num;
-			str += rTwo.getStr().substring(192-subNum-1);
+			str += rTwo.getStr().substring(192-subNum);
 			str += rOne.getStr().substring(0, 192-subNum);
+			break;
 		case "down":
 			subNum = 16*num;
 			str += rOne.getStr().substring(subNum);
 			str += rTwo.getStr().substring(0, subNum);
+			break;
+		case "left":
 		}
 		
 		
@@ -176,8 +186,6 @@ public class RoomManager {
 		{
 			return false;
 		}
-		System.out.println(row);
-		System.out.println(rooms.size());
 		if(row>=rooms.size())
 		{
 			return false;

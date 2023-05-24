@@ -50,7 +50,11 @@ public class Room {
 		{
 			for(int j = 0; j<16; j++)
 			{
-				retArray[i][j]+=Integer.parseInt(str.substring(count, count+1));
+				if(str.substring(count, count+1) != "\n" || str.substring(count, count+1) != "\r")
+				{
+					retArray[i][j]+=Integer.parseInt(str.substring(count, count+1));
+				}
+				
 				count++;
 			}
 		}
