@@ -1,11 +1,9 @@
-
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.security.DrbgParameters;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
@@ -15,18 +13,17 @@ import object.ObjectMain;
 
 public class Player extends Entity implements ActionListener 
 {
-	private GamePanel gp;
-	private KeyHandler keyH;
-	private RoomManager rooms;
-	private BufferedImage up1, up2, down1, down2, left1, left2, right1, right2;
-	private BufferedImage swordUp,swordUp1,swordLeft,swordLeft1,swordRight,swordRight1,swordDown,swordDown1;
+	GamePanel gp;
+	KeyHandler keyH;
+	private ArrayList<ObjectMain> bombs; //bombs
 	
 	
-	public Player(GamePanel gp, KeyHandler keyH, RoomManager rooms)
+	public Player(GamePanel gp, KeyHandler keyH)
 	{
+		bombs = new ArrayList<ObjectMain>();
+		bombs.add(new Bomb());
 		this.gp=gp;
 		this.keyH=keyH;
-		this.rooms = rooms;
 		
 		solidArea = new Rectangle(8, 16, 32, 28);
 		
@@ -145,78 +142,24 @@ public class Player extends Entity implements ActionListener
 			
 			if(collisionOn == false)
 			{
-					
-					switch(direction)
-					{
-					
-					case "up":
-						
-						if(!rooms.isRoomAvailable(rooms.getRoomRow() - 1, rooms.getRoomColumn()))
-						{
-							if(y > 0)
-							{
-								y-=speed;
-							}
-						}
-						else
-						{
-							
-							y-=speed;
-							
-						}
-						break;
-					case "down":
-						
-						if(!rooms.isRoomAvailable(rooms.getRoomRow() + 1, rooms.getRoomColumn()))
-						{
-							if(y < gp.screenHeight - 50)
-							{
-								y+=speed;
-							}
-						}
-						else
-						{
-							
-							y+=speed;
-							
-						}
-						
-						break;
-					case "left":
-						
-						if(!rooms.isRoomAvailable(rooms.getRoomRow(), rooms.getRoomColumn() - 1))
-						{
-							if(x > 0)
-							{
-								x-=speed;
-							}
-						}
-						else
-						{
-							
-							x-=speed;
-							
-						}
-						
-						break;
-					case "right":
-						if(!rooms.isRoomAvailable(rooms.getRoomRow(), rooms.getRoomColumn() + 1))
-						{
-							if(x < gp.screenWidth - 45)
-							{
-								x+=speed;
-							}
-						}
-						else
-						{
-							
-							x+=speed;
-							
-						}
-						
-						break;
-					
-					}
+				
+				switch(direction)
+				{
+				
+				case "up":
+					y-=speed;
+					break;
+				case "down":
+					y+=speed;
+					break;
+				case "left":
+					x-=speed;
+					break;
+				case "right":
+					x+=speed;
+					break;
+				
+				}
 				
 			}
 			
@@ -327,6 +270,7 @@ public class Player extends Entity implements ActionListener
 		// TODO Auto-generated method stub
 		
 	}
+	
 	
 	
 
