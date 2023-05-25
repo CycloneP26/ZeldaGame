@@ -107,13 +107,14 @@ public class RoomManager {
 		{
 			if(isRoomAvailable(currentRoomRow+1, currentRoomColumn))
 			{
-				player.setY(0);
+				
 				for(int i = 0; i<12; i++)
 				{
 					currentRoom = getSwitchedRoom(getRoomArray().get(currentRoomRow).get(currentRoomColumn), getRoomArray().get(currentRoomRow+1).get(currentRoomColumn), i, "down");  
 					gp.repaint();
 					gp.waitThread(125);
 				}
+				player.setY(0);
 				currentRoomRow++;
 				cChecker.setCurRow(currentRoomRow);
 			}
@@ -142,11 +143,13 @@ public class RoomManager {
 			subNum = 16*num;
 			str += rTwo.getStr().substring(192-subNum);
 			str += rOne.getStr().substring(0, 192-subNum);
+			gp.getPlayer().setY((48*num));
 			break;
 		case "down":
 			subNum = 16*num;
 			str += rOne.getStr().substring(subNum);
 			str += rTwo.getStr().substring(0, subNum);
+			gp.getPlayer().setY((48*12)-(48*num));
 			break;
 		case "left":
 		}
