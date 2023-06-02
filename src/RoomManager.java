@@ -98,6 +98,12 @@ public class RoomManager {
 		{
 			if(isRoomAvailable(currentRoomRow, currentRoomColumn-1))
 			{
+				for(int i = 1; i<16; i++)
+				{
+					currentRoom = getSwitchedRoom(getRoomArray().get(currentRoomRow).get(currentRoomColumn-1), getRoomArray().get(currentRoomRow).get(currentRoomColumn), i, "left");  
+					gp.repaint();
+					gp.waitThread(125);
+				}
 				player.setX(gp.screenWidth-40);
 				currentRoomColumn--;
 				cChecker.setCurCol(currentRoomColumn);
@@ -123,6 +129,12 @@ public class RoomManager {
 		{
 			if(isRoomAvailable(currentRoomRow, currentRoomColumn+1))
 			{
+				for(int i = 1; i<16; i++)
+				{
+					currentRoom = getSwitchedRoom(getRoomArray().get(currentRoomRow).get(currentRoomColumn+1), getRoomArray().get(currentRoomRow).get(currentRoomColumn), i, "right");  
+					gp.repaint();
+					gp.waitThread(125);
+				}
 				player.setX(0);
 				currentRoomColumn++;
 				cChecker.setCurCol(currentRoomColumn);
@@ -152,6 +164,40 @@ public class RoomManager {
 			gp.getPlayer().setY((48*12)-(48*num));
 			break;
 		case "left":
+			for(int i = 0; i<192; i++)
+			{
+				if(i%16==0)
+				{
+					str += rOne.getStr().substring(i+16-num, i+16);
+					i+= num;
+					i--;
+				}
+				else
+				{
+					str += rTwo.getStr().substring(i-num, i-num+1);
+				}
+				
+			}
+			gp.getPlayer().setX((48*num));
+			break;
+		case "right":
+			for(int i = 0; i<192; i++)
+			{
+				if(i%16==16-num)
+				{
+					str += rOne.getStr().substring(i-(16-num), i+num-(16-num));
+					i+= num;
+					i--;
+					
+				}
+				else
+				{
+					str += rTwo.getStr().substring(i+num, i+num+1);
+				}
+				
+			}
+			gp.getPlayer().setX((48*16)-(48*num));
+			break;
 		}
 		
 		
