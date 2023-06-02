@@ -14,6 +14,7 @@ public class GamePanel extends JPanel implements Runnable
 	final int screenWidth=tileSize*maxScreenCol;
 	final int screenHeight=tileSize*maxScreenRow;
 	private int FPS = 60;
+    private int hudHeight = 16 * 3; // height of the HUD panel
 	
 	
 	private RoomManager rooms;
@@ -21,6 +22,8 @@ public class GamePanel extends JPanel implements Runnable
 	private Thread gameThread;
 	private Player player;
 	private CollisionChecker cChecker;
+
+    private HUD hudPanel;
 	
 	
 	public GamePanel()
@@ -33,6 +36,10 @@ public class GamePanel extends JPanel implements Runnable
 		player=new Player(this, keyH, rooms);
 		
 		cChecker = new CollisionChecker(this, rooms, rooms.getRoomRow(), rooms.getRoomColumn());
+		
+		int panelWidth = screenWidth;
+        int panelHeight = screenHeight - hudHeight; // Subtract hudHeight to accommodate the game area only
+        this.setPreferredSize(new Dimension(panelWidth, panelHeight));
 		
 		this.setPreferredSize(new Dimension(screenWidth, screenHeight));
 		this.setBackground(Color.white);
@@ -116,6 +123,25 @@ public class GamePanel extends JPanel implements Runnable
 		return player;
 		
 	}
+	public int getTileSize()
+    {
+    	return tileSize;
+    }
+    
+    public int getHudHeight()
+    {
+    	return hudHeight;
+    }
+    
+    public int getScreenHeight()
+    {
+    	return screenHeight;
+    }
+    
+    public int getScreenWidth()
+    {
+    	return screenWidth;
+    }
 	
 	public void paintComponent(Graphics g)
 	{
