@@ -104,8 +104,6 @@ public class RoomManager {
 		{
 			return false;
 		}
-		System.out.println(row);
-		System.out.println(rooms.size());
 		if(row>=rooms.size())
 		{
 			return false;
