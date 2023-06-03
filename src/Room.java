@@ -1,14 +1,12 @@
-
 import java.awt.Graphics2D;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
 public class Room {
 	
-	private GamePanel gp;
-	private Tile[] tile;
-	private int[][] tileLayout;
-	private String str;
+	GamePanel gp;
+	Tile[] tile;
+	int[][] tileLayout = new int[12][16];
 	
 	public Room(GamePanel gp)
 	{
@@ -25,55 +23,7 @@ public class Room {
 				tileLayout[i][j] = (int)(Math.random()*3);
 			}
 		}
-
-		str = mapToStr(tileLayout);
 		
-	}
-	public Room(GamePanel gp, String str)
-	{
-		this.gp = gp;
-		this.str = str;
-		
-		tile = new Tile[10];
-		tileLayout = new int[12][16];
-		getTileImage();
-		
-		tileLayout = strToMap(str);
-		
-	}
-	
-	public int[][] strToMap(String str)
-	{
-		int[][] retArray = new int[12][16];
-		int count = 0;
-		for(int i = 0; i<12; i++)
-		{
-			for(int j = 0; j<16; j++)
-			{
-				if(str.substring(count, count+1) != "\n" || str.substring(count, count+1) != "\r")
-				{
-					retArray[i][j]+=Integer.parseInt(str.substring(count, count+1));
-				}
-				
-				count++;
-			}
-		}
-		
-		
-		return retArray;
-	}
-
-	public String mapToStr(int[][] map)
-	{
-		String retStr = "";
-		for(int i = 0; i<map.length; i++)
-		{
-			for(int j = 0; j<map[0].length; j++)
-			{
-				retStr += map[i][j];
-			}
-		}
-		return retStr;
 	}
 	
 	public void getTileImage()
@@ -89,12 +39,6 @@ public class Room {
 			
 			tile[2] = new Tile();
 			tile[2].image = ImageIO.read(getClass().getResourceAsStream("/tiles/water.png"));
-			
-			tile[3] = new Tile();
-			tile[3].image = ImageIO.read(getClass().getResourceAsStream("/tiles/clearFlatGround.png"));
-
-			tile[4] = new Tile();
-			tile[4].image = ImageIO.read(getClass().getResourceAsStream("/tiles/middleRock.png"));
 		}
 		catch(IOException e)
 		{
@@ -109,15 +53,9 @@ public class Room {
 		
 	}
 	
-	
-	
-	public Tile[] getTile()
-	{
-		return tile;
-	}
-	
 	public void draw(Graphics2D g2)
 	{
+	    
 		for(int i = 0; i<tileLayout.length; i++)
 		{
 			for(int j = 0; j<tileLayout[0].length; j++)
@@ -125,11 +63,5 @@ public class Room {
 				g2.drawImage(tile[tileLayout[i][j]].image, j*48, i*48, gp.tileSize, gp.tileSize, null);
 			}
 		}
-	}
-	public String getStr() {
-		return str;
-	}
-	public void setStr(String str) {
-		this.str = str;
 	}
 }
