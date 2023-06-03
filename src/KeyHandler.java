@@ -3,7 +3,7 @@ import java.awt.event.KeyListener;
 
 public class KeyHandler implements KeyListener
 {
-	public boolean upPressed, downPressed, leftPressed, rightPressed, swordPressed, bItem;
+	private boolean upPressed, downPressed, leftPressed, rightPressed, swordPressed, bItem;
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
@@ -16,27 +16,27 @@ public class KeyHandler implements KeyListener
 		int code=e.getKeyCode();
 		if(code==KeyEvent.VK_W)
 		{
-			upPressed=true;
+			setUpPressed(true);
 		}
 		if(code==KeyEvent.VK_S)
 		{
-			downPressed=true;
+			setDownPressed(true);
 		}
 		if(code==KeyEvent.VK_A)
 		{
-			leftPressed=true;
+			setLeftPressed(true);
 		}
 		if(code==KeyEvent.VK_D)
 		{
-			rightPressed=true;
+			setRightPressed(true);
 		}
 		if(code==KeyEvent.VK_Q)
 		{
-			swordPressed=true;
+			setSwordPressed(true);
 		}
 		if(code == KeyEvent.VK_B)
 		{
-			bItem = true;
+			setbItem(true);
 		}
 		
 	}
@@ -47,28 +47,76 @@ public class KeyHandler implements KeyListener
 		int code=e.getKeyCode();
 		if(code==KeyEvent.VK_W)
 		{
-			upPressed=false;
+			setUpPressed(false);
 		}
 		if(code==KeyEvent.VK_S)
 		{
-			downPressed=false;
+			setDownPressed(false);
 		}
 		if(code==KeyEvent.VK_A)
 		{
-			leftPressed=false;
+			setLeftPressed(false);
 		}
 		if(code==KeyEvent.VK_D)
 		{
-			rightPressed=false;
+			setRightPressed(false);
 		}
 		if(code==KeyEvent.VK_Q)
 		{
-			swordPressed=false;
+			setSwordPressed(false);
 		}
 		if(code == KeyEvent.VK_B)
 		{
-			bItem = false; 
+			setbItem(false); 
 		}
+	}
+
+	public boolean isUpPressed() {
+		return upPressed;
+	}
+
+	public void setUpPressed(boolean upPressed) {
+		this.upPressed = upPressed;
+	}
+
+	public boolean isDownPressed() {
+		return downPressed;
+	}
+
+	public void setDownPressed(boolean downPressed) {
+		this.downPressed = downPressed;
+	}
+
+	public boolean isLeftPressed() {
+		return leftPressed;
+	}
+
+	public void setLeftPressed(boolean leftPressed) {
+		this.leftPressed = leftPressed;
+	}
+
+	public boolean isRightPressed() {
+		return rightPressed;
+	}
+
+	public void setRightPressed(boolean rightPressed) {
+		this.rightPressed = rightPressed;
+	}
+
+	public boolean isSwordPressed() {
+		return swordPressed;
+	}
+
+	public void setSwordPressed(boolean swordPressed) {
+		this.swordPressed = swordPressed;
+	}
+
+	public boolean isbItem() {
+		return bItem;
+	}
+
+	public void setbItem(boolean bItem) {
+		this.bItem = bItem;
 	}
 
 }
