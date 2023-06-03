@@ -17,7 +17,7 @@ public class Main extends JFrame
 		
 		JFrame window = new JFrame();
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.setSize(768, 768);
+        window.setSize(768, 757);
         window.setResizable(false);
         window.setTitle("The Legend of Zelda");
 
