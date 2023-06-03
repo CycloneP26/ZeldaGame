@@ -5,6 +5,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 public class Room {
 	
+	
 	private GamePanel gp;
 	private Tile[] tile;
 	private int[][] tileLayout;
@@ -89,12 +90,33 @@ public class Room {
 			
 			tile[2] = new Tile();
 			tile[2].image = ImageIO.read(getClass().getResourceAsStream("/tiles/water.png"));
+			tile[2].collision = true;
 			
 			tile[3] = new Tile();
 			tile[3].image = ImageIO.read(getClass().getResourceAsStream("/tiles/clearFlatGround.png"));
 
 			tile[4] = new Tile();
 			tile[4].image = ImageIO.read(getClass().getResourceAsStream("/tiles/middleRock.png"));
+			tile[4].collision = true;
+			
+			tile[5] = new Tile();
+			tile[5].image = ImageIO.read(getClass().getResourceAsStream("/tiles/greenWall.png"));
+			tile[5].collision = true;
+			
+			tile[6] = new Tile();
+			tile[6].image = ImageIO.read(getClass().getResourceAsStream("/tiles/greenDiagOne.png"));
+			tile[6].collision = true;
+			
+			tile[7] = new Tile();
+			tile[7].image = ImageIO.read(getClass().getResourceAsStream("/tiles/greenDiagTwo.png"));
+			tile[7].collision = true;
+			
+			tile[8] = new Tile();
+			tile[8].image = ImageIO.read(getClass().getResourceAsStream("/tiles/black.png"));
+			
+			tile[9] = new Tile();
+			tile[9].image = ImageIO.read(getClass().getResourceAsStream("/tiles/cactus.png"));
+			tile[9].collision = true;
 		}
 		catch(IOException e)
 		{
