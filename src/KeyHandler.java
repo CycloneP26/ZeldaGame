@@ -3,7 +3,7 @@ import java.awt.event.KeyListener;
 
 public class KeyHandler implements KeyListener
 {
-	public boolean upPressed, downPressed, leftPressed, rightPressed, swordPressed, bItem;
+	private boolean upPressed, downPressed, leftPressed, rightPressed, swordPressed, bItem;
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
@@ -69,6 +69,53 @@ public class KeyHandler implements KeyListener
 		{
 			bItem = false; 
 		}
+	}
+	public boolean isUpPressed() {
+		return upPressed;
+	}
+
+	public void setUpPressed(boolean upPressed) {
+		this.upPressed = upPressed;
+	}
+
+	public boolean isDownPressed() {
+		return downPressed;
+	}
+
+	public void setDownPressed(boolean downPressed) {
+		this.downPressed = downPressed;
+	}
+
+	public boolean isLeftPressed() {
+		return leftPressed;
+	}
+
+	public void setLeftPressed(boolean leftPressed) {
+		this.leftPressed = leftPressed;
+	}
+
+	public boolean isRightPressed() {
+		return rightPressed;
+	}
+
+	public void setRightPressed(boolean rightPressed) {
+		this.rightPressed = rightPressed;
+	}
+
+	public boolean isSwordPressed() {
+		return swordPressed;
+	}
+
+	public void setSwordPressed(boolean swordPressed) {
+		this.swordPressed = swordPressed;
+	}
+
+	public boolean isbItem() {
+		return bItem;
+	}
+
+	public void setbItem(boolean bItem) {
+		this.bItem = bItem;
 	}
 
 }
