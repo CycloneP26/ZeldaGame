@@ -3,6 +3,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 
 public class GamePanel extends JPanel implements Runnable
 {
@@ -13,17 +14,17 @@ public class GamePanel extends JPanel implements Runnable
 	final int maxScreenRow=12;
 	final int screenWidth=tileSize*maxScreenCol;
 	final int screenHeight=tileSize*maxScreenRow;
+	private Timer timer;
 	private int FPS = 60;
-    private int hudHeight = 16 * 3; // height of the HUD panel
 	
 	
 	private RoomManager rooms;
 	private KeyHandler keyH;
 	private Thread gameThread;
 	private Player player;
+	private Entity mobs[];
 	private CollisionChecker cChecker;
-
-    private HUD hudPanel;
+	private AssetSetter aSetter;
 	
 	
 	public GamePanel()
@@ -33,13 +34,13 @@ public class GamePanel extends JPanel implements Runnable
 		
 		rooms = new RoomManager(this, 3, 3);
 		
-		player=new Player(this, keyH, rooms);
+		mobs=new Entity[30];
+		
+		player=new Player(this,keyH);
+		
+		aSetter=new AssetSetter(this);
 		
 		cChecker = new CollisionChecker(this, rooms, rooms.getRoomRow(), rooms.getRoomColumn());
-		
-		int panelWidth = screenWidth;
-        int panelHeight = screenHeight - hudHeight; // Subtract hudHeight to accommodate the game area only
-        this.setPreferredSize(new Dimension(panelWidth, panelHeight));
 		
 		this.setPreferredSize(new Dimension(screenWidth, screenHeight));
 		this.setBackground(Color.white);
@@ -55,16 +56,6 @@ public class GamePanel extends JPanel implements Runnable
 		gameThread=new Thread(this);
 		gameThread.start();
 		
-	}
-	
-	public void waitThread(int s)
-	{
-		try {
-			Thread.sleep(s);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 	
 	public CollisionChecker getCollision()
@@ -108,13 +99,19 @@ public class GamePanel extends JPanel implements Runnable
 	}
 	
 	
-
 	public void update()
 	{
 		
 		player.update();
 		rooms.update();
 		
+		for(int i=0;i<mobs.length;i++)
+		{
+			if(mobs[i]!=null)
+			{
+				mobs[i].update();
+			}
+		}
 	}
 	
 	public Player getPlayer()
@@ -123,25 +120,6 @@ public class GamePanel extends JPanel implements Runnable
 		return player;
 		
 	}
-	public int getTileSize()
-    {
-    	return tileSize;
-    }
-    
-    public int getHudHeight()
-    {
-    	return hudHeight;
-    }
-    
-    public int getScreenHeight()
-    {
-    	return screenHeight;
-    }
-    
-    public int getScreenWidth()
-    {
-    	return screenWidth;
-    }
 	
 	public void paintComponent(Graphics g)
 	{
@@ -150,9 +128,37 @@ public class GamePanel extends JPanel implements Runnable
 		
 		Graphics2D g2=(Graphics2D)g;
 		
-		rooms.getCurrentRoom().draw(g2);
+		rooms.getRoomArray().get(rooms.getRoomRow()).get(rooms.getRoomColumn()).draw(g2);
 		player.draw(g2);
+		for(int i=0; i<mobs.length;i++)
+		{
+			if(mobs[i]!=null)
+			{
+				//System.out.println(mobs[i]);
+				mobs[i].draw(g2);
+			}
+		}
+		
+		
+	
 		g2.dispose();
+		
+	}
+	public int getTileSize()
+	{
+		return tileSize;
+	}
+
+	public Entity[] getMobs() {
+		return mobs;
+	}
+
+	public void setMobs(Entity mobs[]) {
+		this.mobs = mobs;
+	}
+
+	public void setUpGame() {
+		aSetter.setMonster();
 		
 	}
 }
