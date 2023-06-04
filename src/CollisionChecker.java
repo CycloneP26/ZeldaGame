@@ -75,7 +75,8 @@ public class CollisionChecker
 			entityBottomRow = (entityBottomY + entity.getSpeed()) / gp.tileSize;
 			if(entityBottomRow < 12 && entityRightCol < 16)
 			{
-				
+				System.out.println();
+				System.out.println("hi");
 				tileNum1 = curRoom.getTileLayout()[entityBottomRow][entityLeftCol];
 				tileNum2 = curRoom.getTileLayout()[entityBottomRow][entityRightCol];
 				if(curRoom.getTile()[tileNum1].getCollision() == true || curRoom.getTile()[tileNum2].getCollision() == true)

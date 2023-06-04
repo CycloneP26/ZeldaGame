@@ -58,7 +58,6 @@ public class Entity {
 
 			}
 
-			System.out.println(worldX);
 		}
 		spriteCounter++;
 		if(spriteCounter>12)
@@ -304,16 +303,13 @@ public class Entity {
 		return solidArea;
 	}
 
-
 	public void setSolidArea(Rectangle solidArea) {
 		this.solidArea = solidArea;
 	}
 
-
 	public boolean isCollisionOn() {
 		return collisionOn;
 	}
-
 
 	public void setCollisionOn(boolean collisionOn) {
 		this.collisionOn = collisionOn;

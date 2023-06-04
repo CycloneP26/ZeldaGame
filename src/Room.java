@@ -1,6 +1,7 @@
 
 import java.awt.Graphics2D;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 public class Room {
@@ -10,12 +11,13 @@ public class Room {
 	private Tile[] tile;
 	private int[][] tileLayout;
 	private String str;
+	private ArrayList<Entity> mobs;
 	
 	public Room(GamePanel gp)
 	{
 		this.gp = gp;
 		
-		tile = new Tile[10];
+		tile = new Tile[30];
 		
 		getTileImage();
 		
@@ -28,6 +30,7 @@ public class Room {
 		}
 
 		str = mapToStr(tileLayout);
+		mobs = new ArrayList<Entity>();
 		
 	}
 	public Room(GamePanel gp, String str)
@@ -35,11 +38,12 @@ public class Room {
 		this.gp = gp;
 		this.str = str;
 		
-		tile = new Tile[10];
+		tile = new Tile[30];
 		tileLayout = new int[12][16];
 		getTileImage();
 		
 		tileLayout = strToMap(str);
+		mobs = new ArrayList<Entity>();
 		
 	}
 	
@@ -53,7 +57,10 @@ public class Room {
 			{
 				if(str.substring(count, count+1) != "\n" || str.substring(count, count+1) != "\r")
 				{
-					retArray[i][j]+=Integer.parseInt(str.substring(count, count+1));
+					
+					//retArray[i][j]+=Integer.parseInt(str.substring(count, count+1));
+					retArray[i][j]+= convertToNum(str.substring(count, count+1));
+					
 				}
 				
 				count++;
@@ -117,6 +124,30 @@ public class Room {
 			tile[9] = new Tile();
 			tile[9].image = ImageIO.read(getClass().getResourceAsStream("/tiles/cactus.png"));
 			tile[9].collision = true;
+			
+			tile[10] = new Tile();
+			tile[10].image = ImageIO.read(getClass().getResourceAsStream("/tiles/cactus.png"));
+			tile[10].collision = true;
+			
+			//a
+			tile[11] = new Tile();
+			tile[11].image = ImageIO.read(getClass().getResourceAsStream("/tiles/rockDiagOne.png"));
+			tile[11].collision = true;
+			
+			//b
+			tile[12] = new Tile();
+			tile[12].image = ImageIO.read(getClass().getResourceAsStream("/tiles/rockDiagTwo.png"));
+			tile[12].collision = true;
+			
+			//c
+			tile[13] = new Tile();
+			tile[13].image = ImageIO.read(getClass().getResourceAsStream("/tiles/rockDiagThree.png"));
+			tile[13].collision = true;
+			
+			//d
+			tile[14] = new Tile();
+			tile[14].image = ImageIO.read(getClass().getResourceAsStream("/tiles/rockDiagFour.png"));
+			tile[14].collision = true;
 		}
 		catch(IOException e)
 		{
@@ -131,7 +162,35 @@ public class Room {
 		
 	}
 	
+	public int convertToNum(String s)
+	{
+		char c = s.charAt(0);
+		if(Character.isDigit(c))
+		{
+			return Integer.parseInt(s);
+		}
+		else
+		{
+			char temp = c;
+			int count = 0;
+			while(temp != 'a')
+			{
+				temp--;
+				count++;
+			}
+			return count + 11;
+		}
+	}
 	
+	public ArrayList<Entity> getMobs()
+	{
+		return mobs;
+	}
+	
+	public void addMobs(Entity e)
+	{
+		mobs.add(e);
+	}
 	
 	public Tile[] getTile()
 	{

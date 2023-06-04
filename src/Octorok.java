@@ -13,6 +13,16 @@ public class Octorok extends Entity
 		setSpeed(1);
 		getBruhImage();
 	}
+	
+	public Octorok(GamePanel gp, int x, int y)
+	{
+		super(gp);
+		setX(x);
+		setY(y);
+		setDirection("down");
+		setSpeed(1);
+		getBruhImage();
+	}
 	public String toString()
 	{
 		return "Octorok";
@@ -37,7 +47,6 @@ public class Octorok extends Entity
 			int i= random.nextInt(100)+1;
 			if(i<=25)
 			{
-				System.out.println("bruh");
 				setDirection("up");
 			}
 			if(i>25&&i<=50)

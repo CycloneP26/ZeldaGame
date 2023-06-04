@@ -2,6 +2,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.util.ArrayList;
+
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -25,7 +27,6 @@ public class GamePanel extends JPanel implements Runnable
 	private Player player;
 	private CollisionChecker cChecker;
 	private Entity mobs[];
-	private AssetSetter aSetter;
 
 	
 	
@@ -39,8 +40,7 @@ public class GamePanel extends JPanel implements Runnable
 		player=new Player(this, keyH, rooms);
 		mobs=new Entity[30];
 		cChecker = new CollisionChecker(this, rooms, rooms.getRoomRow(), rooms.getRoomColumn());
-		aSetter=new AssetSetter(this);
-		aSetter.setMonster();
+
 		
 		int panelWidth = screenWidth;
         int panelHeight = screenHeight - hudHeight; // Subtract hudHeight to accommodate the game area only
@@ -120,11 +120,12 @@ public class GamePanel extends JPanel implements Runnable
 		player.update();
 		rooms.update();
 		
-		for(int i=0;i<mobs.length;i++)
+		ArrayList<Entity> mobs = rooms.getCurrentRoom().getMobs();
+		for(int i=0; i<mobs.size();i++)
 		{
-			if(mobs[i]!=null)
+			if(mobs.get(i)!=null)
 			{
-				mobs[i].update();
+				mobs.get(i).update();
 			}
 		}
 	}
@@ -165,11 +166,12 @@ public class GamePanel extends JPanel implements Runnable
 		
 		rooms.getCurrentRoom().draw(g2);
 		player.draw(g2);
-		for(int i=0; i<mobs.length;i++)
+		ArrayList<Entity> mobs = rooms.getCurrentRoom().getMobs();
+		for(int i=0; i<mobs.size();i++)
 		{
-			if(mobs[i]!=null)
+			if(mobs.get(i)!=null)
 			{
-				mobs[i].draw(g2);
+				mobs.get(i).draw(g2);
 			}
 		}
 		g2.dispose();
@@ -184,8 +186,4 @@ public class GamePanel extends JPanel implements Runnable
 		this.mobs = mobs;
 	}
 
-	public void setUpGame() {
-		aSetter.setMonster();
-
-	}
 }
