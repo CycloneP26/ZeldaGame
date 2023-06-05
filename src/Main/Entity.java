@@ -16,6 +16,9 @@ public class Entity {
 	boolean itemUse = false;
 	
 	public Rectangle solidArea;
+	
+	private int solidAreaDefX, solidAreaDefY;
+	
 	public boolean collisionOn = false;
 	
 	public int getX()
@@ -150,5 +153,17 @@ public class Entity {
 	public void setItemDown(BufferedImage img) {this.itemDown = img;}
 	public void setItemLeft(BufferedImage img) {this.itemLeft = img;}
 	public void setItemRight(BufferedImage img) {this.itemRight = img;}
+	public int getSolidAreaDefX() {
+		return solidAreaDefX;
+	}
+	public void setSolidAreaDefX(int solidAreaDefX) {
+		this.solidAreaDefX = solidAreaDefX;
+	}
+	public int getSolidAreaDefY() {
+		return solidAreaDefY;
+	}
+	public void setSolidAreaDefY(int solidAreaDefY) {
+		this.solidAreaDefY = solidAreaDefY;
+	}
 	
 }

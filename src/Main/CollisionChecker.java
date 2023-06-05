@@ -1,5 +1,7 @@
 package Main;
 
+import object.ItemEntity;
+
 public class CollisionChecker 
 {
 
@@ -130,6 +132,25 @@ public class CollisionChecker
 				
 		
 	}
-	
+	public int checkObject(Entity e, boolean p) //Check if player is hitting any object, return index of the object 
+	{
+		int index = 0;
+		ItemEntity temp[] = new ItemEntity[10];
+		temp = gp.getItems();
+		for(int i = 0; i < temp.length; i++)
+		{
+			if(temp[i] != null)
+			{
+				//get the entity's position 
+				e.solidArea.x = e.getX() + e.solidArea.x;
+				e.solidArea.y = e.getY() + e.solidArea.y;
+				
+				//Object position
+				
+				
+			}
+		}
+		return index;
+	}
 	
 }

@@ -24,7 +24,8 @@ public class Player extends Entity implements ActionListener
 		this.gp=gp;
 		this.keyH=keyH;
 		solidArea = new Rectangle(8, 16, 32, 28);
-		
+		setSolidAreaDefX(solidArea.x);//For item interaction (Default values)
+		setSolidAreaDefY(solidArea.y);
 		
 		setDefaultValue();
 		try {

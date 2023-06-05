@@ -3,22 +3,21 @@ package Main;
 import object.ItemEntity;
 import object.Key;
 
-public class AssetSetter 
+public class AssetSetter //To initialize the items on the map 
 {
-	
 	private GamePanel gp;
 	public AssetSetter(GamePanel gp)
 	{
-		this.gp = gp; 
+		this.gp = gp;
 	}
-	public void setObject()
+	public void setObj()
 	{
 		ItemEntity[] temp = new ItemEntity[10];
-		temp = gp.getObj();
+		temp = gp.getItems();
 		temp[0] = new Key();
-		temp[0].setWorldX(gp.getTileSize() * 23);
-		temp[0].setWorldY(gp.getTileSize()  * 7);
-		gp.setObj(temp);
+		temp[0].setWorldX(gp.getTileSize()* 8);
+		temp[0].setWorldY(gp.getTileSize() * 8);
+		gp.setItems(temp);
 		
 	}
 }

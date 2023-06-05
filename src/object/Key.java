@@ -17,5 +17,6 @@ public class Key extends ItemEntity
 		{
 			e.printStackTrace();	
 		}
+		setCollision(true);
 	}
 }

@@ -27,7 +27,7 @@ public class GamePanel extends JPanel implements Runnable
 	private Player player;
 	private AssetSetter assetS = new AssetSetter(this);
 	private CollisionChecker cChecker;
-	
+	private ItemEntity items[] = new ItemEntity[10];
 	
 	public GamePanel()
 	{
@@ -49,7 +49,7 @@ public class GamePanel extends JPanel implements Runnable
 	}
 	public void setUpGame()
 	{
-		assetS.setObject();
+		assetS.setObj();
 	}
 	public void startGameThread()
 	{
@@ -121,9 +121,18 @@ public class GamePanel extends JPanel implements Runnable
 		super.paintComponent(g);
 		
 		Graphics2D g2=(Graphics2D)g;
-		
+		//Paint the rooms
 		rooms.getRoomArray().get(rooms.getRoomRow()).get(rooms.getRoomColumn()).draw(g2);
-		player.draw(g2);
+		
+		for(int i = 0; i < items.length; i++)
+		{
+			if(items[i] != null)
+			{
+				items[i].draw(g2, this);
+			}
+		}
+		
+		player.draw(g2); //Paint the players
 		g2.dispose();
 		
 	}
@@ -140,12 +149,12 @@ public class GamePanel extends JPanel implements Runnable
 		return screenWidth;
 	}
 
-	public ItemEntity[] getObj() {
-		return obj;
+	
+	public ItemEntity[] getItems() 
+	{
+		return items;
 	}
-
-	public void setObj(ItemEntity obj[]) {
-		this.obj = obj;
-		
+	public void setItems(ItemEntity items[]) {
+		this.items = items;
 	}
 }
