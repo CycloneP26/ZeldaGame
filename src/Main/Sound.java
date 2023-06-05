@@ -14,6 +14,9 @@ public class Sound
 	public Sound()
 	{
 		soundURL[0] = getClass().getResource("/sound/01 Title BGM.wav");
+		soundURL[1] = getClass().getResource("/sound/SwordSlash.wav");
+		soundURL[2] = getClass().getResource("/sound/LOZ_Get_Rupee.wav");
+		soundURL[3] = getClass().getResource("/sound/LOZ_Get_Heart.wav");
 	}
 	public void setFile(int i)
 	{

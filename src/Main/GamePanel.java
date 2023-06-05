@@ -35,7 +35,7 @@ public class GamePanel extends JPanel implements Runnable
 	//Entity and objects 
 	private Player player;
 	private Entity mobs[];
-	private ItemEntity items[];
+	private ArrayList<ItemEntity> items;
 	
 	
 	
@@ -48,7 +48,7 @@ public class GamePanel extends JPanel implements Runnable
 		
 		player=new Player(this, keyH, rooms);
 		mobs=new Entity[30];
-		items = new ItemEntity[10];
+		items = new ArrayList<ItemEntity>();
 		cChecker = new CollisionChecker(this, rooms, rooms.getRoomRow(), rooms.getRoomColumn());
 
 		
@@ -217,11 +217,14 @@ public class GamePanel extends JPanel implements Runnable
 	public void setMobs(Entity mobs[]) {
 		this.mobs = mobs;
 	}
-	public ItemEntity[] getItems() {
+	public ArrayList<ItemEntity> getItems() {
 		return items;
 	}
-	public void setItems(ItemEntity items[]) {
+	public void setItems(ArrayList<ItemEntity> items) {
 		this.items = items;
 	}
-	
+	public RoomManager getRooms()
+	{
+		return rooms;
+	}
 }

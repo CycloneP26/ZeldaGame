@@ -1,5 +1,7 @@
 package Main;
 
+import java.util.ArrayList;
+
 import object.ItemEntity;
 
 public class CollisionChecker 
@@ -142,56 +144,84 @@ public class CollisionChecker
 	}
 	public int checkObject(Entity e, boolean p) //Check if player is hitting any object, return index of the object 
 	{
-		int index = 0;
-		ItemEntity temp[] = new ItemEntity[10];
-		temp = gp.getItems();
-		for(int i = 0; i < temp.length; i++)
+		int index = -1;
+		ArrayList<ItemEntity> temp = new ArrayList<ItemEntity>();
+		temp = gp.getRooms().getCurrentRoom().getItems();
+		for(int i = 0; i < temp.size(); i++)
 		{
-			if(temp[i] != null)
+			if(temp.get(i) != null)
 			{
 				//get the entity's position 
 				e.getSolidArea().x = e.getX() + e.getSolidArea().x;
 				e.getSolidArea().y = e.getY() + e.getSolidArea().y;
 				
 				//Object position
-				temp[i].getSolidAreaI().x = temp[i].getWorldX() + temp[i].getSolidAreaI().x;
-				temp[i].getSolidAreaI().y = temp[i].getWorldY() + temp[i].getSolidAreaI().y;
+				temp.get(i).getSolidAreaI().x = temp.get(i).getWorldX() + temp.get(i).getSolidAreaI().x;
+				temp.get(i).getSolidAreaI().y = temp.get(i).getWorldY() + temp.get(i).getSolidAreaI().y;
 				switch(e.getDirection())
 				{
 				case "up":
 					e.getSolidArea().y -= e.getSpeed();
-					if(e.getSolidArea().intersects(temp[i].getSolidAreaI()))//checks if two rectangles are touching
+					if(e.getSolidArea().intersects(temp.get(i).getSolidAreaI()))//checks if two rectangles are touching
 					{
-						
+						if(temp.get(i).isCollision())
+						{
+							e.setCollisionOn(true);
+						}
+						if(p == true)
+						{
+							index = i;
+						}
 					}
 					break;
 				case "down":
 					e.getSolidArea().y += e.getSpeed();
-					if(e.getSolidArea().intersects(temp[i].getSolidAreaI()))//checks if two rectangles are touching
+					if(e.getSolidArea().intersects(temp.get(i).getSolidAreaI()))//checks if two rectangles are touching
 					{
-						
+						if(temp.get(i).isCollision())
+						{
+							e.setCollisionOn(true);
+						}
+						if(p == true)
+						{
+							index = i;
+						}
 					}
 					break;
 				case "left":
 					e.getSolidArea().x -= e.getSpeed();
-					if(e.getSolidArea().intersects(temp[i].getSolidAreaI()))//checks if two rectangles are touching
+					if(e.getSolidArea().intersects(temp.get(i).getSolidAreaI()))//checks if two rectangles are touching
 					{
-						
+						if(temp.get(i).isCollision())
+						{
+							e.setCollisionOn(true);
+						}
+						if(p == true)
+						{
+							index = i;
+						}
 					}
 					break;
 				case "right":
 					e.getSolidArea().x += e.getSpeed();
-					if(e.getSolidArea().intersects(temp[i].getSolidAreaI()))//checks if two rectangles are touching
+					if(e.getSolidArea().intersects(temp.get(i).getSolidAreaI()))//checks if two rectangles are touching
 					{
-						
+						if(temp.get(i).isCollision())
+						{
+							e.setCollisionOn(true);
+						}
+						if(p == true)
+						{
+							index = i;
+						}
 					}
 					break;
 				}
 			
 			e.getSolidArea().x = e.getSolidAreaDefX();
 			e.getSolidArea().y = e.getSolidAreaDefY();
-			temp[i].getSolidAreaI().x = temp[i].getSolidAreaIDefX();
-			temp[i].getSolidAreaI().y = temp[i].getSolidAreaIDefY();
+			temp.get(i).getSolidAreaI().x = temp.get(i).getSolidAreaIDefX();
+			temp.get(i).getSolidAreaI().y = temp.get(i).getSolidAreaIDefY();
 			}
 		}
 		gp.setItems(temp);

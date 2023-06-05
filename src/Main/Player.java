@@ -22,13 +22,15 @@ public class Player extends Entity implements ActionListener
 	private BufferedImage swordUp,swordUp1,swordLeft,swordLeft1,swordRight,swordRight1,swordDown,swordDown1;
 	private final int screenX;
 	private final int screenY;
-
-	
+	private GamePanel gp;
+	private int rupees = 0;
+	private int keys = 0;
 	
 	
 	public Player(GamePanel gp, KeyHandler keyH, RoomManager rooms)
 	{
 		super(gp);
+		this.gp = gp;
 		this.keyH=keyH;
 		this.rooms = rooms;
 		this.screenX = 0;
@@ -200,6 +202,8 @@ public class Player extends Entity implements ActionListener
 			
 			setCollisionOn(false);
 			getGp().getCollision().checkTile(this);
+			int index = getGp().getCollision().checkObject(this, true);
+			pickUpObj(index);
 			
 			if(isCollisionOn() == false)
 			{
@@ -295,7 +299,26 @@ public class Player extends Entity implements ActionListener
 		
 	}
 	
-		
+	public void pickUpObj(int i)
+	{
+		if(i != -1)
+		{
+			String objName = gp.getItems().get(i).getName();
+			switch(objName)
+			{
+			case "key":
+				keys++;
+				gp.getItems().set(i, null);
+				gp.playEffect(3);
+				break;
+			case "rupee":
+				gp.getItems().set(i, null);
+				gp.playEffect(2);
+				rupees++;
+				break;
+			}
+		}
+	}
 	public void draw(Graphics2D g2)
 	{
 		//animation
