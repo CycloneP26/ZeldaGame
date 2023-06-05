@@ -1,25 +1,9 @@
 package object;
 
-import java.io.IOException;
+public class Key {
+	
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
 
-import javax.imageio.ImageIO;
-
-import Main.GamePanel;
-
-public class Key extends ItemEntity
-{	
-	public Key(GamePanel gp)
-	{
-		super(gp);
-		setName("key");
-		try 
-		{
-			setImage(ImageIO.read(getClass().getResourceAsStream("/objects/Key.png"))); 
-		}
-		catch(IOException e)
-		{
-			e.printStackTrace();	
-		}
-		
 	}
 }
