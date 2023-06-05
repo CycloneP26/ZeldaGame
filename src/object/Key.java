@@ -4,10 +4,13 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import Main.GamePanel;
+
 public class Key extends ItemEntity
 {	
-	public Key()
+	public Key(GamePanel gp)
 	{
+		super(gp);
 		setName("key");
 		try 
 		{
@@ -17,6 +20,6 @@ public class Key extends ItemEntity
 		{
 			e.printStackTrace();	
 		}
-		setCollision(true);
+		
 	}
 }

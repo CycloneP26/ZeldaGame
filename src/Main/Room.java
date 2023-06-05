@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
+
+import object.ItemEntity;
 public class Room {
 	
 	
@@ -14,7 +16,7 @@ public class Room {
 	private int[][] tileLayout;
 	private String str;
 	private ArrayList<Entity> mobs;
-	
+	private ArrayList<ItemEntity> items;
 	public Room(GamePanel gp)
 	{
 		this.gp = gp;
@@ -33,6 +35,7 @@ public class Room {
 
 		str = mapToStr(tileLayout);
 		mobs = new ArrayList<Entity>();
+		items = new ArrayList<ItemEntity>();
 		
 	}
 	public Room(GamePanel gp, String str)
@@ -46,7 +49,7 @@ public class Room {
 		
 		tileLayout = strToMap(str);
 		mobs = new ArrayList<Entity>();
-		
+		items = new ArrayList<ItemEntity>();
 	}
 	
 	public int[][] strToMap(String str)
@@ -188,7 +191,10 @@ public class Room {
 	{
 		return mobs;
 	}
-	
+	public void addItem(ItemEntity i)
+	{
+		items.add(i);
+	}
 	public void addMobs(Entity e)
 	{
 		mobs.add(e);
@@ -214,5 +220,11 @@ public class Room {
 	}
 	public void setStr(String str) {
 		this.str = str;
+	}
+	public ArrayList<ItemEntity> getItems() {
+		return items;
+	}
+	public void setItems(ArrayList<ItemEntity> items) {
+		this.items = items;
 	}
 }

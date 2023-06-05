@@ -15,12 +15,9 @@ public class AssetSetter {
 	}
 	public void setObject()
 	{
-		ItemEntity[] temp = new ItemEntity[10];
-		temp = gp.getItems();
-		temp[0] = new Key();
-		temp[0].setWorldX(gp.getTileSize()* 8);
-		temp[0].setWorldY(gp.getTileSize() * 8);
-		gp.setItems(temp);
+		gp.getItems()[0] = new Key(gp);
+		gp.getItems()[0].setWorldX(gp.getTileSize() * 8);
+		gp.getItems()[0].setWorldY(gp.getTileSize() * 8);
 	}
 	public void setMonster()
 	{

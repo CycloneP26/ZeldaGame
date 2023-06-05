@@ -8,6 +8,7 @@ import Main.GamePanel;
 
 public class ItemEntity 
 {
+	private GamePanel gp;
 	private BufferedImage image;
 	private String name;
 	private boolean collision = false;
@@ -16,7 +17,11 @@ public class ItemEntity
 	//Default positions of the items (for collision)
 	private int solidAreaIDefX = 0;
 	private int solidAreaIDefY = 0;
-	public void draw(Graphics2D g2, GamePanel gp)
+	public ItemEntity(GamePanel gp)
+	{
+		this.gp = gp;
+	}
+	public void draw(Graphics2D g2)
 	{
 		g2.drawImage(image, worldX, worldY, gp.getTileSize(), gp.getTileSize(), null);
 	}
