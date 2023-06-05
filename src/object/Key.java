@@ -1,5 +1,9 @@
 package object;
 
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
 public class Key extends ItemEntity
 {	
 	public Key()
