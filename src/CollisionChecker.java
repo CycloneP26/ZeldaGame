@@ -137,62 +137,6 @@ public class CollisionChecker
 	{
 		return 2;
 	}
-	public int checkObject(Entity e, boolean p) //Check if player is hitting any object, return index of the object 
-	{
-		int index = 0;
-		ItemEntity temp[] = new ItemEntity[10];
-		temp = gp.getItems();
-		for(int i = 0; i < temp.length; i++)
-		{
-			if(temp[i] != null)
-			{
-				//get the entity's position 
-				e.solidArea.x = e.getX() + e.solidArea.x;
-				e.solidArea.y = e.getY() + e.solidArea.y;
-				
-				//Object position
-				temp[i].getSolidAreaI().x = temp[i].getWorldX() + temp[i].getSolidAreaI().x;
-				temp[i].getSolidAreaI().y = temp[i].getWorldY() + temp[i].getSolidAreaI().y;
-				switch(e.getDirection())
-				{
-				case "up":
-					e.solidArea.y -= e.getSpeed();
-					if(e.solidArea.intersects(temp[i].getSolidAreaI()))//checks if two rectangles are touching
-					{
-						
-					}
-					break;
-				case "down":
-					e.solidArea.y += e.getSpeed();
-					if(e.solidArea.intersects(temp[i].getSolidAreaI()))//checks if two rectangles are touching
-					{
-						
-					}
-					break;
-				case "left":
-					e.solidArea.x -= e.getSpeed();
-					if(e.solidArea.intersects(temp[i].getSolidAreaI()))//checks if two rectangles are touching
-					{
-						
-					}
-					break;
-				case "right":
-					e.solidArea.x += e.getSpeed();
-					if(e.solidArea.intersects(temp[i].getSolidAreaI()))//checks if two rectangles are touching
-					{
-						
-					}
-					break;
-				}
-			
-			e.solidArea.x = e.getSolidAreaDefX();
-			e.solidArea.y = e.getSolidAreaDefY();
-			temp[i].getSolidAreaI().x = temp[i].getSolidAreaIDefX();
-			temp[i].getSolidAreaI().y = temp[i].getSolidAreaIDefY();
-			}
-		}
-		gp.setItems(temp);
-		return index;
-	}
+	
 	
 }
