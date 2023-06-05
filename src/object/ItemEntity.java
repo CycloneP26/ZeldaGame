@@ -13,7 +13,6 @@ public class ItemEntity
 	private boolean collision = false;
 	private int worldX, worldY;
 	private Rectangle solidAreaI = new Rectangle (0,0,48,48);
-	
 	//Default positions of the items (for collision)
 	private int solidAreaIDefX = 0;
 	private int solidAreaIDefY = 0;
@@ -56,5 +55,17 @@ public class ItemEntity
 	}
 	public void setSolidAreaI(Rectangle solidAreaI) {
 		this.solidAreaI = solidAreaI;
+	}
+	public int getSolidAreaIDefX() {
+		return solidAreaIDefX;
+	}
+	public void setSolidAreaIDefX(int solidAreaIDefX) {
+		this.solidAreaIDefX = solidAreaIDefX;
+	}
+	public int getSolidAreaIDefY() {
+		return solidAreaIDefY;
+	}
+	public void setSolidAreaIDefY(int solidAreaIDefY) {
+		this.solidAreaIDefY = solidAreaIDefY;
 	}
 }

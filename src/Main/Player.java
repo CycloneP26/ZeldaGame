@@ -186,6 +186,9 @@ public class Player extends Entity implements ActionListener
 			collisionOn = false;
 			gp.getCollision().checkTile(this);
 			
+			//Object Collision as well
+
+			int objIndex = gp.getCollision().checkObject(this, true);
 			if(collisionOn == false)
 			{
 				

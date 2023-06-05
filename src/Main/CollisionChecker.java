@@ -12,7 +12,6 @@ public class CollisionChecker
 	
 	public CollisionChecker(GamePanel gp, RoomManager rooms, int curRow, int curCol)
 	{
-		
 		this.gp = gp;
 		this.rooms = rooms;
 		this.curRow = curRow;
@@ -146,10 +145,47 @@ public class CollisionChecker
 				e.solidArea.y = e.getY() + e.solidArea.y;
 				
 				//Object position
-				
-				
+				temp[i].getSolidAreaI().x = temp[i].getWorldX() + temp[i].getSolidAreaI().x;
+				temp[i].getSolidAreaI().y = temp[i].getWorldY() + temp[i].getSolidAreaI().y;
+				switch(e.getDirection())
+				{
+				case "up":
+					e.solidArea.y -= e.getSpeed();
+					if(e.solidArea.intersects(temp[i].getSolidAreaI()))//checks if two rectangles are touching
+					{
+						System.out.println("up");
+					}
+					break;
+				case "down":
+					e.solidArea.y += e.getSpeed();
+					if(e.solidArea.intersects(temp[i].getSolidAreaI()))//checks if two rectangles are touching
+					{
+						
+					}
+					break;
+				case "left":
+					e.solidArea.x -= e.getSpeed();
+					if(e.solidArea.intersects(temp[i].getSolidAreaI()))//checks if two rectangles are touching
+					{
+						
+					}
+					break;
+				case "right":
+					e.solidArea.x += e.getSpeed();
+					if(e.solidArea.intersects(temp[i].getSolidAreaI()))//checks if two rectangles are touching
+					{
+						
+					}
+					break;
+				}
+			
+			e.solidArea.x = e.getSolidAreaDefX();
+			e.solidArea.y = e.getSolidAreaDefY();
+			temp[i].getSolidAreaI().x = temp[i].getSolidAreaIDefX();
+			temp[i].getSolidAreaI().y = temp[i].getSolidAreaIDefY();
 			}
 		}
+		gp.setItems(temp);
 		return index;
 	}
 	
