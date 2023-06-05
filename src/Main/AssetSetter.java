@@ -11,15 +11,15 @@ public class AssetSetter {
 
 	public AssetSetter(GamePanel gp)
 	{
-		this.gp=gp;
+		this.gp = gp;
 	}
 	public void setObject()
 	{
 		ItemEntity[] temp = new ItemEntity[10];
 		temp = gp.getItems();
 		temp[0] = new Key();
-		temp[0].setWorldX(gp.getTileSize()* 0);
-		temp[0].setWorldY(gp.getTileSize() * 0);
+		temp[0].setWorldX(gp.getTileSize()* 8);
+		temp[0].setWorldY(gp.getTileSize() * 8);
 		gp.setItems(temp);
 	}
 	public void setMonster()

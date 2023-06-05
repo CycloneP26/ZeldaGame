@@ -28,12 +28,15 @@ public class GamePanel extends JPanel implements Runnable
 	private AssetSetter assetS = new AssetSetter(this);
 	private RoomManager rooms;
 	private KeyHandler keyH;
-	private Thread gameThread;
-	private Player player;
 	private CollisionChecker cChecker;
+	private Sound sound = new Sound();
+	private Thread gameThread;
+	
+	//Entity and objects 
+	private Player player;
 	private Entity mobs[];
 	private ItemEntity items[] = new ItemEntity[10];
-
+	
 	
 	
 	public GamePanel()
@@ -62,10 +65,12 @@ public class GamePanel extends JPanel implements Runnable
 	public void setUpGame()
 	{
 		assetS.setObject();
+		
+		
 	}
 	public void startGameThread()
 	{
-		
+		playMusic(0);
 		gameThread=new Thread(this);
 		gameThread.start();
 		
@@ -176,6 +181,13 @@ public class GamePanel extends JPanel implements Runnable
 		rooms.getCurrentRoom().draw(g2);
 		player.draw(g2);
 		ArrayList<Entity> mobs = rooms.getCurrentRoom().getMobs();
+		for(int i = 0; i < items.length; i++)
+		{
+			if(items[i] != null)
+			{
+				items[i].draw(g2, null);
+			}
+		}
 		for(int i=0; i<mobs.size();i++)
 		{
 			if(mobs.get(i)!=null)
@@ -183,10 +195,25 @@ public class GamePanel extends JPanel implements Runnable
 				mobs.get(i).draw(g2);
 			}
 		}
+		
 		g2.dispose();
 		
 	}
-
+	public void playMusic(int i)
+	{
+		sound.setFile(i);
+		sound.play();
+		sound.loop();
+	}
+	public void stopMusic()
+	{
+		sound.stop();
+	}
+	public void playEffect(int i)
+	{
+		sound.setFile(i);
+		sound.play();
+	}
 	public Entity[] getMobs() {
 		return mobs;
 	}

@@ -22,9 +22,9 @@ public class Main extends JFrame
         window.setSize(768, 757);
         window.setResizable(false);
         window.setTitle("The Legend of Zelda");
-
+        
         GamePanel gamePanel = new GamePanel();
-
+        
         JPanel mainPanel = new JPanel(new BorderLayout());
 
         JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -69,8 +69,8 @@ public class Main extends JFrame
         window.add(mainPanel);
         window.setLocationRelativeTo(null);
         window.setVisible(true);
-
+        
         gamePanel.startGameThread();
-		
+	
 	}
 }
