@@ -1,5 +1,6 @@
 package Main;
 
+
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
@@ -11,8 +12,6 @@ import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
-import object.Bomb;
-import object.ObjectMain;
 
 public class Player extends Entity implements ActionListener 
 {
@@ -23,23 +22,21 @@ public class Player extends Entity implements ActionListener
 	private BufferedImage swordUp,swordUp1,swordLeft,swordLeft1,swordRight,swordRight1,swordDown,swordDown1;
 	private final int screenX;
 	private final int screenY;
-	private ArrayList<ObjectMain> bombs;
+
 	
 	
 	
 	public Player(GamePanel gp, KeyHandler keyH, RoomManager rooms)
 	{
 		super(gp);
-		bombs = new ArrayList<ObjectMain>();
-		bombs.add(new Bomb());
 		this.keyH=keyH;
 		this.rooms = rooms;
 		this.screenX = 0;
 		this.screenY = 0;
 		
 		setSolidArea(new Rectangle(8, 16, 32, 28));
-		
-		
+		setSolidAreaDefX(getSolidArea().x);
+		setSolidAreaDefY(getSolidArea().y);
 		setDefaultValue();
 		try {
 			getPlayerImage();
@@ -52,6 +49,14 @@ public class Player extends Entity implements ActionListener
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+		try
+		{
+			getBItemImage();
+		}
+		catch(IOException e2)
+		{
+			e2.printStackTrace();
 		}
 	}
 	public void setDefaultValue()
@@ -302,7 +307,6 @@ public class Player extends Entity implements ActionListener
 				if(itemUse)
 				{
 					image = getItemUp();
-
 				}
 				else
 				{

@@ -144,7 +144,7 @@ public class CollisionChecker
 	{
 		int index = 0;
 		ItemEntity temp[] = new ItemEntity[10];
-		//temp = gp.getItems();
+		temp = gp.getItems();
 		for(int i = 0; i < temp.length; i++)
 		{
 			if(temp[i] != null)
@@ -188,13 +188,13 @@ public class CollisionChecker
 					break;
 				}
 			
-			//e.getSolidArea().x = e.getSolidAreaIDefX();
-			//e.getSolidArea().y = e.getSolidAreaIDefY();
+			e.getSolidArea().x = e.getSolidAreaDefX();
+			e.getSolidArea().y = e.getSolidAreaDefY();
 			temp[i].getSolidAreaI().x = temp[i].getSolidAreaIDefX();
 			temp[i].getSolidAreaI().y = temp[i].getSolidAreaIDefY();
 			}
 		}
-		//gp.setItems(temp);
+		gp.setItems(temp);
 		return index;
 	}
 	

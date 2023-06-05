@@ -1,4 +1,5 @@
 package Main;
+
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
@@ -14,9 +15,12 @@ public class Entity {
 	swordDown,swordDown1, itemUp, itemDown, itemRight, itemLeft;
 	private BufferedImage OctorokUp,OctorokUp1,OctorokDown,OctorokDown1,OctorokLeft,OctorokLeft1,OctorokRight,OctorokRight1;
 	private String direction;
+
+	private int solidAreaDefX, solidAreaDefY;
 	
 	public int spriteCounter=0;
 	public int spriteNum=1;
+	
 	boolean attacking=false;
 	boolean bomb = false;
 	boolean itemUse = false;
@@ -341,5 +345,17 @@ public class Entity {
 	}
 	public void setActionLockCounter(int actionLockCounter) {
 		this.actionLockCounter = actionLockCounter;
+	}
+	public int getSolidAreaDefY() {
+		return solidAreaDefY;
+	}
+	public void setSolidAreaDefY(int solidAreaDefY) {
+		this.solidAreaDefY = solidAreaDefY;
+	}
+	public int getSolidAreaDefX() {
+		return solidAreaDefX;
+	}
+	public void setSolidAreaDefX(int solidAreaDefX) {
+		this.solidAreaDefX = solidAreaDefX;
 	}
 }

@@ -1,4 +1,5 @@
 package Main;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -24,13 +25,14 @@ public class GamePanel extends JPanel implements Runnable
 	
     	private int hudHeight = 16 * 3; // height of the HUD panel
 	
+	private AssetSetter assetS = new AssetSetter(this);
 	private RoomManager rooms;
 	private KeyHandler keyH;
 	private Thread gameThread;
 	private Player player;
 	private CollisionChecker cChecker;
 	private Entity mobs[];
-	private ItemEntity obj[] = new ItemEntity[10];
+	private ItemEntity items[] = new ItemEntity[10];
 
 	
 	
@@ -39,7 +41,7 @@ public class GamePanel extends JPanel implements Runnable
 		
 		keyH=new KeyHandler();
 		
-		rooms = new RoomManager(this, 10, 9);
+		rooms = new RoomManager(this, 3, 3);
 		
 		player=new Player(this, keyH, rooms);
 		mobs=new Entity[30];
@@ -57,7 +59,10 @@ public class GamePanel extends JPanel implements Runnable
 		this.setFocusable(true);
 		
 	}
-	
+	public void setUpGame()
+	{
+		assetS.setObject();
+	}
 	public void startGameThread()
 	{
 		
@@ -189,11 +194,11 @@ public class GamePanel extends JPanel implements Runnable
 	public void setMobs(Entity mobs[]) {
 		this.mobs = mobs;
 	}
-//	public ItemEntity[] getItems() 
-//	{
-//		return items;
-//	}
-//	public void setItems(ItemEntity items[]) {
-//		this.items = items;
-//	}
+	public ItemEntity[] getItems() 
+	{
+		return items;
+	}
+	public void setItems(ItemEntity items[]) {
+		this.items = items;
+	}
 }
