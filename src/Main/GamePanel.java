@@ -25,7 +25,7 @@ public class GamePanel extends JPanel implements Runnable
 	
     	private int hudHeight = 16 * 3; // height of the HUD panel
 	
-	private AssetSetter assetS = new AssetSetter(this);
+	
 	private RoomManager rooms;
 	private KeyHandler keyH;
 	private CollisionChecker cChecker;
@@ -63,12 +63,7 @@ public class GamePanel extends JPanel implements Runnable
 		this.setFocusable(true);
 		
 	}
-	public void setUpGame()
-	{
-		assetS.setObject();
-		
-		
-	}
+	
 	public void startGameThread()
 	{
 		playMusic(0);

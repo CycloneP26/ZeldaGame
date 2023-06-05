@@ -26,7 +26,7 @@ public class RoomManager {
 				{
 					Room tempRoom = new Room(gp, "555555533555555555558563355555555556333335555555556333333555555556333333375555553333333333333333553333333333335555333333333333555533333333333355553333333333335555555555555555555555555555555555");
 					tempRoom.addMobs(new Octorok(gp, 250, 250));
-					tempRoom.addItem(new Key(gp));
+					tempRoom.addItem(new Key(gp, 500, 350));
 					temp.add(tempRoom);
 				}
 				else if(i==1 && j==1)
