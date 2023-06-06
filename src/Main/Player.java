@@ -300,26 +300,26 @@ public class Player extends Entity implements ActionListener
 		
 	}
 	
-	public void pickUpObj(int i)
-	{
-		if(i != -1)
-		{
-			String objName = gp.getItems().get(i).getName();
-			switch(objName)
-			{
-			case "key":
-				keys++;
-				gp.getItems().set(i, null);
-				gp.playEffect(3);
-				break;
-			case "rupee":
-				gp.getItems().set(i, null);
-				gp.playEffect(2);
-				rupees++;
-				break;
-			}
-		}
+	public void pickUpObj(int i) {
+	    if (i != -1) {
+	        String objName = gp.getItems().get(i).getName();
+	        switch (objName) {
+	            case "key":
+	                keys++;
+	                gp.getItems().set(i, null);
+	                gp.playEffect(3);
+	                Main.updateKeysCount(keys); // Update keys count in the HUD
+	                break;
+	            case "rupee":
+	                gp.getItems().set(i, null);
+	                gp.playEffect(2);
+	                rupees++;
+	                Main.updateRupeesCount(rupees); // Update rupees count in the HUD
+	                break;
+	        }
+	    }
 	}
+
 	public void draw(Graphics2D g2)
 	{
 		//animation
@@ -454,3 +454,4 @@ public class Player extends Entity implements ActionListener
 	}
 
 }
+
