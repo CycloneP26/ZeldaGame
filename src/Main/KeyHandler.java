@@ -6,6 +6,25 @@ import java.awt.event.KeyListener;
 public class KeyHandler implements KeyListener
 {
 	private boolean upPressed, downPressed, leftPressed, rightPressed, swordPressed, bItem;
+	private boolean on;
+	
+	public KeyHandler()
+	{
+
+		super();
+		on = true;
+
+	}
+
+	public void setOn(boolean on)
+	{
+
+		this.on = on;
+
+	}
+	
+	
+	
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
@@ -16,29 +35,34 @@ public class KeyHandler implements KeyListener
 	public void keyPressed(KeyEvent e) 
 	{
 		int code=e.getKeyCode();
-		if(code==KeyEvent.VK_W)
+		if(on == true)
 		{
-			upPressed=true;
-		}
-		if(code==KeyEvent.VK_S)
-		{
-			downPressed=true;
-		}
-		if(code==KeyEvent.VK_A)
-		{
-			leftPressed=true;
-		}
-		if(code==KeyEvent.VK_D)
-		{
-			rightPressed=true;
-		}
-		if(code==KeyEvent.VK_Q)
-		{
-			swordPressed=true;
-		}
-		if(code == KeyEvent.VK_B)
-		{
-			bItem = true;
+
+			if(code==KeyEvent.VK_W)
+			{
+				upPressed=true;
+			}
+			if(code==KeyEvent.VK_S)
+			{
+				downPressed=true;
+			}
+			if(code==KeyEvent.VK_A)
+			{
+				leftPressed=true;
+			}
+			if(code==KeyEvent.VK_D)
+			{
+				rightPressed=true;
+			}
+			if(code==KeyEvent.VK_Q)
+			{
+				swordPressed=true;
+			}
+			if(code == KeyEvent.VK_B)
+			{
+				bItem = true;
+			}
+
 		}
 		
 	}

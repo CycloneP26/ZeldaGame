@@ -89,6 +89,13 @@ public class GamePanel extends JPanel implements Runnable
 		
 	}
 	
+	public KeyHandler getKeyHandler()
+	{
+
+		return keyH;
+
+	}
+	
 	public void run()
 	{
 		double drawInterval=1000000000/FPS;

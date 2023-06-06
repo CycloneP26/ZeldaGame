@@ -142,6 +142,9 @@ public class RoomManager {
 		{
 			if(isRoomAvailable(currentRoomRow-1, currentRoomColumn))
 			{
+				gp.getKeyHandler().setOn(false);
+				gp.getKeyHandler().setUpPressed(false);
+				
 				player.setY(gp.screenHeight-50);
 				for(int i = 0; i<12; i++)
 				{
@@ -158,6 +161,9 @@ public class RoomManager {
 		{
 			if(isRoomAvailable(currentRoomRow, currentRoomColumn-1))
 			{
+				gp.getKeyHandler().setOn(false);
+				gp.getKeyHandler().setLeftPressed(false);
+				
 				for(int i = 1; i<16; i++)
 				{
 					currentRoom = getSwitchedRoom(getRoomArray().get(currentRoomRow).get(currentRoomColumn-1), getRoomArray().get(currentRoomRow).get(currentRoomColumn), i, "left");  
@@ -174,6 +180,9 @@ public class RoomManager {
 			if(isRoomAvailable(currentRoomRow+1, currentRoomColumn))
 			{
 				
+				gp.getKeyHandler().setOn(false);
+				gp.getKeyHandler().setDownPressed(false);
+				
 				for(int i = 0; i<12; i++)
 				{
 					currentRoom = getSwitchedRoom(getRoomArray().get(currentRoomRow).get(currentRoomColumn), getRoomArray().get(currentRoomRow+1).get(currentRoomColumn), i, "down");  
@@ -189,6 +198,10 @@ public class RoomManager {
 		{
 			if(isRoomAvailable(currentRoomRow, currentRoomColumn+1))
 			{
+				
+				gp.getKeyHandler().setOn(false);
+				gp.getKeyHandler().setRightPressed(false);
+				
 				for(int i = 1; i<16; i++)
 				{
 					currentRoom = getSwitchedRoom(getRoomArray().get(currentRoomRow).get(currentRoomColumn+1), getRoomArray().get(currentRoomRow).get(currentRoomColumn), i, "right");  
@@ -200,7 +213,7 @@ public class RoomManager {
 				cChecker.setCurCol(currentRoomColumn);
 			}
 		}
-
+		gp.getKeyHandler().setOn(true);
 		currentRoom = getRoomArray().get(currentRoomRow).get(currentRoomColumn);
 		
 	}
