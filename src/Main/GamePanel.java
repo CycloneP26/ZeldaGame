@@ -221,9 +221,12 @@ public class GamePanel extends JPanel implements Runnable
 	public ArrayList<Entity> getMobs() {
 		return rooms.getCurrentRoom().getMobs();
 	}
-	public void setMobs(ArrayList<Entity> mobs) {
-		rooms.getCurrentRoom().setMobs(mobs);
+	
+	public void setMobs(ArrayList<Entity> e)
+	{
+		rooms.getCurrentRoom().setMobs(e);
 	}
+	
 	public ArrayList<ItemEntity> getItems() {
 		return items;
 	}

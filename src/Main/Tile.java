@@ -9,6 +9,7 @@ public class Tile {
 	public boolean collision;
 	private boolean traversable;
 	private boolean breakable;
+
 	
 	public Tile()
 	{
@@ -56,6 +57,13 @@ public class Tile {
 	{
 		return traversable;
 	}
+	public boolean isBreakable() {
+		return breakable;
+	}
+	public void setBreakable(boolean breakable) {
+		this.breakable = breakable;
+	}
+	
 	
 	
 	
