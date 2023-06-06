@@ -92,7 +92,7 @@ public class CollisionChecker
 				if(curRoom.getTile()[tileNum1].getTraverse() == true || curRoom.getTile()[tileNum2].getTraverse() == true)
 				{
 					
-					rooms.caveStart();
+					
 					
 				}
 				
@@ -237,7 +237,7 @@ public class CollisionChecker
 			temp.get(i).getSolidArea().x = temp.get(i).getSolidAreaDefX();
 			temp.get(i).getSolidArea().y = temp.get(i).getSolidAreaDefY();
 			}
-			if(temp.get(i).getHealth()<0)
+			if(temp.get(i).getHealth()<=0)
 			{
 				temp.remove(i);
 			}
