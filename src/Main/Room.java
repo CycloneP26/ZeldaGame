@@ -17,6 +17,7 @@ public class Room {
 	private String str;
 	private ArrayList<Entity> mobs;
 	private ArrayList<ItemEntity> items;
+	private String type;
 	public Room(GamePanel gp)
 	{
 		this.gp = gp;
@@ -50,6 +51,33 @@ public class Room {
 		tileLayout = strToMap(str);
 		mobs = new ArrayList<Entity>();
 		items = new ArrayList<ItemEntity>();
+	}
+	
+	public Room(GamePanel gp, String str, String type)
+	{
+		this.gp = gp;
+		this.str = str;
+		this.type = type;
+		
+		mobs = new ArrayList<Entity>();
+		items = new ArrayList<ItemEntity>();
+		
+		mobs.add(new Octorok(gp, 250, 250));
+		
+		if(type.indexOf("cave") != -1)
+		{
+			str = "111111111111111111111111111111111188888888888811118888888888881111888888888888111188888888888811118888888888881111888888888888111188888888888811118888888888881111111118811111111111111881111111";
+			
+		}
+		
+		tile = new Tile[30];
+		tileLayout = new int[12][16];
+		getTileImage();
+		
+		tileLayout = strToMap(str);
+		
+		
+		
 	}
 	
 	public int[][] strToMap(String str)
@@ -126,6 +154,7 @@ public class Room {
 			tile[8] = new Tile();
 			tile[8].image = ImageIO.read(getClass().getResourceAsStream("/tiles/black.png"));
 			
+			
 			tile[9] = new Tile();
 			tile[9].image = ImageIO.read(getClass().getResourceAsStream("/tiles/cactus.png"));
 			tile[9].collision = true;
@@ -178,6 +207,11 @@ public class Room {
 			tile[19] = new Tile();
 			tile[19].image = ImageIO.read(getClass().getResourceAsStream("/tiles/waterTopRight.png"));
 			tile[19].collision = true;
+			
+			//j
+			tile[20] = new Tile();
+			tile[20].image = ImageIO.read(getClass().getResourceAsStream("/tiles/black.png"));
+			tile[20].setTraverse(true);
 		}
 		catch(IOException e)
 		{

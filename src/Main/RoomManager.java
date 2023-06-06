@@ -25,10 +25,13 @@ public class RoomManager {
 			{
 				if(i==9 && j==0)
 				{
-					Room tempRoom = new Room(gp, "555555533555555555558563355555555556333335555555556333333555555556333333375555553333333333333333553333333333335555333333333333555533333333333355553333333333335555555555555555555555555555555555");
-					tempRoom.addMobs(new Octorok(gp, 250, 250));
-					tempRoom.addItem(new Key(gp, 500, 350));
-					tempRoom.addItem(new Rupee(gp, 400, 350));
+//					Room tempRoom = new Room(gp, "55555553355555555555j563355555555556333335555555556333333555555556333333375555553333333333333333553333333333335555333333333333555533333333333355553333333333335555555555555555555555555555555555");
+//					tempRoom.addMobs(new Octorok(gp, 250, 250));
+//					tempRoom.addItem(new Key(gp, 500, 350));
+//					tempRoom.addItem(new Rupee(gp, 400, 350));
+//					temp.add(tempRoom);
+					
+					Room tempRoom = new Room(gp, "hi", "cave");
 					temp.add(tempRoom);
 				}
 				else if(i==9 && j==1)
@@ -94,8 +97,8 @@ public class RoomManager {
 			rooms.add(temp);
 		}
 		
-		currentRoomRow = 8;
-		currentRoomColumn = 8;
+		currentRoomRow = 9;
+		currentRoomColumn = 0;
 		this.currentRoom = getRoomArray().get(currentRoomRow).get(currentRoomColumn);
 
 		this.gp = gp;
@@ -278,6 +281,10 @@ public class RoomManager {
 		return temp;
 	}
 
+	public void caveStart()
+	{
+		currentRoom = new Room(gp, "hi", "cave");
+	}
 	public Room getCurrentRoom()
 	{
 		return currentRoom;

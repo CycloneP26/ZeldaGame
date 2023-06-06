@@ -90,6 +90,12 @@ public class CollisionChecker
 					entity.setCollisionOn(true);
 					
 				}
+				if(curRoom.getTile()[tileNum1].getTraverse() == true || curRoom.getTile()[tileNum2].getTraverse() == true)
+				{
+					
+					rooms.caveStart();
+					
+				}
 				
 			}
 			
