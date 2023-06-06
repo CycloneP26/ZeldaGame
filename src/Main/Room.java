@@ -258,7 +258,10 @@ public class Room {
 	{
 		mobs.add(e);
 	}
-	
+	public void setMobs(ArrayList<Entity> mobs)
+	{
+		this.mobs = mobs;
+	}
 	public Tile[] getTile()
 	{
 		return tile;

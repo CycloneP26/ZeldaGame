@@ -203,6 +203,7 @@ public class Player extends Entity implements ActionListener
 			setCollisionOn(false);
 			getGp().getCollision().checkTile(this);
 			int index = getGp().getCollision().checkObject(this, true);
+			int index2 = getGp().getCollision().checkFight(this, true);
 			pickUpObj(index);
 			
 			if(isCollisionOn() == false)
@@ -447,6 +448,9 @@ public class Player extends Entity implements ActionListener
 		return screenY;
 	}
 	
-	
+	public boolean getAttacking()
+	{
+		return attacking;
+	}
 
 }

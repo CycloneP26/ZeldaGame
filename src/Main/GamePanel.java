@@ -44,7 +44,7 @@ public class GamePanel extends JPanel implements Runnable
 		
 		keyH=new KeyHandler();
 		
-		rooms = new RoomManager(this, 10, 9);
+		rooms = new RoomManager(this, 10, 11);
 		
 		player=new Player(this, keyH, rooms);
 		mobs=new Entity[30];
@@ -218,11 +218,11 @@ public class GamePanel extends JPanel implements Runnable
 		sound.setFile(i);
 		sound.play();
 	}
-	public Entity[] getMobs() {
-		return mobs;
+	public ArrayList<Entity> getMobs() {
+		return rooms.getCurrentRoom().getMobs();
 	}
-	public void setMobs(Entity mobs[]) {
-		this.mobs = mobs;
+	public void setMobs(ArrayList<Entity> mobs) {
+		rooms.getCurrentRoom().setMobs(mobs);
 	}
 	public ArrayList<ItemEntity> getItems() {
 		return items;

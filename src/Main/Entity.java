@@ -15,7 +15,8 @@ public class Entity {
 	swordDown,swordDown1, itemUp, itemDown, itemRight, itemLeft;
 	private BufferedImage OctorokUp,OctorokUp1,OctorokDown,OctorokDown1,OctorokLeft,OctorokLeft1,OctorokRight,OctorokRight1;
 	private String direction;
-
+	private int health;
+	
 	private int solidAreaDefX, solidAreaDefY;
 	
 	public int spriteCounter=0;
@@ -357,5 +358,13 @@ public class Entity {
 	}
 	public void setSolidAreaDefX(int solidAreaDefX) {
 		this.solidAreaDefX = solidAreaDefX;
+	}
+	public void setHealth(int h)
+	{
+		health = h;
+	}
+	public int getHealth()
+	{
+		return health;
 	}
 }
