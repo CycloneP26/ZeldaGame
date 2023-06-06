@@ -44,7 +44,7 @@ public class GamePanel extends JPanel implements Runnable
 		
 		keyH=new KeyHandler();
 		
-		rooms = new RoomManager(this, 3, 3);
+		rooms = new RoomManager(this, 10, 9);
 		
 		player=new Player(this, keyH, rooms);
 		mobs=new Entity[30];

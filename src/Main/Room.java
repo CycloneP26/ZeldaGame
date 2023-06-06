@@ -153,6 +153,31 @@ public class Room {
 			tile[14] = new Tile();
 			tile[14].image = ImageIO.read(getClass().getResourceAsStream("/tiles/rockDiagFour.png"));
 			tile[14].collision = true;
+			
+			//e
+			tile[15] = new Tile();
+			tile[15].image = ImageIO.read(getClass().getResourceAsStream("/tiles/waterLeft.png"));
+			tile[15].collision = true;
+			
+			//f
+			tile[16] = new Tile();
+			tile[16].image = ImageIO.read(getClass().getResourceAsStream("/tiles/waterRight.png"));
+			tile[16].collision = true;
+			
+			//g
+			tile[17] = new Tile();
+			tile[17].image = ImageIO.read(getClass().getResourceAsStream("/tiles/waterTop.png"));
+			tile[17].collision = true;
+			
+			//h
+			tile[18] = new Tile();
+			tile[18].image = ImageIO.read(getClass().getResourceAsStream("/tiles/waterTopLeft.png"));
+			tile[18].collision = true;
+			
+			//i
+			tile[19] = new Tile();
+			tile[19].image = ImageIO.read(getClass().getResourceAsStream("/tiles/waterTopRight.png"));
+			tile[19].collision = true;
 		}
 		catch(IOException e)
 		{
