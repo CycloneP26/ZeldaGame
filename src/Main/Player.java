@@ -203,6 +203,7 @@ public class Player extends Entity implements ActionListener
 			setCollisionOn(false);
 			getGp().getCollision().checkTile(this);
 			int index = getGp().getCollision().checkObject(this, true);
+			int index2 = getGp().getCollision().checkFight(this, true);
 			pickUpObj(index);
 			
 			if(isCollisionOn() == false)
@@ -213,13 +214,13 @@ public class Player extends Entity implements ActionListener
 					
 					case "up":
 						
-						if(!rooms.isRoomAvailable(rooms.getRoomRow() - 1, rooms.getRoomColumn()))
-						{
+//						if(!rooms.isRoomAvailable(rooms.getRoomRow() - 1, rooms.getRoomColumn()))
+//						{
 							if(getY() > 0)
 							{
 								setY(getY()-getSpeed());
 							}
-						}
+						//}
 						else
 						{
 							
@@ -229,13 +230,13 @@ public class Player extends Entity implements ActionListener
 						break;
 					case "down":
 						
-						if(!rooms.isRoomAvailable(rooms.getRoomRow() + 1, rooms.getRoomColumn()))
-						{
+//						if(!rooms.isRoomAvailable(rooms.getRoomRow() + 1, rooms.getRoomColumn()))
+//						{
 							if(getY() < getGp().screenHeight - 50)
 							{
 								setY(getY()+getSpeed());
 							}
-						}
+//						}
 						else
 						{
 							
@@ -246,13 +247,13 @@ public class Player extends Entity implements ActionListener
 						break;
 					case "left":
 						
-						if(!rooms.isRoomAvailable(rooms.getRoomRow(), rooms.getRoomColumn() - 1))
-						{
+//						if(!rooms.isRoomAvailable(rooms.getRoomRow(), rooms.getRoomColumn() - 1))
+//						{
 							if(getX() > 0)
 							{
 								setX(getX()-getSpeed());
 							}
-						}
+						//}
 						else
 						{
 							
@@ -262,13 +263,13 @@ public class Player extends Entity implements ActionListener
 						
 						break;
 					case "right":
-						if(!rooms.isRoomAvailable(rooms.getRoomRow(), rooms.getRoomColumn() + 1))
-						{
+//						if(!rooms.isRoomAvailable(rooms.getRoomRow(), rooms.getRoomColumn() + 1))
+//						{
 							if(getX() < getGp().screenWidth - 45)
 							{
 								setX(getX()+getSpeed());
 							}
-						}
+//						}
 						else
 						{
 							
@@ -447,6 +448,9 @@ public class Player extends Entity implements ActionListener
 		return screenY;
 	}
 	
-	
+	public boolean getAttacking()
+	{
+		return attacking;
+	}
 
 }

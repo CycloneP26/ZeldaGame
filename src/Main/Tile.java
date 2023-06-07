@@ -7,6 +7,9 @@ public class Tile {
 	
 	public BufferedImage image;
 	public boolean collision;
+	private boolean traversable;
+	private boolean breakable;
+
 	
 	public Tile()
 	{
@@ -16,6 +19,13 @@ public class Tile {
 	{
 		this.image = image;
 		collision = coll;
+	}
+	
+	public Tile(BufferedImage image, boolean coll, boolean traverse)
+	{
+		this.image = image;
+		collision = coll;
+		traversable = traverse;
 	}
 
 	public BufferedImage getImage()
@@ -37,5 +47,24 @@ public class Tile {
 	{
 		collision = coll;
 	}
+	
+	public void setTraverse(boolean traverse)
+	{
+		traversable = traverse;
+	}
+	
+	public boolean getTraverse()
+	{
+		return traversable;
+	}
+	public boolean isBreakable() {
+		return breakable;
+	}
+	public void setBreakable(boolean breakable) {
+		this.breakable = breakable;
+	}
+	
+	
+	
 	
 }
