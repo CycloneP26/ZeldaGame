@@ -5,7 +5,11 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import Main.GamePanel;
-
+/*
+This class creates a Rupee item that can be picked up and added to the inventory.
+The contructor's purpose is to correctly path the image so it can be properly used in GamePanel
+@author Sachin Chhaya 
+*/
 public class Rupee extends ItemEntity
 {
 
