@@ -7,31 +7,31 @@ import java.io.IOException;
 import java.awt.Graphics2D;
 
 public class Entity {
-	private GamePanel gp;
-	private int worldX,worldY;
-	private int speed;
-	private BufferedImage up1, up2, down1, down2, left1, left2, right1, right2;
-	private BufferedImage swordUp,swordUp1,swordLeft,swordLeft1,swordRight,swordRight1,
+	private GamePanel gp;   //Be able to access the main GamePanel to add components
+	private int worldX,worldY; //position of entity 
+	private int speed; //speed of the entity 
+	private BufferedImage up1, up2, down1, down2, left1, left2, right1, right2; //all images for Link's movement 
+	private BufferedImage swordUp,swordUp1,swordLeft,swordLeft1,swordRight,swordRight1, //images for sword movement 
 	swordDown,swordDown1, itemUp, itemDown, itemRight, itemLeft;
-	private BufferedImage OctorokUp,OctorokUp1,OctorokDown,OctorokDown1,OctorokLeft,OctorokLeft1,OctorokRight,OctorokRight1;
-	private String direction;
-	private int health;
+	private BufferedImage OctorokUp,OctorokUp1,OctorokDown,OctorokDown1,OctorokLeft,OctorokLeft1,OctorokRight,OctorokRight1; //Images for Octorok
+	private String direction; //Direction that the entity is facing
+	private int health; //health of the entity 
 	
-	private int solidAreaDefX, solidAreaDefY;
+	private int solidAreaDefX, solidAreaDefY; //default area of entity to check collision
 	
-	public int spriteCounter=0;
-	public int spriteNum=1;
+	public int spriteCounter=0; //Updates with game thread to animate
+	public int spriteNum=1; //Updates with spriteCounter 
 	
-	boolean attacking=false;
+	boolean attacking=false; 
 	boolean bomb = false;
 	boolean itemUse = false;
 	
-	private Rectangle solidArea=new Rectangle(0,0,48,48);
-	private boolean collisionOn = false;
-	private int actionLockCounter=0;
+	private Rectangle solidArea=new Rectangle(0,0,48,48); //area of entity to check collision
+	private boolean collisionOn = false; //whether the entity will use collision
+	private int actionLockCounter=0; //SOMEONE COMMENT THIS 
 	
 	
-	public Entity(GamePanel gp)
+	public Entity(GamePanel gp) //constructor for all Entity, just to access the gamePanel
 	{
 		this.setGp(gp);
 	}
@@ -39,7 +39,7 @@ public class Entity {
 	{
 
 	}
-	public void update()
+	public void update() //Updates the positions and animates entity 
 	{
 		setAction();
 		collisionOn=false;
@@ -320,7 +320,7 @@ public class Entity {
 	public void setCollisionOn(boolean collisionOn) {
 		this.collisionOn = collisionOn;
 	}
-	public BufferedImage setup(String imagePath,int width,int height)
+	public BufferedImage setup(String imagePath,int width,int height) //image pathing so is works properly with gamePanel
 	{
 		UtilityTool uTool=new UtilityTool();
 		BufferedImage image=null;
@@ -333,7 +333,7 @@ public class Entity {
 		{
 			e.printStackTrace();
 		}
-		return image;
+		return image; //returns the image after it is pathed correctly
 	}
 	public GamePanel getGp() {
 		return gp;
