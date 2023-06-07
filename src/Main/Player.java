@@ -11,20 +11,33 @@ import java.security.DrbgParameters;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
+/*
+The player class is used to create the Link entity that the player uses.This is done through using things 
+like the ActionListener to observe keystrokes that allow methods to choose the sprite/action that should 
+be drawn. The player's position and collision is also used in this class.
+@author Sachin Chhaya
+@author David Kostanyan 
 
+*/
 
 public class Player extends Entity implements ActionListener 
 {
-	
-	private KeyHandler keyH; //KeyHandler which scans the keystrokes
-	private RoomManager rooms; //Be able to access the room that the player is in 
-	private BufferedImage up1, up2, down1, down2, left1, left2, right1, right2; //Images for Link's movement 
-	private BufferedImage swordUp,swordUp1,swordLeft,swordLeft1,swordRight,swordRight1,swordDown,swordDown1; //Images for link's sword movement 
+	//KeyHandler which scans the keystrokes
+	private KeyHandler keyH; 
+	//Be able to access the room that the player is in 
+	private RoomManager rooms; 
+	//Images for Link's movement 
+	private BufferedImage up1, up2, down1, down2, left1, left2, right1, right2; 
+	//Images for link's sword movement 
+	private BufferedImage swordUp,swordUp1,swordLeft,swordLeft1,swordRight,swordRight1,swordDown,swordDown1; 
 	private final int screenX; //SOMEONE COMMENT THIS 
 	private final int screenY; //AND THIS 
-	private GamePanel gp; //Access the GamePanel 
-	private int rupees = 0; //amount of rupees
-	private int keys = 0; //amount of keys 
+	//Access the GamePanel 
+	private GamePanel gp; 
+	//amount of rupees
+	private int rupees = 0; 
+	//amount of keys 
+	private int keys = 0; 
 	
 	//Constructor initializes all the fields that deal with position, and paths the images 
 	public Player(GamePanel gp, KeyHandler keyH, RoomManager rooms) //@param takes a GamePanel, keyhandler, and RoomManagager to access the main panel, the keystrokes, and the map layouts
