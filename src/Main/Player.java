@@ -16,18 +16,18 @@ import javax.imageio.ImageIO;
 public class Player extends Entity implements ActionListener 
 {
 	
-	private KeyHandler keyH;
-	private RoomManager rooms;
-	private BufferedImage up1, up2, down1, down2, left1, left2, right1, right2;
-	private BufferedImage swordUp,swordUp1,swordLeft,swordLeft1,swordRight,swordRight1,swordDown,swordDown1;
-	private final int screenX;
-	private final int screenY;
-	private GamePanel gp;
-	private int rupees = 0;
-	private int keys = 0;
+	private KeyHandler keyH; //KeyHandler which scans the keystrokes
+	private RoomManager rooms; //Be able to access the room that the player is in 
+	private BufferedImage up1, up2, down1, down2, left1, left2, right1, right2; //Images for Link's movement 
+	private BufferedImage swordUp,swordUp1,swordLeft,swordLeft1,swordRight,swordRight1,swordDown,swordDown1; //Images for link's sword movement 
+	private final int screenX; //SOMEONE COMMENT THIS 
+	private final int screenY; //AND THIS 
+	private GamePanel gp; //Access the GamePanel 
+	private int rupees = 0; //amount of rupees
+	private int keys = 0; //amount of keys 
 	
-	
-	public Player(GamePanel gp, KeyHandler keyH, RoomManager rooms)
+	//Constructor initializes all the fields that deal with position, and paths the images 
+	public Player(GamePanel gp, KeyHandler keyH, RoomManager rooms) //@param takes a GamePanel, keyhandler, and RoomManagager to access the main panel, the keystrokes, and the map layouts
 	{
 		super(gp);
 		this.gp = gp;
@@ -61,6 +61,7 @@ public class Player extends Entity implements ActionListener
 			e2.printStackTrace();
 		}
 	}
+	//Sets the positions to default
 	public void setDefaultValue()
 	{		
 		setX(384);
@@ -69,7 +70,8 @@ public class Player extends Entity implements ActionListener
 		setDirection("down");
 	}
 	
-	public void getPlayerImage() throws IOException
+	//Sets up and paths all the images for the player 
+	public void getPlayerImage() throws IOException //@throws IO Exception to properly use the images
 	{
 		
 		setUp1(setup("/player/linkMovingBack",getTileSize(),getTileSize()));
@@ -81,7 +83,8 @@ public class Player extends Entity implements ActionListener
 		setRight1(setup("/player/linkMovingRight",getTileSize(),getTileSize()));
 		setRight2(setup("/player/linkMovingRight1",getTileSize(),getTileSize()));
 	}
-	public void getPlayerAttackImage() throws IOException
+	//Sets up and paths all the images for when the player attacks
+	public void getPlayerAttackImage() throws IOException //@throws IO Exception to properly use the images
 	{
 		setSwordUp(setup("/player/linkSwordUp1",getTileSize(),getTileSize()*2));
 		setSwordLeft(setup("/player/linkSwordLeft1",getTileSize()*2,getTileSize()));
@@ -92,7 +95,8 @@ public class Player extends Entity implements ActionListener
 		setSwordRight1(setup("/player/linkSwordRight",getTileSize()*2,getTileSize()));
 		setSwordDown1(setup("/player/linkSwordDown",getTileSize(),getTileSize()*2));
 	}
-	public void getBItemImage() throws IOException
+	//Sets up and paths all images of the player using items 
+	public void getBItemImage() throws IOException //@throws IO Exception to properly use the images
 	{
 		//if(something about which item is being used)
 		setItemLeft (setup("/player/useItemLeft", getTileSize(), getTileSize()));
@@ -100,6 +104,7 @@ public class Player extends Entity implements ActionListener
 		setItemRight  (setup("/player/useItemRight",getTileSize(),getTileSize()));
 		setItemDown  (setup("/player/useItemDown",getTileSize(),getTileSize()));
 	}
+	//Works with the gameThread and updates a counter which animates the player according to the amount of ticks that are passed 
 	public void attacking()
 	{
 		spriteCounter++;
@@ -115,7 +120,7 @@ public class Player extends Entity implements ActionListener
 		}
 	
 	}
-	
+	//Works with gameThread and updates the counter which changes the sprite according to the ticks that are passed
 	public void item()
 	{
 		//Makes sure useItem animation turns off
@@ -135,7 +140,7 @@ public class Player extends Entity implements ActionListener
 			itemUse =false;
 		}
 	}
-	
+	//Updates the player movements and checks the collisions 
 	public void update()
 	{
 		//movement and attacking
@@ -300,7 +305,8 @@ public class Player extends Entity implements ActionListener
 		
 	}
 	
-	public void pickUpObj(int i)
+	//Plays a sound when an item is picked up, and removes it from the screen
+	public void pickUpObj(int i) //@param takes the index of the items array that is picked up 
 	{
 		if(i != -1)
 		{
@@ -320,7 +326,8 @@ public class Player extends Entity implements ActionListener
 			}
 		}
 	}
-	public void draw(Graphics2D g2)
+	//Draws the image according to what actions are being performed 
+	public void draw(Graphics2D g2) //@param Graphics2D required to draw the images 
 	{
 		//animation
 		BufferedImage image=null;
