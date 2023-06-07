@@ -42,7 +42,12 @@ public class RoomManager {
 				}
 				else if(i==9 && j==2)
 				{
-					temp.add(new Room(gp, "1111111111111111a11111ba111111113a1111333333a11133a1113333333111333a113334333a113333ab33434333333333333334333c1133333333333331113333cd333333c111c11111dc1111111111111111111111111111111111111111"));
+					Room tempRoom=new Room(gp,"1111111111111111a11111ba111111113a1111333333a11133a1113333333111333a113334333a113333ab33434333333333333334333c1133333333333331113333cd333333c111c11111dc1111111111111111111111111111111111111111");
+					tempRoom.addMobs(new Spider(gp,300,300));
+					tempRoom.addMobs(new Spider(gp,500,300));
+					tempRoom.addMobs(new Spider(gp,300,200));
+					tempRoom.addMobs(new Spider(gp,500,300));
+					temp.add(tempRoom);
 				}
 				else if(i==9 && j==3)
 				{
@@ -106,8 +111,8 @@ public class RoomManager {
 			rooms.add(temp);
 		}
 		
-		currentRoomRow = 0;
-		currentRoomColumn = 10;
+		currentRoomRow = 9;
+		currentRoomColumn = 2;
 		this.currentRoom = getRoomArray().get(currentRoomRow).get(currentRoomColumn);
 
 		this.gp = gp;

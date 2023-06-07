@@ -14,7 +14,10 @@ public class Entity {
 	private BufferedImage swordUp,swordUp1,swordLeft,swordLeft1,swordRight,swordRight1, //images for sword movement 
 	swordDown,swordDown1, itemUp, itemDown, itemRight, itemLeft;
 	private BufferedImage OctorokUp,OctorokUp1,OctorokDown,OctorokDown1,OctorokLeft,OctorokLeft1,OctorokRight,OctorokRight1; //Images for Octorok
+	private BufferedImage SpiderStill,SpiderJump;
+	private BufferedImage Rock;
 	private String direction; //Direction that the entity is facing
+	private String direction2;
 	private int health; //health of the entity 
 	
 	private int solidAreaDefX, solidAreaDefY; //default area of entity to check collision
@@ -49,16 +52,57 @@ public class Entity {
 			switch(getDirection())
 			{
 			case "up":
-				worldY-=speed;
-				break;
+				if(worldX>0&&worldY>0&&worldX<700&&worldY<700)
+				{
+					if(worldY-speed>0)
+					{
+						worldY-=speed;
+					}
+					else
+					{
+						setAction();
+					}
+				}
 			case "down":
-				worldY+=speed;
+				if(worldX>0&&worldY>0&&worldX<700&&worldY<700)
+				{
+					if(worldY+speed<500)
+					{
+						worldY+=speed;
+					}
+					else
+					{
+						setAction();
+					}
+				}
+
 				break;
 			case "left":
-				worldX-=speed;
+				if(worldX>0&&worldY>0&&worldX<700&&worldY<700)
+				{
+					if(worldX-speed>0)
+					{
+						worldX-=speed;
+					}
+					else
+					{
+						setAction();
+					}
+				}
+
 				break;
 			case "right":
-				worldX+=speed;
+				if(worldX>0&&worldY>0&&worldX<700&&worldY<700)
+				{
+					if(worldX+speed<700)
+					{
+						worldX+=speed;
+					}
+					else
+					{
+						setAction();
+					}
+				}
 
 				break;
 
@@ -366,5 +410,30 @@ public class Entity {
 	public int getHealth()
 	{
 		return health;
+	}
+	public BufferedImage getSpiderStill() {
+		return SpiderStill;
+	}
+	public void setSpiderStill(BufferedImage spiderStill) {
+		SpiderStill = spiderStill;
+	}
+	public BufferedImage getSpiderJump() {
+		return SpiderJump;
+	}
+	public void setSpiderJump(BufferedImage spiderJump) {
+		SpiderJump = spiderJump;
+	}
+	public String getDirection2() {
+		return direction2;
+	}
+	public void setDirection2(String direction2) {
+		this.direction2 = direction2;
+	}
+
+	public BufferedImage getRock() {
+		return Rock;
+	}
+	public void setRock(BufferedImage rock) {
+		Rock = rock;
 	}
 }
