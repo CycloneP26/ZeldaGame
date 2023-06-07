@@ -39,8 +39,12 @@ public class Player extends Entity implements ActionListener
 	//amount of keys 
 	private int keys = 0; 
 	
-	//Constructor initializes all the fields that deal with position, and paths the images 
-	public Player(GamePanel gp, KeyHandler keyH, RoomManager rooms) //@param takes a GamePanel, keyhandler, and RoomManagager to access the main panel, the keystrokes, and the map layouts
+	/*Constructor initializes all the fields that deal with position, and paths the images 
+	@param GamePanel to access and update the panel
+	@param KeyHandler to use the ActionListener and observe keystrokes
+	@param RoomManager to find collision and position of the player 
+	*/
+	public Player(GamePanel gp, KeyHandler keyH, RoomManager rooms) 
 	{
 		super(gp);
 		this.gp = gp;
@@ -83,8 +87,10 @@ public class Player extends Entity implements ActionListener
 		setDirection("down");
 	}
 	
-	//Sets up and paths all the images for the player 
-	public void getPlayerImage() throws IOException //@throws IO Exception to properly use the images
+	/*Sets up and paths all the images for the player 
+	@throws IO Exception to properly utilize the images without errors 
+	*/
+	public void getPlayerImage() throws IOException 
 	{
 		
 		setUp1(setup("/player/linkMovingBack",getTileSize(),getTileSize()));
@@ -96,8 +102,10 @@ public class Player extends Entity implements ActionListener
 		setRight1(setup("/player/linkMovingRight",getTileSize(),getTileSize()));
 		setRight2(setup("/player/linkMovingRight1",getTileSize(),getTileSize()));
 	}
-	//Sets up and paths all the images for when the player attacks
-	public void getPlayerAttackImage() throws IOException //@throws IO Exception to properly use the images
+	/*Sets up and paths all the images for the player attack images  
+	@throws IO Exception to properly utilize the images without errors 
+	*/
+	public void getPlayerAttackImage() throws IOException
 	{
 		setSwordUp(setup("/player/linkSwordUp1",getTileSize(),getTileSize()*2));
 		setSwordLeft(setup("/player/linkSwordLeft1",getTileSize()*2,getTileSize()));
@@ -108,8 +116,10 @@ public class Player extends Entity implements ActionListener
 		setSwordRight1(setup("/player/linkSwordRight",getTileSize()*2,getTileSize()));
 		setSwordDown1(setup("/player/linkSwordDown",getTileSize(),getTileSize()*2));
 	}
-	//Sets up and paths all images of the player using items 
-	public void getBItemImage() throws IOException //@throws IO Exception to properly use the images
+	/*Sets up and paths all the images for the player using item images  
+	@throws IO Exception to properly utilize the images without errors 
+	*/
+	public void getBItemImage() throws IOException
 	{
 		//if(something about which item is being used)
 		setItemLeft (setup("/player/useItemLeft", getTileSize(), getTileSize()));
@@ -166,10 +176,10 @@ public class Player extends Entity implements ActionListener
 			item();
 		}
 		else if(keyH.isUpPressed()==true||keyH.isDownPressed()==true
-				||keyH.isLeftPressed()==true
-				||keyH.isRightPressed()==true
-				||keyH.isSwordPressed()==true
-				||keyH.isbItem() == true)//For now, bItem is only bomb, we need to finish UI to implement multiple items
+			||keyH.isLeftPressed()==true
+			||keyH.isRightPressed()==true
+			||keyH.isSwordPressed()==true
+			||keyH.isbItem() == true)
 		{
 			if(keyH.isbItem() == true)
 			{
@@ -318,8 +328,10 @@ public class Player extends Entity implements ActionListener
 		
 	}
 	
-	//Plays a sound when an item is picked up, and removes it from the screen
-	public void pickUpObj(int i) //@param takes the index of the items array that is picked up 
+	/*Plays a sound when an item is picked up, and removes it from the screen
+	@param takes the index of the items array that is picked up 
+	*/
+	public void pickUpObj(int i) 
 	{
 		if(i != -1)
 		{
@@ -339,8 +351,10 @@ public class Player extends Entity implements ActionListener
 			}
 		}
 	}
-	//Draws the image according to what actions are being performed 
-	public void draw(Graphics2D g2) //@param Graphics2D required to draw the images 
+	/*Draws the image according to what actions are being performed 
+	@param Graphics2D required to draw the images 
+	*/
+	public void draw(Graphics2D g2) 
 	{
 		//animation
 		BufferedImage image=null;
@@ -439,6 +453,12 @@ public class Player extends Entity implements ActionListener
 			g2.drawImage(image,super.getX(),super.getY(),null);
 		}
 	}
+	/*
+	This method takes the image file path and the image's height and width to scale and intialize the image so it can be used as a Bufferedimage
+	@param String imagePath is used to determine the file location of the image
+	@param int width is used to determine the width of the BufferedImage
+	@param int height is used to determine the height of the BufferedImage 
+	*/
 	public BufferedImage setup(String imagePath,int width,int height)
 	{
 		UtilityTool uTool=new UtilityTool();
