@@ -98,11 +98,11 @@ public class GamePanel extends JPanel implements Runnable
 		gameThread.start();
 		
 	}
-	//SOMEONE COMMENT THIS 
-	public void waitThread(int s)
+	//Makes the thread stop for d milliseconds
+	public void waitThread(int d)
 	{
 		try {
-			Thread.sleep(s);
+			Thread.sleep(d);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
