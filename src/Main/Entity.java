@@ -123,7 +123,7 @@ public class Entity {
 			spriteCounter=0;
 		}
 	}
-	public void draw(Graphics2D g2) 
+	public void draw(Graphics2D g2) //@param Graphics2D is taken to draw the images
 	{
 		BufferedImage image=null;
 
