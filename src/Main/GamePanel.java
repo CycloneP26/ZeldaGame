@@ -176,7 +176,7 @@ public class GamePanel extends JPanel implements Runnable
     	return screenWidth;
     }
 	//All the entities that must be rendered in each room is drawn here
-	public void paintComponent(Graphics g) //Graphics required to draw
+	public void paintComponent(Graphics g) //@param Graphics required to draw
 	{
 		
 		
