@@ -24,7 +24,6 @@ public class Octorok extends Entity
 		setDirection("down");
 		setSpeed(1);
 		getBruhImage();
-		setHealth(3);
 	}
 	public String toString()
 	{

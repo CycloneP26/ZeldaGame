@@ -17,11 +17,6 @@ public class Room {
 	private String str;
 	private ArrayList<Entity> mobs;
 	private ArrayList<ItemEntity> items;
-	private int caveR;
-	private int caveC;
-	private String type;
-	private int toCaveC;
-	private int toCaveR;
 	public Room(GamePanel gp)
 	{
 		this.gp = gp;
@@ -48,17 +43,11 @@ public class Room {
 		this.gp = gp;
 		this.str = str;
 		
-		if(str.equals("cave"))
-		{
-			this.str = "111111111111111111111111111111111188888888888811118888888888881111888888888888111188888888888811118888888888881111888888888888111188888888888811118888888888881111111118811111111111111881111111";
-			setType("cave");
-		}
-		
 		tile = new Tile[30];
 		tileLayout = new int[12][16];
 		getTileImage();
 		
-		tileLayout = strToMap(this.str);
+		tileLayout = strToMap(str);
 		mobs = new ArrayList<Entity>();
 		items = new ArrayList<ItemEntity>();
 	}
@@ -137,7 +126,6 @@ public class Room {
 			tile[8] = new Tile();
 			tile[8].image = ImageIO.read(getClass().getResourceAsStream("/tiles/black.png"));
 			
-			
 			tile[9] = new Tile();
 			tile[9].image = ImageIO.read(getClass().getResourceAsStream("/tiles/cactus.png"));
 			tile[9].collision = true;
@@ -190,11 +178,6 @@ public class Room {
 			tile[19] = new Tile();
 			tile[19].image = ImageIO.read(getClass().getResourceAsStream("/tiles/waterTopRight.png"));
 			tile[19].collision = true;
-			
-			//j
-			tile[20] = new Tile();
-			tile[20].image = ImageIO.read(getClass().getResourceAsStream("/tiles/black.png"));
-			tile[20].setTraverse(true);
 		}
 		catch(IOException e)
 		{
@@ -241,10 +224,7 @@ public class Room {
 	{
 		mobs.add(e);
 	}
-	public void setMobs(ArrayList<Entity> mobs)
-	{
-		this.mobs = mobs;
-	}
+	
 	public Tile[] getTile()
 	{
 		return tile;
@@ -271,35 +251,5 @@ public class Room {
 	}
 	public void setItems(ArrayList<ItemEntity> items) {
 		this.items = items;
-	}
-	public int getCaveR() {
-		return caveR;
-	}
-	public void setCaveR(int caveR) {
-		this.caveR = caveR;
-	}
-	public int getCaveC() {
-		return caveC;
-	}
-	public void setCaveC(int caveC) {
-		this.caveC = caveC;
-	}
-	public String getType() {
-		return type;
-	}
-	public void setType(String type) {
-		this.type = type;
-	}
-	public int getToCaveC() {
-		return toCaveC;
-	}
-	public void setToCaveC(int toCaveC) {
-		this.toCaveC = toCaveC;
-	}
-	public int getToCaveR() {
-		return toCaveR;
-	}
-	public void setToCaveR(int toCaveR) {
-		this.toCaveR = toCaveR;
 	}
 }

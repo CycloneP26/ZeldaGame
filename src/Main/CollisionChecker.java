@@ -1,4 +1,4 @@
-  package Main;
+package Main;
 
 import java.util.ArrayList;
 
@@ -80,19 +80,14 @@ public class CollisionChecker
 			entityBottomRow = (entityBottomY + entity.getSpeed()) / gp.tileSize;
 			if(entityBottomRow < 12 && entityRightCol < 16)
 			{
-				
+				System.out.println();
+				System.out.println("hi");
 				tileNum1 = curRoom.getTileLayout()[entityBottomRow][entityLeftCol];
 				tileNum2 = curRoom.getTileLayout()[entityBottomRow][entityRightCol];
 				if(curRoom.getTile()[tileNum1].getCollision() == true || curRoom.getTile()[tileNum2].getCollision() == true)
 				{
 					
 					entity.setCollisionOn(true);
-					
-				}
-				if(curRoom.getTile()[tileNum1].getTraverse() == true || curRoom.getTile()[tileNum2].getTraverse() == true)
-				{
-					
-					
 					
 				}
 				
@@ -143,107 +138,9 @@ public class CollisionChecker
 				
 		
 	}
-	
-	public int checkFight(Player e, boolean p) //Check if player is hitting any object, return index of the object 
+	public int checkEntity(Entity entity,Entity[]target)
 	{
-		int index = -1;
-		ArrayList<Entity> temp = gp.getRooms().getCurrentRoom().getMobs();
-		
-		for(int i = 0; i < temp.size(); i++)
-		{
-			if(temp.get(i) != null)
-			{
-				//get the entity's position 
-				e.getSolidArea().x = e.getX() + e.getSolidArea().x;
-				e.getSolidArea().y = e.getY() + e.getSolidArea().y;
-				
-				//Object position
-				temp.get(i).getSolidArea().x = temp.get(i).getX() + temp.get(i).getSolidArea().x;
-				temp.get(i).getSolidArea().y = temp.get(i).getY() + temp.get(i).getSolidArea().y;
-				switch(e.getDirection())
-				{
-				case "up":
-					
-					if(e.getSolidArea().intersects(temp.get(i).getSolidArea()))//checks if two rectangles are touching
-					{
-						if(e.getAttacking())
-						{
-							temp.get(i).setHealth(temp.get(i).getHealth()-1);
-							System.out.println("attack");
-						}
-						else
-						{
-							e.setHealth(e.getHealth()-1);
-							//e.getSolidArea().y += e.getSpeed();
-							System.out.println("hurt");
-						}
-					}
-					break;
-				case "down":
-					e.getSolidArea().y += e.getSpeed();
-					if(e.getSolidArea().intersects(temp.get(i).getSolidArea()))//checks if two rectangles are touching
-					{
-						if(e.getAttacking())
-						{
-							temp.get(i).setHealth(temp.get(i).getHealth()-1);
-							System.out.println("attack");
-						}
-						else
-						{
-							e.setHealth(e.getHealth()-1);
-							//e.getSolidArea().y += e.getSpeed();
-							System.out.println("hurt");
-						}
-					}
-					break;
-				case "left":
-					e.getSolidArea().x -= e.getSpeed();
-					if(e.getSolidArea().intersects(temp.get(i).getSolidArea()))//checks if two rectangles are touching
-					{
-						if(e.getAttacking())
-						{
-							temp.get(i).setHealth(temp.get(i).getHealth()-1);
-							System.out.println("attack");
-						}
-						else
-						{
-							e.setHealth(e.getHealth()-1);
-							//e.getSolidArea().y += e.getSpeed();
-							System.out.println("hurt");
-						}
-					}
-					break;
-				case "right":
-					e.getSolidArea().x += e.getSpeed();
-					if(e.getSolidArea().intersects(temp.get(i).getSolidArea()))//checks if two rectangles are touching
-					{
-						if(e.getAttacking())
-						{
-							temp.get(i).setHealth(temp.get(i).getHealth()-1);
-							System.out.println("attack");
-						}
-						else
-						{
-							e.setHealth(e.getHealth()-1);
-							//e.getSolidArea().y += e.getSpeed();
-							System.out.println("hurt");
-						}
-					}
-					break;
-				}
-			
-			e.getSolidArea().x = e.getSolidAreaDefX();
-			e.getSolidArea().y = e.getSolidAreaDefY();
-			temp.get(i).getSolidArea().x = temp.get(i).getSolidAreaDefX();
-			temp.get(i).getSolidArea().y = temp.get(i).getSolidAreaDefY();
-			}
-			if(temp.get(i).getHealth()<=0)
-			{
-				temp.remove(i);
-			}
-		}
-		gp.setMobs(temp);
-		return index;
+		return 2;
 	}
 	public int checkObject(Entity e, boolean p) //Check if player is hitting any object, return index of the object 
 	{
@@ -330,4 +227,5 @@ public class CollisionChecker
 		gp.setItems(temp);
 		return index;
 	}
+	
 }
