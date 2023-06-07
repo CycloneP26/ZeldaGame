@@ -13,33 +13,36 @@ import object.ItemEntity;
 
 public class GamePanel extends JPanel implements Runnable
 {
-	final int originalTileSize=16;
-	final int scale=3;
-	final int tileSize=originalTileSize*scale;
-	final int maxScreenCol=16;
-	final int maxScreenRow=12;
-	final int screenWidth=tileSize*maxScreenCol;
-	final int screenHeight=tileSize*maxScreenRow;
-	private int FPS = 60;
-	private Timer timer;
+	final int originalTileSize=16; //tile size before scale
+	final int scale=3; //scale of the tiles 
+	final int tileSize=originalTileSize*scale; //scaled tile size
+	final int maxScreenCol=16; //#of tiles on width
+	final int maxScreenRow=12; //#of tiles on height
+	final int screenWidth=tileSize*maxScreenCol; //width of screen
+	final int screenHeight=tileSize*maxScreenRow;//width of height
+	private int FPS = 60; //how many times it updates per second
+	private Timer timer; //UTILIZATION UNKNOWN AS OF NOW
 	
     	private int hudHeight = 16 * 3; // height of the HUD panel
 	
 	
-	private RoomManager rooms;
-	private KeyHandler keyH;
-	private CollisionChecker cChecker;
-	private Sound sound = new Sound();
-	private Thread gameThread;
+	private RoomManager rooms; //Creates a 2D array of rooms
+	private KeyHandler keyH; //Observes the key movements
+	private CollisionChecker cChecker; //Checks collision of all entities
+	private Sound sound = new Sound(); //Creates sound 
+	private Thread gameThread; //Runtime Game loop 
 	
 	//Entity and objects 
-	private Player player;
-	private Entity mobs[];
-	private ArrayList<ItemEntity> items;
+	private Player player; //Link field
+	private Entity mobs[]; //Per room, the monsters that exist
+	private ArrayList<ItemEntity> items; //Per room, items that exist 
 	
 	
-	
-	public GamePanel()
+	/*
+	Creates the actual GamePanel that initializes all the fields that update 
+	with the GameThread
+	*/
+	public GamePanel() 
 	{
 		
 		keyH=new KeyHandler();
@@ -63,7 +66,7 @@ public class GamePanel extends JPanel implements Runnable
 		this.setFocusable(true);
 		
 	}
-	
+	//Starts the game thread and runs the update methods
 	public void startGameThread()
 	{
 		playMusic(0);
@@ -71,7 +74,7 @@ public class GamePanel extends JPanel implements Runnable
 		gameThread.start();
 		
 	}
-	
+	//SOMEONE COMMENT THIS 
 	public void waitThread(int s)
 	{
 		try {
@@ -95,7 +98,7 @@ public class GamePanel extends JPanel implements Runnable
 		return keyH;
 
 	}
-	
+	//SOMEONE COMMENT THIS
 	public void run()
 	{
 		double drawInterval=1000000000/FPS;
@@ -130,7 +133,7 @@ public class GamePanel extends JPanel implements Runnable
 	}
 	
 	
-
+	//Updates the positions and conditions of all entities 
 	public void update()
 	{
 		
@@ -172,8 +175,8 @@ public class GamePanel extends JPanel implements Runnable
     {
     	return screenWidth;
     }
-	
-	public void paintComponent(Graphics g)
+	//All the entities that must be rendered in each room is drawn here
+	public void paintComponent(Graphics g) //Graphics required to draw
 	{
 		
 		
@@ -203,17 +206,20 @@ public class GamePanel extends JPanel implements Runnable
 		g2.dispose();
 		
 	}
-	public void playMusic(int i)
+	//Takes the index of the sound that is played and loops it
+	public void playMusic(int i) //@param Integer is used to choose the sound file within the list
 	{
 		sound.setFile(i);
 		sound.play();
 		sound.loop();
 	}
+	//Stops the sound/music 
 	public void stopMusic()
 	{
 		sound.stop();
 	}
-	public void playEffect(int i)
+	//Plays a sound but does not loop it 
+	public void playEffect(int i) //@param takes integer to choose the sound file
 	{
 		sound.setFile(i);
 		sound.play();
