@@ -5,9 +5,14 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 import Main.GamePanel;
-
+/*
+This class encompasses all items that appear on the map. It is the superclass 
+for all items and it is used to draw and keep track of them.
+@author Sachin Chhaya 
+*/
 public class ItemEntity 
 {
+	
 	private GamePanel gp;
 	private BufferedImage image;
 	private String name;
