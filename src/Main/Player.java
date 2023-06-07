@@ -237,7 +237,8 @@ public class Player extends Entity implements ActionListener
 			if(isCollisionOn() == false)
 			{
 					
-					switch(getDirection())
+				System.out.println(getX() + ", " + getY());	
+				switch(getDirection())
 					{
 					
 					case "up":

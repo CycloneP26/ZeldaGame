@@ -31,7 +31,8 @@ public class ItemEntity
 	/*Superconstructor that takes a GamePanel for the item to access gp
 	@param GamePanel gp to access gp
 	*/
-	`public ItemEntity(GamePanel gp)
+
+	public ItemEntity(GamePanel gp)
 	{
 		this.gp = gp;
 	}

@@ -30,6 +30,8 @@ public class Room {
 		
 		getTileImage();
 		
+		tileLayout = new int[12][16];
+		
 		for(int i = 0; i<tileLayout.length; i++)
 		{
 			for(int j = 0; j<tileLayout[0].length; j++)
