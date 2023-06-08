@@ -83,7 +83,7 @@ public class Player extends Entity implements ActionListener
 	//Sets the positions to default
 	public void setDefaultValue()
 	{		
-		setX(384);
+		setX(250);
 		setY(288);
 		setSpeed(4);
 		setDirection("down");
@@ -316,7 +316,6 @@ public class Player extends Entity implements ActionListener
 					{
 						setSpeed(0);
 						attacking=true;
-						gp.playEffect(1);
 					}
 					if(keyH.isUpPressed()==true)
 					{

@@ -23,6 +23,8 @@ public class Room {
 	private String type;
 	private int toCaveC;
 	private int toCaveR;
+	private boolean secret;
+	private String secretRoom;
 	public Room(GamePanel gp)
 	{
 		this.gp = gp;
@@ -316,5 +318,17 @@ public class Room {
 	}
 	public void setBombs(ArrayList<useableEntity> bombs) {
 		this.bombs = bombs;
+	}
+	public boolean isSecret() {
+		return secret;
+	}
+	public void setSecret(boolean secret) {
+		this.secret = secret;
+	}
+	public String getSecretRoom() {
+		return secretRoom;
+	}
+	public void setSecretRoom(String secretRoom) {
+		this.secretRoom = secretRoom;
 	}
 }

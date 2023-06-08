@@ -79,22 +79,16 @@ public class CollisionChecker
 					gp.getKeyHandler().setUpPressed(false);
 					int thisX = gp.getPlayer().getX();
 					int thisY = gp.getPlayer().getY();
-					for(int i=0; i<96; i++)
+					for(int i=0; i<48; i++)
 					{
 						rooms.setCurrentRoom(rooms.getSwitchedRoom(curRoom, new Room(gp), i, "cave"));
 						gp.repaint();
-//						if(i%16==0)
-//						{
-//							gp.waitThread(1);
-//						}
-						gp.getPlayer().setX(gp.getPlayer().getX()+((362-thisX)/96));
-						gp.getPlayer().setY(gp.getPlayer().getY()+((518-thisY)/96));
+						
 					}
 					rooms.setCurrentRoomCol(curRoom.getToCaveC());
 					rooms.setCurrentRoomRow(curRoom.getToCaveR());
 					gp.getPlayer().setX(362);
 					gp.getPlayer().setY(518);
-					//rooms.setCurrentRoom(rooms.getRoomArray().get(rooms.getCurrentRoom().getToCaveR()).get(rooms.getCurrentRoom().getToCaveC()));
 
 
 				}

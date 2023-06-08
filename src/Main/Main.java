@@ -17,7 +17,7 @@ public class Main extends JFrame {
 
     public void runGame() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(768, 757);
+        setSize(768, 774);
         setResizable(false);
         setTitle("The Legend of Zelda");
 

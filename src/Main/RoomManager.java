@@ -55,9 +55,13 @@ public class RoomManager {
 				}
 				else if(i==9 && j==4)
 				{
-					Room tempRoom=new Room(gp, "11111111111333111111111118133311111111b33333333311111b33333333331ba1b3333333333333333333333333331dc1d33hgggggggg11111d3e22222222111111de222222221111111e222222221111111e222222221111111e22222222");
+					Room tempRoom=new Room(gp, "11111111111333111111111111133311111111b33333333311111b33333333331ba1b3333333333333333333333333331dc1d33hgggggggg11111d3e22222222111111de222222221111111e222222221111111e222222221111111e22222222");
+					tempRoom.setSecret(true);
+					tempRoom.setSecretRoom("1111111111133311111111111j133311111111b33333333311111b33333333331ba1b3333333333333333333333333331dc1d33hgggggggg11111d3e22222222111111de222222221111111e222222221111111e222222221111111e22222222");
 					tempRoom.addMobs(new Leever(gp,600,150));
 					tempRoom.addMobs(new Leever(gp,420,200));
+					tempRoom.setToCaveC(10);
+					tempRoom.setToCaveR(2);
 					temp.add(tempRoom);
 				}
 				else if(i==9 && j==5)
@@ -100,6 +104,15 @@ public class RoomManager {
 					temp.add(cave);
 					
 				}
+				
+				else if(i==2 && j==10)
+				{
+					Room cave = new Room(gp, "cave");
+					cave.setCaveC(4);
+					cave.setCaveR(9);
+					temp.add(cave);
+					
+				}
 				else if(i==0)
 				{
 					temp.add(new Room(gp, "111111111111111133333333333333333333433333334333333433333333333333334333333433333333333333333333333333333343333333334333333333333333343333333333333343333334333333333333333333331111111331111111"));
@@ -115,7 +128,7 @@ public class RoomManager {
 		}
 		
 		currentRoomRow = 9;
-		currentRoomColumn = 0;
+		currentRoomColumn = 4;
 		this.currentRoom = getRoomArray().get(currentRoomRow).get(currentRoomColumn);
 
 		this.gp = gp;
@@ -316,9 +329,16 @@ public class RoomManager {
 		case "cave":
 			for(int i=0; i<num; i++)
 			{
-				str += "88";
+				str += "8888";
 			}
-			str += rOne.getStr().substring(num*2);
+			try
+			{
+				str += rOne.getStr().substring(num*4);
+			}
+			catch(Exception e)
+			{
+				str += "8";
+			}
 			break;
 		}
 		
