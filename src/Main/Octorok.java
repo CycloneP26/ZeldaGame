@@ -67,7 +67,7 @@ public class Octorok extends Entity
 			setActionLockCounter(0);
 		}
 	}
-	public void update() //Updates the positions and animates entity 
+	public void update()
 	{
 		setAction();
 		setCollisionOn(false);
@@ -81,7 +81,6 @@ public class Octorok extends Entity
 				{
 					if(getY()-getSpeed()>0)
 					{
-						System.out.println("hehehehe");
 						setY(getY()-2*getSpeed());
 					}
 					else
@@ -89,17 +88,17 @@ public class Octorok extends Entity
 						setAction();
 					}
 				}
+
+				break;
 			case "down":
 				if(getX()>0&&getY()>0&&getX()<700&&getY()<500)
 				{
 					if(getY()+getSpeed()<400)
 					{
-						System.out.println(getX());
 						setY(getY()+getSpeed());
 					}
 					else
 					{
-						
 						setAction();
 					}
 				}
@@ -110,7 +109,6 @@ public class Octorok extends Entity
 				{
 					if(getX()-getSpeed()>0)
 					{
-						System.out.println(getX());
 						setX(getX()-getSpeed());
 					}
 					else
@@ -125,7 +123,6 @@ public class Octorok extends Entity
 				{
 					if(getX()+getSpeed()<700)
 					{
-						System.out.println(getX());
 						setX(getX()+getSpeed());
 					}
 					else
@@ -151,6 +148,37 @@ public class Octorok extends Entity
 				spriteNum=1;
 			}
 			spriteCounter=0;
+		}
+	}
+	public void draw(Graphics2D g2) 
+	{
+		BufferedImage image=null;
+
+		//getY()-getGp().getPlayer().getY()+getGp().getPlayer().getScreenY();
+		//if(getX()+getGp().getTileSize()>getGp().getPlayer().getX()-getGp().getPlayer().getScreenX() &&
+		  // getX()-getGp().getTileSize()<getGp().getPlayer().getX()+getGp().getPlayer().getScreenX()&&
+		  // getY()+getGp().getTileSize()>getGp().getPlayer().getY()-getGp().getPlayer().getScreenY()&&
+		  // getY()-getGp().getTileSize()<getGp().getPlayer().getY()+getGp().getPlayer().getScreenY())
+		{
+			switch(getDirection()) {
+			case "up":
+				if(spriteNum==1){image=getUp1();}
+				if(spriteNum==2){image=getUp2();}
+				break;
+			case "down":
+				if(spriteNum==1){image=getDown1();}
+				if(spriteNum==2){image=getDown2();}
+				break;
+			case "left":
+				if(spriteNum==1){image=getLeft1();}
+				if(spriteNum==2){image=getLeft2();}
+				break;
+			case "right":
+				if(spriteNum==1){image=getRight1();}
+				if(spriteNum==2){image=getRight2();}
+				break;
+			}
+			g2.drawImage(image,getX(),getY(),getGp().getTileSize(),getGp().getTileSize(),null);
 		}
 	}
 }

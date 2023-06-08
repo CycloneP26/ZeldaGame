@@ -10,7 +10,7 @@ public class Leever extends Entity {
 		setY(250);
 		setDirection("right");
 		setSpeed(1);
-		
+
 		getImage();
 	}
 
@@ -75,7 +75,7 @@ public class Leever extends Entity {
 						setAction();
 					}
 				}
-				
+
 				break;
 			case "right":
 				if(getX()>0&&getY()>0&&getX()<700&&getY()<700)
@@ -89,11 +89,11 @@ public class Leever extends Entity {
 						setAction();
 					}
 				}
-				
+
 				break;
 
 			}
-			
+
 
 		}
 		spriteCounter++;
@@ -105,12 +105,12 @@ public class Leever extends Entity {
 			}
 			else if(spriteNum==2)
 			{
-			
+
 				spriteNum=3;
 			}
 			else if(spriteNum==3)
 			{
-				
+
 				spriteNum=4;
 			}
 			else if(spriteNum==4)
@@ -143,7 +143,6 @@ public class Leever extends Entity {
 				if(spriteNum==5){image=getLeever2();}
 				break;
 			case "right":
-				System.out.println("heheheheheheh");
 				if(spriteNum==1){image=getLeeverSand();}
 				if(spriteNum==2){image=getLeeverEmerge();}
 				if(spriteNum==3){image=getLeeverEmerge2();}
@@ -155,4 +154,3 @@ public class Leever extends Entity {
 		}
 	}
 }
-

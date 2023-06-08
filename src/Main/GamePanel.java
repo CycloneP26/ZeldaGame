@@ -10,32 +10,56 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 import object.ItemEntity;
-
+/*
+The GamePanel class creates a JPanel that is used to display the entire game. 
+The entire project is threaded and runs on this class. It uses runnable and a 
+GameThread to update the values of all the components. 
+@author Sachin Chhaya
+@author David Kostanyan
+@author Pranay Thatikonda
+@author Christopher Li 
+*/
 public class GamePanel extends JPanel implements Runnable
 {
-	final int originalTileSize=16; //tile size before scale
-	final int scale=3; //scale of the tiles 
-	final int tileSize=originalTileSize*scale; //scaled tile size
-	final int maxScreenCol=16; //#of tiles on width
-	final int maxScreenRow=12; //#of tiles on height
-	final int screenWidth=tileSize*maxScreenCol; //width of screen
-	final int screenHeight=tileSize*maxScreenRow;//width of height
-	private int FPS = 60; //how many times it updates per second
+	//tile size before scale
+	final int originalTileSize=16; 
+	//scale of the tiles 
+	final int scale=3; 
+	//scaled tile size
+	final int tileSize=originalTileSize*scale; 
+	//#of tiles on width
+	final int maxScreenCol=16;
+	//#of tiles on height
+	final int maxScreenRow=12; 
+	//width of screen
+	final int screenWidth=tileSize*maxScreenCol; 
+	//width of height
+	final int screenHeight=tileSize*maxScreenRow;
+	//how many times it updates per second
+	private int FPS = 60; 
+	
 	private Timer timer; //UTILIZATION UNKNOWN AS OF NOW
+	// height of the HUD panel
+    	private int hudHeight = 16 * 3; 
 	
-    	private int hudHeight = 16 * 3; // height of the HUD panel
-	
-	
-	private RoomManager rooms; //Creates a 2D array of rooms
-	private KeyHandler keyH; //Observes the key movements
-	private CollisionChecker cChecker; //Checks collision of all entities
-	private Sound sound = new Sound(); //Creates sound 
-	private Thread gameThread; //Runtime Game loop 
+	//Creates a 2D array of rooms
+	private RoomManager rooms; 
+	//Observes the key movements
+	private KeyHandler keyH; 
+	//Checks collision of all entities
+	private CollisionChecker cChecker; 
+	//Creates sound 
+	private Sound sound = new Sound();
+	//Runtime Game loop 
+	private Thread gameThread; 
 	
 	//Entity and objects 
-	private Player player; //Link field
-	private Entity mobs[]; //Per room, the monsters that exist
-	private ArrayList<ItemEntity> items; //Per room, items that exist 
+	//Link field
+	private Player player; 
+	//Per room, the monsters that exist
+	private Entity mobs[]; 
+	//Per room, items that exist 
+	private ArrayList<ItemEntity> items; 
 	
 	
 	/*
@@ -74,7 +98,7 @@ public class GamePanel extends JPanel implements Runnable
 		gameThread.start();
 		
 	}
-	//SOMEONE COMMENT THIS 
+	//Makes the thread stop for s milliseconds
 	public void waitThread(int s)
 	{
 		try {

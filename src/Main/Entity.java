@@ -53,26 +53,57 @@ public class Entity {
 			switch(getDirection())
 			{
 			case "up":
-				
+				if(worldX>0&&worldY>0&&worldX<700&&worldY<700)
+				{
+					if(worldY-speed>0)
+					{
 						worldY-=speed;
-					
-				
+					}
+					else
+					{
+						setAction();
+					}
+				}
 			case "down":
-				
+				if(worldX>0&&worldY>0&&worldX<700&&worldY<700)
+				{
+					if(worldY+speed<500)
+					{
 						worldY+=speed;
-					
+					}
+					else
+					{
+						setAction();
+					}
+				}
 
 				break;
 			case "left":
-				
+				if(worldX>0&&worldY>0&&worldX<700&&worldY<700)
+				{
+					if(worldX-speed>0)
+					{
 						worldX-=speed;
-					
+					}
+					else
+					{
+						setAction();
+					}
+				}
 
 				break;
 			case "right":
-				
+				if(worldX>0&&worldY>0&&worldX<700&&worldY<700)
+				{
+					if(worldX+speed<700)
+					{
 						worldX+=speed;
-					
+					}
+					else
+					{
+						setAction();
+					}
+				}
 
 				break;
 

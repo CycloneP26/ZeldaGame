@@ -3,6 +3,7 @@
 import java.util.ArrayList;
 
 import object.ItemEntity;
+import object.Rupee;
 
 public class CollisionChecker 
 {
@@ -47,11 +48,13 @@ public class CollisionChecker
 		int entityTopRow = entityTopY / gp.tileSize;
 		int entityBottomRow = entityBottomY / gp.tileSize;
 		
-		int tileNum1;
-		int tileNum2;
+		
 	
 		
 		Room curRoom =rooms.getRoomArray().get(curRow).get(curCol);
+		
+		int tileNum1;
+		int tileNum2;
 		
 		switch(entity.getDirection())
 		{
@@ -70,7 +73,31 @@ public class CollisionChecker
 					entity.setCollisionOn(true);
 					
 				}
-				
+				if(curRoom.getTile()[tileNum1].getTraverse() == true || curRoom.getTile()[tileNum2].getTraverse() == true)
+				{
+					gp.getKeyHandler().setOn(false);
+					gp.getKeyHandler().setUpPressed(false);
+					int thisX = gp.getPlayer().getX();
+					int thisY = gp.getPlayer().getY();
+					for(int i=0; i<96; i++)
+					{
+						rooms.setCurrentRoom(rooms.getSwitchedRoom(curRoom, new Room(gp), i, "cave"));
+						gp.repaint();
+//						if(i%16==0)
+//						{
+//							gp.waitThread(1);
+//						}
+						gp.getPlayer().setX(gp.getPlayer().getX()+((362-thisX)/96));
+						gp.getPlayer().setY(gp.getPlayer().getY()+((518-thisY)/96));
+					}
+					rooms.setCurrentRoomCol(curRoom.getToCaveC());
+					rooms.setCurrentRoomRow(curRoom.getToCaveR());
+					gp.getPlayer().setX(362);
+					gp.getPlayer().setY(518);
+					//rooms.setCurrentRoom(rooms.getRoomArray().get(rooms.getCurrentRoom().getToCaveR()).get(rooms.getCurrentRoom().getToCaveC()));
+
+
+				}
 			}
 			
 			
@@ -169,13 +196,13 @@ public class CollisionChecker
 						if(e.getAttacking())
 						{
 							temp.get(i).setHealth(temp.get(i).getHealth()-1);
-							System.out.println("attack");
+							
 						}
 						else
 						{
 							e.setHealth(e.getHealth()-1);
 							//e.getSolidArea().y += e.getSpeed();
-							System.out.println("hurt");
+							
 						}
 					}
 					break;
@@ -186,13 +213,13 @@ public class CollisionChecker
 						if(e.getAttacking())
 						{
 							temp.get(i).setHealth(temp.get(i).getHealth()-1);
-							System.out.println("attack");
+							
 						}
 						else
 						{
 							e.setHealth(e.getHealth()-1);
 							//e.getSolidArea().y += e.getSpeed();
-							System.out.println("hurt");
+							
 						}
 					}
 					break;
@@ -203,13 +230,13 @@ public class CollisionChecker
 						if(e.getAttacking())
 						{
 							temp.get(i).setHealth(temp.get(i).getHealth()-1);
-							System.out.println("attack");
+							
 						}
 						else
 						{
 							e.setHealth(e.getHealth()-1);
 							//e.getSolidArea().y += e.getSpeed();
-							System.out.println("hurt");
+							
 						}
 					}
 					break;
@@ -220,13 +247,13 @@ public class CollisionChecker
 						if(e.getAttacking())
 						{
 							temp.get(i).setHealth(temp.get(i).getHealth()-1);
-							System.out.println("attack");
+							
 						}
 						else
 						{
 							e.setHealth(e.getHealth()-1);
 							//e.getSolidArea().y += e.getSpeed();
-							System.out.println("hurt");
+							
 						}
 					}
 					break;
@@ -239,6 +266,7 @@ public class CollisionChecker
 			}
 			if(temp.get(i).getHealth()<=0)
 			{
+				rooms.getCurrentRoom().addItem(new Rupee(gp, temp.get(i).getX(), temp.get(i).getY()));
 				temp.remove(i);
 			}
 		}
