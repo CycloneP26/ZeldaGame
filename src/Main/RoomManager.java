@@ -25,7 +25,7 @@ public class RoomManager {
 			{
 				if(i==9 && j==0)
 				{
-					Room tempRoom = new Room(gp, "555555533555555555558563355555555556333335555555556333333555555556333333375555553333333333333333553333333333335555333333333333555533333333333355553333333333335555555555555555555555555555555555");
+					Room tempRoom = new Room(gp, "55555553355555555555j563355555555556333335555555556333333555555556333333375555555333333333333333553333333333335555333333333333555533333333333355553333333333335555555555555555555555555555555555");
 					tempRoom.addMobs(new Octorok(gp, 250, 250));
 					tempRoom.addItem(new Key(gp, 500, 350));
 					tempRoom.addItem(new Rupee(gp, 400, 350));
@@ -112,7 +112,7 @@ public class RoomManager {
 		}
 		
 		currentRoomRow = 9;
-		currentRoomColumn = 2;
+		currentRoomColumn = 0;
 		this.currentRoom = getRoomArray().get(currentRoomRow).get(currentRoomColumn);
 
 		this.gp = gp;
@@ -149,6 +149,16 @@ public class RoomManager {
 		return rooms;
 	}
 	
+	public void setCurrentRoomRow(int c)
+	{
+		currentRoomRow = c;
+	}
+
+	public void setCurrentRoomCol(int c)
+	{
+		currentRoomColumn = c;
+	}
+	
 	public void update()
 	{
 		
@@ -157,8 +167,8 @@ public class RoomManager {
 		
 		if(player.getY()<0)
 		{
-//			if(isRoomAvailable(currentRoomRow-1, currentRoomColumn))
-//			{
+			if(isRoomAvailable(currentRoomRow-1, currentRoomColumn))
+			{
 				gp.getKeyHandler().setOn(false);
 				gp.getKeyHandler().setUpPressed(false);
 				
@@ -171,13 +181,13 @@ public class RoomManager {
 				}
 				currentRoomRow--;
 				cChecker.setCurRow(currentRoomRow);
-			//}
+			}
 			
 		}
 		else if(player.getX()<0)
 		{
-//			if(isRoomAvailable(currentRoomRow, currentRoomColumn-1))
-//			{
+			if(isRoomAvailable(currentRoomRow, currentRoomColumn-1))
+			{
 				gp.getKeyHandler().setOn(false);
 				gp.getKeyHandler().setLeftPressed(false);
 				
@@ -190,15 +200,11 @@ public class RoomManager {
 				player.setX(gp.screenWidth-40);
 				currentRoomColumn--;
 				cChecker.setCurCol(currentRoomColumn);
-			//}
+			}
 		}
 		else if(player.getY() + 40>gp.screenHeight)
 		{
-//			if(isRoomAvailable(currentRoomRow+1, currentRoomColumn))
-//			{
-				
-				
-			//}
+			
 			if(currentRoom.getType().equals("cave"))
 			{
 				
@@ -207,7 +213,7 @@ public class RoomManager {
 				player.setY(250);
 				player.setX(250);
 			}
-			else
+			else if(isRoomAvailable(currentRoomRow+1, currentRoomColumn))
 			{
 				gp.getKeyHandler().setOn(false);
 				gp.getKeyHandler().setDownPressed(false);
@@ -222,12 +228,13 @@ public class RoomManager {
 				currentRoomRow++;
 				cChecker.setCurRow(currentRoomRow);
 			}
+			
 		}
 		else if(player.getX()+40>gp.screenWidth)
 		{
 			System.out.println("hi");
-//			if(isRoomAvailable(currentRoomRow, currentRoomColumn+1))
-//			{
+			if(isRoomAvailable(currentRoomRow, currentRoomColumn+1))
+			{
 				
 				gp.getKeyHandler().setOn(false);
 				gp.getKeyHandler().setRightPressed(false);
@@ -241,7 +248,7 @@ public class RoomManager {
 				player.setX(0);
 				currentRoomColumn++;
 				cChecker.setCurCol(currentRoomColumn);
-			//}
+			}
 		}
 		gp.getKeyHandler().setOn(true);
 		currentRoom = getRoomArray().get(currentRoomRow).get(currentRoomColumn);
@@ -303,6 +310,13 @@ public class RoomManager {
 			}
 			gp.getPlayer().setX((48*16)-(48*num));
 			break;
+		case "cave":
+			for(int i=0; i<num; i++)
+			{
+				str += "88";
+			}
+			str += rOne.getStr().substring(num);
+			break;
 		}
 		
 		
@@ -334,29 +348,29 @@ public class RoomManager {
 		
 	}
 	
-//	public boolean isRoomAvailable(int row, int column)
-//	{
-//		if(row<0)
-//		{
-//			return false;
-//		}
-//		if(column<0)
-//		{
-//			return false;
-//		}
-//		if(row>=rooms.size()-1)
-//		{
-//			return false;
-//		}
-//		if(column>=rooms.get(0).size()-1)
-//		{
-//			return false;
-//		}
-//		if(rooms.get(row).get(column).equals(null))
-//		{
-//			return false;
-//		}
-//		
-//		return true;
-//	}
+	public boolean isRoomAvailable(int row, int column)
+	{
+		if(row<0)
+		{
+			return false;
+		}
+		if(column<0)
+		{
+			return false;
+		}
+		if(row>=rooms.size()-1)
+		{
+			return false;
+		}
+		if(column>=rooms.get(0).size()-1)
+		{
+			return false;
+		}
+		if(rooms.get(row).get(column).equals(null))
+		{
+			return false;
+		}
+		
+		return true;
+	}
 }
