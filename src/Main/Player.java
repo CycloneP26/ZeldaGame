@@ -563,10 +563,23 @@ public class Player extends Entity implements ActionListener
 					{
 						gp.getRooms().getCurrentRoom().getBombs().add(new Bomb(gp));
 						System.out.println(gp.getRooms().getCurrentRoom().isSecret());
+						
 						if(gp.getRooms().getCurrentRoom().isSecret())
 						{
 							System.out.println("secret :O");
-							gp.getRooms().getCurrentRoom().setSecretFound(true);
+							int[] coords = gp.getRooms().getCurrentRoom().secretCoords(gp.getRooms().getCurrentRoom().getSecretRoom());
+							System.out.println(gp.getRooms().getCurrentRoom().getBombs().get(0).getX());
+							if(gp.getRooms().getCurrentRoom().getBombs().get(0).getX() <= coords[1]+48
+							&& gp.getRooms().getCurrentRoom().getBombs().get(0).getX()+144 >= coords[1]
+							&& gp.getRooms().getCurrentRoom().getBombs().get(0).getY() <= coords[0]+48
+							&& gp.getRooms().getCurrentRoom().getBombs().get(0).getY()+144 >= coords[0])
+							{
+								gp.getRooms().getCurrentRoom().setSecretFound(true);
+							}
+							else
+							{
+								System.out.println("failed");
+							}
 						}
 					}
 					
@@ -597,6 +610,25 @@ public class Player extends Entity implements ActionListener
 					if(gp.getRooms().getCurrentRoom().getBombs().size()==0) 
 					{
 						gp.getRooms().getCurrentRoom().getBombs().add(new Bomb(gp));
+						System.out.println(gp.getRooms().getCurrentRoom().isSecret());
+						
+						if(gp.getRooms().getCurrentRoom().isSecret())
+						{
+							System.out.println("secret :O");
+							int[] coords = gp.getRooms().getCurrentRoom().secretCoords(gp.getRooms().getCurrentRoom().getSecretRoom());
+							System.out.println(gp.getRooms().getCurrentRoom().getBombs().get(0).getX());
+							if(gp.getRooms().getCurrentRoom().getBombs().get(0).getX() <= coords[1]+48
+							&& gp.getRooms().getCurrentRoom().getBombs().get(0).getX()+144 >= coords[1]
+							&& gp.getRooms().getCurrentRoom().getBombs().get(0).getY() <= coords[0]+48
+							&& gp.getRooms().getCurrentRoom().getBombs().get(0).getY()+144 >= coords[0])
+							{
+								gp.getRooms().getCurrentRoom().setSecretFound(true);
+							}
+							else
+							{
+								System.out.println("failed");
+							}
+						}
 					}
 
 				}
@@ -625,6 +657,25 @@ public class Player extends Entity implements ActionListener
 					if(gp.getRooms().getCurrentRoom().getBombs().size()==0) 
 					{
 						gp.getRooms().getCurrentRoom().getBombs().add(new Bomb(gp));
+						System.out.println(gp.getRooms().getCurrentRoom().isSecret());
+						
+						if(gp.getRooms().getCurrentRoom().isSecret())
+						{
+							System.out.println("secret :O");
+							int[] coords = gp.getRooms().getCurrentRoom().secretCoords(gp.getRooms().getCurrentRoom().getSecretRoom());
+							System.out.println(gp.getRooms().getCurrentRoom().getBombs().get(0).getX());
+							if(gp.getRooms().getCurrentRoom().getBombs().get(0).getX() <= coords[1]+48
+							&& gp.getRooms().getCurrentRoom().getBombs().get(0).getX()+144 >= coords[1]
+							&& gp.getRooms().getCurrentRoom().getBombs().get(0).getY() <= coords[0]+48
+							&& gp.getRooms().getCurrentRoom().getBombs().get(0).getY()+144 >= coords[0])
+							{
+								gp.getRooms().getCurrentRoom().setSecretFound(true);
+							}
+							else
+							{
+								System.out.println("failed");
+							}
+						}
 					}
 
 				}
@@ -654,6 +705,25 @@ public class Player extends Entity implements ActionListener
 					if(gp.getRooms().getCurrentRoom().getBombs().size()==0) 
 					{
 						gp.getRooms().getCurrentRoom().getBombs().add(new Bomb(gp));
+						System.out.println(gp.getRooms().getCurrentRoom().isSecret());
+						
+						if(gp.getRooms().getCurrentRoom().isSecret())
+						{
+							System.out.println("secret :O");
+							int[] coords = gp.getRooms().getCurrentRoom().secretCoords(gp.getRooms().getCurrentRoom().getSecretRoom());
+							System.out.println(gp.getRooms().getCurrentRoom().getBombs().get(0).getX());
+							if(gp.getRooms().getCurrentRoom().getBombs().get(0).getX() <= coords[1]+48
+							&& gp.getRooms().getCurrentRoom().getBombs().get(0).getX()+144 >= coords[1]
+							&& gp.getRooms().getCurrentRoom().getBombs().get(0).getY() <= coords[0]+48
+							&& gp.getRooms().getCurrentRoom().getBombs().get(0).getY()+144 >= coords[0])
+							{
+								gp.getRooms().getCurrentRoom().setSecretFound(true);
+							}
+							else
+							{
+								System.out.println("failed");
+							}
+						}
 					}
 				}
 				else

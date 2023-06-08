@@ -193,9 +193,16 @@ public class RoomManager {
 			Room secretRoom = new Room(gp, ogRoom.getSecretRoom());
 			secretRoom.setToCaveC(ogRoom.getToCaveC());
 			secretRoom.setToCaveR(ogRoom.getToCaveR());
+			for(int i = 0; i<ogRoom.getMobs().size(); i++)
+			{
+				secretRoom.getMobs().add(ogRoom.getMobs().get(i));
+			}
+			for(int i = 0; i<ogRoom.getItems().size(); i++)
+			{
+				secretRoom.getItems().add(ogRoom.getItems().get(i));
+			}
 			rooms.get(currentRoomRow).remove(currentRoomColumn);
 			rooms.get(currentRoomRow).add(currentRoomColumn, secretRoom);
-			
 		}
 		if(player.getY()<0)
 		{

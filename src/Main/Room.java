@@ -272,6 +272,18 @@ public class Room {
 			}
 		}
 	}
+	
+	public int[] secretCoords(String str1)
+	{
+		int[] retArr = new int[2];
+		int blockX = (str1.indexOf("j")/16)*48;
+		int blockY = (str1.indexOf("j")%16)*48;
+		retArr[0] = blockX;
+		retArr[1] = blockY;
+		System.out.println(blockX + ", " + blockY);
+		return retArr;
+	}
+	
 	public String getStr() {
 		return str;
 	}
@@ -338,4 +350,5 @@ public class Room {
 	public void setSecretFound(boolean secretFound) {
 		this.secretFound = secretFound;
 	}
+	
 }
