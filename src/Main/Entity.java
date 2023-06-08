@@ -7,34 +7,30 @@ import java.io.IOException;
 import java.awt.Graphics2D;
 
 public class Entity {
-	private GamePanel gp;   //Be able to access the main GamePanel to add components
-	private int worldX,worldY; //position of entity 
-	private int speed; //speed of the entity 
-	private BufferedImage up1, up2, down1, down2, left1, left2, right1, right2; //all images for Link's movement 
-	private BufferedImage swordUp,swordUp1,swordLeft,swordLeft1,swordRight,swordRight1, //images for sword movement 
+	private GamePanel gp;
+	private int worldX,worldY;
+	private int speed;
+	private BufferedImage up1, up2, down1, down2, left1, left2, right1, right2;
+	private BufferedImage swordUp,swordUp1,swordLeft,swordLeft1,swordRight,swordRight1,
 	swordDown,swordDown1, itemUp, itemDown, itemRight, itemLeft;
-	private BufferedImage OctorokUp,OctorokUp1,OctorokDown,OctorokDown1,OctorokLeft,OctorokLeft1,OctorokRight,OctorokRight1; //Images for Octorok
-	private BufferedImage SpiderStill,SpiderJump;
-	private BufferedImage Rock;
-	private String direction; //Direction that the entity is facing
-	private String direction2;
-	private int health; //health of the entity 
+	private BufferedImage OctorokUp,OctorokUp1,OctorokDown,OctorokDown1,OctorokLeft,OctorokLeft1,OctorokRight,OctorokRight1;
+	private String direction;
+
+	private int solidAreaDefX, solidAreaDefY;
 	
-	private int solidAreaDefX, solidAreaDefY; //default area of entity to check collision
+	public int spriteCounter=0;
+	public int spriteNum=1;
 	
-	public int spriteCounter=0; //Updates with game thread to animate
-	public int spriteNum=1; //Updates with spriteCounter 
-	
-	boolean attacking=false; 
+	boolean attacking=false;
 	boolean bomb = false;
-	boolean itemUse = false;
+	private boolean itemUse = false;
 	
-	private Rectangle solidArea=new Rectangle(0,0,48,48); //area of entity to check collision
-	private boolean collisionOn = false; //whether the entity will use collision
-	private int actionLockCounter=0; //SOMEONE COMMENT THIS 
+	private Rectangle solidArea=new Rectangle(0,0,48,48);
+	private boolean collisionOn = false;
+	private int actionLockCounter=0;
 	
 	
-	public Entity(GamePanel gp) //constructor for all Entity, just to access the gamePanel
+	public Entity(GamePanel gp)
 	{
 		this.setGp(gp);
 	}
@@ -42,7 +38,7 @@ public class Entity {
 	{
 
 	}
-	public void update() //Updates the positions and animates entity 
+	public void update()
 	{
 		setAction();
 		collisionOn=false;
@@ -52,57 +48,16 @@ public class Entity {
 			switch(getDirection())
 			{
 			case "up":
-				if(worldX>0&&worldY>0&&worldX<700&&worldY<700)
-				{
-					if(worldY-speed>0)
-					{
-						worldY-=speed;
-					}
-					else
-					{
-						setAction();
-					}
-				}
+				worldY-=speed;
+				break;
 			case "down":
-				if(worldX>0&&worldY>0&&worldX<700&&worldY<700)
-				{
-					if(worldY+speed<500)
-					{
-						worldY+=speed;
-					}
-					else
-					{
-						setAction();
-					}
-				}
-
+				worldY+=speed;
 				break;
 			case "left":
-				if(worldX>0&&worldY>0&&worldX<700&&worldY<700)
-				{
-					if(worldX-speed>0)
-					{
-						worldX-=speed;
-					}
-					else
-					{
-						setAction();
-					}
-				}
-
+				worldX-=speed;
 				break;
 			case "right":
-				if(worldX>0&&worldY>0&&worldX<700&&worldY<700)
-				{
-					if(worldX+speed<700)
-					{
-						worldX+=speed;
-					}
-					else
-					{
-						setAction();
-					}
-				}
+				worldX+=speed;
 
 				break;
 
@@ -123,7 +78,8 @@ public class Entity {
 			spriteCounter=0;
 		}
 	}
-	public void draw(Graphics2D g2) //@param Graphics2D is taken to draw the images
+	
+	public void draw(Graphics2D g2) 
 	{
 		BufferedImage image=null;
 
@@ -155,6 +111,7 @@ public class Entity {
 			g2.drawImage(image,worldX,worldY,gp.getTileSize(),gp.getTileSize(),null);
 		}
 	}
+	
 	public int getTileSize()
 	{
 		return getGp().tileSize;
@@ -364,7 +321,7 @@ public class Entity {
 	public void setCollisionOn(boolean collisionOn) {
 		this.collisionOn = collisionOn;
 	}
-	public BufferedImage setup(String imagePath,int width,int height) //image pathing so is works properly with gamePanel
+	public BufferedImage setup(String imagePath,int width,int height)
 	{
 		UtilityTool uTool=new UtilityTool();
 		BufferedImage image=null;
@@ -377,7 +334,7 @@ public class Entity {
 		{
 			e.printStackTrace();
 		}
-		return image; //returns the image after it is pathed correctly
+		return image;
 	}
 	public GamePanel getGp() {
 		return gp;
@@ -403,37 +360,13 @@ public class Entity {
 	public void setSolidAreaDefX(int solidAreaDefX) {
 		this.solidAreaDefX = solidAreaDefX;
 	}
-	public void setHealth(int h)
+	
+	public boolean getItemUse()
 	{
-		health = h;
+		return itemUse;
 	}
-	public int getHealth()
+	public void setItemUse(boolean use)
 	{
-		return health;
-	}
-	public BufferedImage getSpiderStill() {
-		return SpiderStill;
-	}
-	public void setSpiderStill(BufferedImage spiderStill) {
-		SpiderStill = spiderStill;
-	}
-	public BufferedImage getSpiderJump() {
-		return SpiderJump;
-	}
-	public void setSpiderJump(BufferedImage spiderJump) {
-		SpiderJump = spiderJump;
-	}
-	public String getDirection2() {
-		return direction2;
-	}
-	public void setDirection2(String direction2) {
-		this.direction2 = direction2;
-	}
-
-	public BufferedImage getRock() {
-		return Rock;
-	}
-	public void setRock(BufferedImage rock) {
-		Rock = rock;
+		itemUse = use;
 	}
 }
