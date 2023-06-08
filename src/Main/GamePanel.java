@@ -98,7 +98,7 @@ public class GamePanel extends JPanel implements Runnable
 		gameThread.start();
 		
 	}
-	//Makes the thread stop for s milliseconds
+	//SOMEONE COMMENT THIS 
 	public void waitThread(int s)
 	{
 		try {
@@ -172,15 +172,6 @@ public class GamePanel extends JPanel implements Runnable
 				mobs.get(i).update();
 			}
 		}
-		
-		
-		for(int i=0; i<rooms.getCurrentRoom().getBombs().size();i++)
-		{
-			if(rooms.getCurrentRoom().getBombs().get(i)!=null)
-			{
-				rooms.getCurrentRoom().getBombs().get(i).updateBomb();
-			}
-		}
 	}
 	
 	public Player getPlayer()
@@ -233,14 +224,6 @@ public class GamePanel extends JPanel implements Runnable
 			if(mobs.get(i)!=null)
 			{
 				mobs.get(i).draw(g2);
-			}
-		}
-		
-		for(int i=0; i<rooms.getCurrentRoom().getBombs().size();i++)
-		{
-			if(rooms.getCurrentRoom().getBombs().get(i)!=null)
-			{
-				rooms.getCurrentRoom().getBombs().get(i).drawItem(g2);
 			}
 		}
 		
