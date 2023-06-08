@@ -135,6 +135,23 @@ public class Player extends Entity implements ActionListener
 		{
 			spriteNum=2;
 		}
+		if(spriteCounter == 10)
+		{
+			
+			Sword sword = new Sword(gp, getDirection(), this);
+			
+		}
+		if(spriteCounter == 15)
+		{
+			
+			for(int i = 0; i < gp.getRooms().getCurrentRoom().getMobs().size(); i++)
+			{
+				
+				gp.getRooms().getCurrentRoom().getMobs().get(i).setKnocked(false);
+				
+			}
+			
+		}
 		if(spriteCounter>25)
 		{
 			spriteNum=2;
@@ -163,168 +180,275 @@ public class Player extends Entity implements ActionListener
 			itemUse =false;
 		}
 	}
+	
+	public void knocked()
+	{
+		
+		spriteCounter++;
+		
+		setSpeed(10);
+		getGp().getCollision().checkKnockTile(this);
+		
+		
+		if(isCollisionOn() == false)
+		{
+				
+				switch(getKnockedDir())
+				{
+				
+				case "up":
+					
+//					if(!rooms.isRoomAvailable(rooms.getRoomRow() - 1, rooms.getRoomColumn()))
+//					{
+						if(getY() > 0)
+						{
+							setY(getY()-getSpeed());
+						}
+					//}
+					else
+					{
+						
+						setY(getY()-getSpeed());
+						
+					}
+					break;
+				case "down":
+					
+//					if(!rooms.isRoomAvailable(rooms.getRoomRow() + 1, rooms.getRoomColumn()))
+//					{
+						if(getY() < getGp().screenHeight - 50)
+						{
+							setY(getY()+getSpeed());
+						}
+//					}
+					else
+					{
+						
+						setY(getY()+getSpeed());
+						
+					}
+					
+					break;
+				case "left":
+					
+//					if(!rooms.isRoomAvailable(rooms.getRoomRow(), rooms.getRoomColumn() - 1))
+//					{
+						if(getX() > 0)
+						{
+							setX(getX()-getSpeed());
+						}
+					//}
+					else
+					{
+						
+						setX(getX()-getSpeed());
+						
+					}
+					
+					break;
+				case "right":
+//					if(!rooms.isRoomAvailable(rooms.getRoomRow(), rooms.getRoomColumn() + 1))
+//					{
+						if(getX() < getGp().screenWidth - 45)
+						{
+							setX(getX()+getSpeed());
+						}
+//					}
+					else
+					{
+						
+						setX(getX()+getSpeed());
+						
+					}
+					
+					break;
+				
+				}
+			
+		}
+		
+		if(spriteCounter>10)
+		{
+			setKnocked(false);
+		}
+		
+	}
+	
 	//Updates the player movements and checks the collisions 
+
 	public void update()
 	{
-		//movement and attacking
-		if(attacking==true)
+		
 		{
-			attacking();
-		}
-		else if (itemUse == true)
-		{
-			item();
-		}
-		else if(keyH.isUpPressed()==true||keyH.isDownPressed()==true
-			||keyH.isLeftPressed()==true
-			||keyH.isRightPressed()==true
-			||keyH.isSwordPressed()==true
-			||keyH.isbItem() == true)
-		{
-			if(keyH.isbItem() == true)
-			{
-				itemUse = true;
-			}
-			if(keyH.isSwordPressed()==true)
-			{
-				setSpeed(0);
-				attacking=true;
-				gp.playEffect(1);
-			}
-			if(keyH.isUpPressed()==true)
-			{
-				if (keyH.isbItem() == true)
-				{
-					itemUse = true;
-				}
-				setSpeed(4);
-				setDirection("up");
-			}
-			else if(keyH.isDownPressed()==true)
-			{
-				if (keyH.isbItem() == true)
-				{
-					itemUse = true;
-				}
-				setSpeed(4);
-				setDirection("down");
-			}
-			else if(keyH.isLeftPressed()==true)
-			{
-				if (keyH.isbItem() == true)
-				{
-					itemUse = true;
-				}
-				setSpeed(4);
-				setDirection("left");
-			}
-			else if(keyH.isRightPressed()==true)
-			{
-				if (keyH.isbItem() == true)
-				{
-					itemUse = true;
-				}
-				setSpeed(4);
-				setDirection("right");
-			}
 			
+			gp.getCollision().checkFight(this);
 			
-			setCollisionOn(false);
-			getGp().getCollision().checkTile(this);
-			int index = getGp().getCollision().checkObject(this, true);
-			int index2 = getGp().getCollision().checkFight(this, true);
-			pickUpObj(index);
-			
-			if(isCollisionOn() == false)
+			//movement and attacking
+			if(getKnocked())
 			{
-					
-					switch(getDirection())
-					{
-					
-					case "up":
-						
-//						if(!rooms.isRoomAvailable(rooms.getRoomRow() - 1, rooms.getRoomColumn()))
-//						{
-							if(getY() > 0)
-							{
-								setY(getY()-getSpeed());
-							}
-						//}
-						else
-						{
-							
-							setY(getY()-getSpeed());
-							
-						}
-						break;
-					case "down":
-						
-//						if(!rooms.isRoomAvailable(rooms.getRoomRow() + 1, rooms.getRoomColumn()))
-//						{
-							if(getY() < getGp().screenHeight - 50)
-							{
-								setY(getY()+getSpeed());
-							}
-//						}
-						else
-						{
-							
-							setY(getY()+getSpeed());
-							
-						}
-						
-						break;
-					case "left":
-						
-//						if(!rooms.isRoomAvailable(rooms.getRoomRow(), rooms.getRoomColumn() - 1))
-//						{
-							if(getX() > 0)
-							{
-								setX(getX()-getSpeed());
-							}
-						//}
-						else
-						{
-							
-							setX(getX()-getSpeed());
-							
-						}
-						
-						break;
-					case "right":
-//						if(!rooms.isRoomAvailable(rooms.getRoomRow(), rooms.getRoomColumn() + 1))
-//						{
-							if(getX() < getGp().screenWidth - 45)
-							{
-								setX(getX()+getSpeed());
-							}
-//						}
-						else
-						{
-							
-							setX(getX()+getSpeed());
-							
-						}
-						
-						break;
-					
-					}
+				
+				knocked();
 				
 			}
 			
-			spriteCounter++;
-			if(spriteCounter>12) 
+			if(attacking==true)
 			{
-				if(spriteNum==1)
-				{
-					spriteNum=2;
-				}
-				else if(spriteNum==2)
-				{
-					spriteNum=1;
-				}
-				spriteCounter=0;
+				attacking();
 			}
+			else if (itemUse == true)
+			{
+				item();
+			}
+			else if(keyH.isUpPressed()==true||keyH.isDownPressed()==true
+				||keyH.isLeftPressed()==true
+				||keyH.isRightPressed()==true
+				||keyH.isSwordPressed()==true
+				||keyH.isbItem() == true)
+			{
+				if(keyH.isbItem() == true)
+				{
+					itemUse = true;
+				}
+				if(keyH.isSwordPressed()==true)
+				{
+					setSpeed(0);
+					attacking=true;
+				}
+				if(keyH.isUpPressed()==true)
+				{
+					if (keyH.isbItem() == true)
+					{
+						itemUse = true;
+					}
+					setSpeed(3);
+					setDirection("up");
+				}
+				else if(keyH.isDownPressed()==true)
+				{
+					if (keyH.isbItem() == true)
+					{
+						itemUse = true;
+					}
+					setSpeed(3);
+					setDirection("down");
+				}
+				else if(keyH.isLeftPressed()==true)
+				{
+					if (keyH.isbItem() == true)
+					{
+						itemUse = true;
+					}
+					setSpeed(3);
+					setDirection("left");
+				}
+				else if(keyH.isRightPressed()==true)
+				{
+					if (keyH.isbItem() == true)
+					{
+						itemUse = true;
+					}
+					setSpeed(3);
+					setDirection("right");
+				}
+				
+				
+				setCollisionOn(false);
+				getGp().getCollision().checkTile(this);
+				int index = getGp().getCollision().checkObject(this, true);
+				pickUpObj(index);
+				
+				if(isCollisionOn() == false)
+				{
+						
+						switch(getDirection())
+						{
+						
+						case "up":
+							
+//							if(!rooms.isRoomAvailable(rooms.getRoomRow() - 1, rooms.getRoomColumn()))
+//							{
+								if(getY() > 0)
+								{
+									setY(getY()-getSpeed());
+								}
+							//}
+							else
+							{
+								
+								setY(getY()-getSpeed());
+								
+							}
+							break;
+						case "down":
+							
+//							if(!rooms.isRoomAvailable(rooms.getRoomRow() + 1, rooms.getRoomColumn()))
+//							{
+								if(getY() < getGp().screenHeight - 50)
+								{
+									setY(getY()+getSpeed());
+								}
+//							}
+							else
+							{
+								
+								setY(getY()+getSpeed());
+								
+							}
+							
+							break;
+						case "left":
+							
+//							if(!rooms.isRoomAvailable(rooms.getRoomRow(), rooms.getRoomColumn() - 1))
+//							{
+								if(getX() > 0)
+								{
+									setX(getX()-getSpeed());
+								}
+							//}
+							else
+							{
+								
+								setX(getX()-getSpeed());
+								
+							}
+							
+							break;
+						case "right":
+//							if(!rooms.isRoomAvailable(rooms.getRoomRow(), rooms.getRoomColumn() + 1))
+//							{
+								if(getX() < getGp().screenWidth - 45)
+								{
+									setX(getX()+getSpeed());
+								}
+//							}
+							else
+							{
+								
+								setX(getX()+getSpeed());
+								
+							}
+							
+							break;
+						
+						}
+					
+				}
+				
+				spriteCounter++;
+				if(spriteCounter>12) 
+				{
+					if(spriteNum==1)
+					{
+						spriteNum=2;
+					}
+					else if(spriteNum==2)
+					{
+						spriteNum=1;
+					}
+					spriteCounter=0;
+				}
+			}
+			
 		}
 		
 	}

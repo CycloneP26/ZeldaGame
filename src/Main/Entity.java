@@ -15,11 +15,12 @@ public class Entity {
 	swordDown,swordDown1, itemUp, itemDown, itemRight, itemLeft;
 	private BufferedImage OctorokUp,OctorokUp1,OctorokDown,OctorokDown1,OctorokLeft,OctorokLeft1,OctorokRight,OctorokRight1; //Images for Octorok
 	private BufferedImage SpiderStill,SpiderJump;
-	private BufferedImage LeeverSand, LeeverEmerge, LeeverEmerge2, Leever1, Leever2;
 	private BufferedImage Rock;
 	private String direction; //Direction that the entity is facing
 	private String direction2;
 	private int health; //health of the entity 
+	private boolean knocked;
+	private String knockedDir;
 	
 	private int solidAreaDefX, solidAreaDefY; //default area of entity to check collision
 	
@@ -437,34 +438,16 @@ public class Entity {
 	public void setRock(BufferedImage rock) {
 		Rock = rock;
 	}
-	public BufferedImage getLeeverSand() {
-		return LeeverSand;
+	public boolean getKnocked() {
+		return knocked;
 	}
-	public void setLeeverSand(BufferedImage leeverSand) {
-		LeeverSand = leeverSand;
+	public void setKnocked(boolean knocked) {
+		this.knocked = knocked;
 	}
-	public BufferedImage getLeeverEmerge() {
-		return LeeverEmerge;
+	public String getKnockedDir() {
+		return knockedDir;
 	}
-	public void setLeeverEmerge(BufferedImage leeverEmerge) {
-		LeeverEmerge = leeverEmerge;
-	}
-	public BufferedImage getLeeverEmerge2() {
-		return LeeverEmerge2;
-	}
-	public void setLeeverEmerge2(BufferedImage leeverEmerge2) {
-		LeeverEmerge2 = leeverEmerge2;
-	}
-	public BufferedImage getLeever1() {
-		return Leever1;
-	}
-	public void setLeever1(BufferedImage leever1) {
-		Leever1 = leever1;
-	}
-	public BufferedImage getLeever2() {
-		return Leever2;
-	}
-	public void setLeever2(BufferedImage leever2) {
-		Leever2 = leever2;
+	public void setKnockedDir(String knockedDir) {
+		this.knockedDir = knockedDir;
 	}
 }
