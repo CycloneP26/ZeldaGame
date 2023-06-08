@@ -20,6 +20,8 @@ public class Entity {
 	private String direction; //Direction that the entity is facing
 	private String direction2;
 	private int health; //health of the entity 
+	private boolean knocked;
+	private String knockedDir;
 	
 	private int solidAreaDefX, solidAreaDefY; //default area of entity to check collision
 	
@@ -469,5 +471,17 @@ public class Entity {
 	public void setItemUse(boolean use)
 	{
 		itemUse = use;
+	}
+	public boolean getKnocked() {
+		return knocked;
+	}
+	public void setKnocked(boolean knocked) {
+		this.knocked = knocked;
+	}
+	public String getKnockedDir() {
+		return knockedDir;
+	}
+	public void setKnockedDir(String knockedDir) {
+		this.knockedDir = knockedDir;
 	}
 }

@@ -1,6 +1,7 @@
 package Main;
 
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
@@ -14,6 +15,7 @@ public class Octorok extends Entity
 		setDirection("down");
 		setSpeed(1);
 		getBruhImage();
+		setSolidArea(new Rectangle(5, 5, 38, 38));
 	}
 	
 	public Octorok(GamePanel gp, int x, int y)
@@ -25,6 +27,7 @@ public class Octorok extends Entity
 		setSpeed(1);
 		getBruhImage();
 		setHealth(3);
+		setSolidArea(new Rectangle(5, 5, 38, 38));
 	}
 	public String toString()
 	{
@@ -43,31 +46,45 @@ public class Octorok extends Entity
 	}
 	public void setAction()
 	{
-		setActionLockCounter(getActionLockCounter()+1);
-		if(getActionLockCounter()==120)
+		if(getKnocked())
 		{
-			Random random=new Random();
-			int i= random.nextInt(100)+1;
-			if(i<=25)
-			{
-				setDirection("up");
-			}
-			if(i>25&&i<=50)
-			{
-				setDirection("down");
-			}
-			if(i>50&&i<=75)
-			{
-				setDirection("left");
-			}
-			if(i>75&&i<=100)
-			{
-				setDirection("right");
-			}
-			setActionLockCounter(0);
+			
+			setDirection(getKnockedDir());
+			setSpeed(10);
+			
 		}
+		else
+		{
+			
+			setSpeed(1);
+			setActionLockCounter(getActionLockCounter()+1);
+			if(getActionLockCounter()==120)
+			{
+				Random random=new Random();
+				int i= random.nextInt(100)+1;
+				if(i<=25)
+				{
+					setDirection("up");
+				}
+				if(i>25&&i<=50)
+				{
+					setDirection("down");
+				}
+				if(i>50&&i<=75)
+				{
+					setDirection("left");
+				}
+				if(i>75&&i<=100)
+				{
+					setDirection("right");
+				}
+				setActionLockCounter(0);
+			}
+			
+		}
+		
 	}
-	public void update()
+	public void update()//Updates the positions and animates entity 
 	{
 		setAction();
 		setCollisionOn(false);
