@@ -24,6 +24,7 @@ public class Room {
 	private int toCaveC;
 	private int toCaveR;
 	private boolean secret;
+	private boolean secretFound;
 	private String secretRoom;
 	public Room(GamePanel gp)
 	{
@@ -330,5 +331,11 @@ public class Room {
 	}
 	public void setSecretRoom(String secretRoom) {
 		this.secretRoom = secretRoom;
+	}
+	public boolean isSecretFound() {
+		return secretFound;
+	}
+	public void setSecretFound(boolean secretFound) {
+		this.secretFound = secretFound;
 	}
 }

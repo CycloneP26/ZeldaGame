@@ -62,6 +62,7 @@ public class RoomManager {
 					Room tempRoom=new Room(gp, "11111111111333111111111111133311111111b33333333311111b33333333331ba1b3333333333333333333333333331dc1d33hgggggggg11111d3e22222222111111de222222221111111e222222221111111e222222221111111e22222222");
 					tempRoom.setSecret(true);
 					tempRoom.setSecretRoom("1111111111133311111111111j133311111111b33333333311111b33333333331ba1b3333333333333333333333333331dc1d33hgggggggg11111d3e22222222111111de222222221111111e222222221111111e222222221111111e22222222");
+					tempRoom.setSecretFound(false);
 					tempRoom.addMobs(new Leever(gp,600,150));
 					tempRoom.addMobs(new Leever(gp,420,200));
 					tempRoom.setToCaveC(10);
@@ -133,7 +134,7 @@ public class RoomManager {
 		}
 		
 		currentRoomRow = 9;
-		currentRoomColumn = 0;
+		currentRoomColumn = 4;
 		this.currentRoom = getRoomArray().get(currentRoomRow).get(currentRoomColumn);
 
 		this.gp = gp;
@@ -185,7 +186,17 @@ public class RoomManager {
 		
 		Player player = gp.getPlayer();
 		CollisionChecker cChecker = gp.getCollision();
-		
+		if(currentRoom.isSecretFound())
+		{
+			System.out.println("room changed :)");
+			Room ogRoom = rooms.get(currentRoomRow).get(currentRoomColumn);
+			Room secretRoom = new Room(gp, ogRoom.getSecretRoom());
+			secretRoom.setToCaveC(ogRoom.getToCaveC());
+			secretRoom.setToCaveR(ogRoom.getToCaveR());
+			rooms.get(currentRoomRow).remove(currentRoomColumn);
+			rooms.get(currentRoomRow).add(currentRoomColumn, secretRoom);
+			
+		}
 		if(player.getY()<0)
 		{
 			if(isRoomAvailable(currentRoomRow-1, currentRoomColumn))
