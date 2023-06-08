@@ -41,6 +41,11 @@ public class Player extends Entity implements ActionListener
 	private int attackCounter = 0;
 	private int knockCounter = 0;
 	
+	private boolean gotHeartC = false;
+	private boolean firstSword = false;
+	private boolean hasSword = false;
+	private boolean gotItem = false;
+	
 	/*Constructor initializes all the fields that deal with position, and paths the images 
 	@param GamePanel to access and update the panel
 	@param KeyHandler to use the ActionListener and observe keystrokes
@@ -103,6 +108,9 @@ public class Player extends Entity implements ActionListener
 		setLeft2(setup("/player/linkMovingLeft1",getTileSize(),getTileSize()));
 		setRight1(setup("/player/linkMovingRight",getTileSize(),getTileSize()));
 		setRight2(setup("/player/linkMovingRight1",getTileSize(),getTileSize()));
+		setNewItem(setup("/player/newItem", getTileSize(), getTileSize()));
+		setaSword(setup("/objects/StartSword", getTileSize(), getTileSize()));
+		setHeartC(setup("/objects/New_Piskel", getTileSize(), getTileSize()));
 	}
 	/*Sets up and paths all the images for the player attack images  
 	@throws IO Exception to properly utilize the images without errors 
@@ -277,10 +285,24 @@ public class Player extends Entity implements ActionListener
 			setItemUse(false);
 		}
 	}
+	
+	public void gotItem()
+	{
+		spriteCounter++;
+
+		if(spriteCounter > 60)
+		{
+			gotItem = false;
+			gotHeartC = false;
+			firstSword = false;
+		}
+	}
+	
 	public void update()
 	{
 		
 		{
+			
 			
 			gp.getCollision().checkFight(this);
 			
@@ -294,6 +316,10 @@ public class Player extends Entity implements ActionListener
 			else
 			{
 				
+				if(gotItem)
+				{
+					gotItem();
+				}
 				if(attacking==true)
 				{
 					attacking();
@@ -454,174 +480,7 @@ public class Player extends Entity implements ActionListener
 		}
 	}
 	
-	//Updates the player movements and checks the collisions 
-//	public void update()
-//	{
-//		
-//		
-//		
-//		//movement and attacking
-//		
-//		if(attacking==true)
-//		{
-//			attacking();
-//		}
-//		else if (getItemUse())
-//		{
-//			item();
-//		}
-//		else if(keyH.isUpPressed()==true||keyH.isDownPressed()==true
-//			||keyH.isLeftPressed()==true
-//			||keyH.isRightPressed()==true
-//			||keyH.isSwordPressed()==true
-//			||keyH.isbItem() == true)
-//		{
-//			if(keyH.isbItem() == true)
-//			{
-//				setItemUse(true);
-//			}
-//			if(keyH.isSwordPressed()==true)
-//			{
-//				setSpeed(0);
-//				attacking=true;
-//				gp.playEffect(1);
-//			}
-//			if(keyH.isUpPressed()==true)
-//			{
-//				if (keyH.isbItem() == true)
-//				{
-//					setItemUse(true);
-//				}
-//				setSpeed(4);
-//				setDirection("up");
-//			}
-//			else if(keyH.isDownPressed()==true)
-//			{
-//				if (keyH.isbItem() == true)
-//				{
-//					setItemUse(true);
-//				}
-//				setSpeed(4);
-//				setDirection("down");
-//			}
-//			else if(keyH.isLeftPressed()==true)
-//			{
-//				if (keyH.isbItem() == true)
-//				{
-//					setItemUse(true);
-//				}
-//				setSpeed(4);
-//				setDirection("left");
-//			}
-//			else if(keyH.isRightPressed()==true)
-//			{
-//				if (keyH.isbItem() == true)
-//				{
-//					setItemUse(true);
-//				}
-//				setSpeed(4);
-//				setDirection("right");
-//			}
-//			
-//			
-//			setCollisionOn(false);
-//			getGp().getCollision().checkTile(this);
-//			int index = getGp().getCollision().checkObject(this, true);
-//			pickUpObj(index);
-//			
-//			if(isCollisionOn() == false)
-//			{
-//					
-//					switch(getDirection())
-//					{
-//					
-//case "up":
-//						
-//						if(!rooms.isRoomAvailable(rooms.getRoomRow() - 1, rooms.getRoomColumn()))
-//						{
-//							if(getY() > 0)
-//							{
-//								setY(getY()-getSpeed());
-//							}
-//						}
-//						else
-//						{
-//							
-//							setY(getY()-getSpeed());
-//							
-//						}
-//						break;
-//					case "down":
-//						
-//						if(!rooms.isRoomAvailable(rooms.getRoomRow() + 1, rooms.getRoomColumn()))
-//						{
-//							if(getY() < getGp().screenHeight - 50)
-//							{
-//								setY(getY()+getSpeed());
-//							}
-//						}
-//						else
-//						{
-//							
-//							setY(getY()+getSpeed());
-//							
-//						}
-//						
-//						break;
-//					case "left":
-//						
-//						if(!rooms.isRoomAvailable(rooms.getRoomRow(), rooms.getRoomColumn() - 1))
-//						{
-//							if(getX() > 0)
-//							{
-//								setX(getX()-getSpeed());
-//							}
-//						}
-//						else
-//						{
-//							
-//							setX(getX()-getSpeed());
-//							
-//						}
-//						
-//						break;
-//					case "right":
-//						if(!rooms.isRoomAvailable(rooms.getRoomRow(), rooms.getRoomColumn() + 1))
-//						{
-//							if(getX() < getGp().screenWidth - 45)
-//							{
-//								setX(getX()+getSpeed());
-//							}
-//						}
-//						else
-//						{
-//							
-//							setX(getX()+getSpeed());
-//							
-//						}
-//						
-//						break;
-//					
-//					}
-//				
-//			}
-//			
-//			spriteCounter++;
-//			if(spriteCounter>12) 
-//			{
-//				if(spriteNum==1)
-//				{
-//					spriteNum=2;
-//				}
-//				else if(spriteNum==2)
-//				{
-//					spriteNum=1;
-//				}
-//				spriteCounter=0;
-//			}
-//		}
-//		
-//	}
+	
 	
 	/*Plays a sound when an item is picked up, and removes it from the screen
 	@param takes the index of the items array that is picked up 
@@ -643,9 +502,26 @@ public class Player extends Entity implements ActionListener
 				gp.playEffect(2);
 				rupees++;
 				break;
+			case "startSword":
+				gp.getItems().set(i, null);
+				gp.playEffect(4);
+				gotItem = true;
+				setHasSword(true);
+				keyH.setLeftPressed(false);
+				keyH.setRightPressed(false);
+				keyH.setDownPressed(false);
+				keyH.setUpPressed(false);
+				firstSword = true;
+				break;
 			case "heart":
 				gp.getItems().set(i, null);
-				gp.playEffect(3);
+				gp.playEffect(4);
+				keyH.setLeftPressed(false);
+				keyH.setRightPressed(false);
+				keyH.setDownPressed(false);
+				keyH.setUpPressed(false);
+				gotItem = true;
+				gotHeartC = true;
 				break;
 			}
 		}
@@ -657,6 +533,22 @@ public class Player extends Entity implements ActionListener
 	{
 		//animation
 		BufferedImage image=null;
+		if(gotItem)
+		{
+			image = getNewItem();
+			if(firstSword)
+			{
+				g2.drawImage(getaSword(), super.getX() , super.getY() - 48, null);
+			}
+			else if (gotHeartC)
+			{
+				g2.drawImage(getHeartC(), super.getX() + 2, super.getY() -48, null);
+			}
+		}
+		else
+		{
+		
+		
 		switch(getDirection()) {
 		case "up":
 			if(attacking==false)
@@ -773,7 +665,7 @@ public class Player extends Entity implements ActionListener
 			}
 			break;
 		}
-		
+		}
 		if(getDirection()=="left"&&attacking)
 		{
 			g2.drawImage(image,super.getX()-40,super.getY(),null);
@@ -787,6 +679,7 @@ public class Player extends Entity implements ActionListener
 		{
 			g2.drawImage(image,super.getX(),super.getY(),null);
 		}
+		
 	}
 	/*
 	This method takes the image file path and the image's height and width to scale and intialize the image so it can be used as a Bufferedimage
@@ -838,6 +731,30 @@ public class Player extends Entity implements ActionListener
 	}
 	public void setAttackCounter(int attackCounter) {
 		this.attackCounter = attackCounter;
+	}
+	public boolean isGotHeartC() {
+		return gotHeartC;
+	}
+	public void setGotHeartC(boolean gotHeartC) {
+		this.gotHeartC = gotHeartC;
+	}
+	public boolean isFirstSword() {
+		return firstSword;
+	}
+	public void setFirstSword(boolean firstSword) {
+		this.firstSword = firstSword;
+	}
+	public boolean isHasSword() {
+		return hasSword;
+	}
+	public void setHasSword(boolean hasSword) {
+		this.hasSword = hasSword;
+	}
+	public boolean isGotItem() {
+		return gotItem;
+	}
+	public void setGotItem(boolean gotItem) {
+		this.gotItem = gotItem;
 	}
 
 }

@@ -69,7 +69,7 @@ public class GamePanel extends JPanel implements Runnable
 	public GamePanel() 
 	{
 		
-		keyH=new KeyHandler();
+		keyH=new KeyHandler(this);
 		
 		rooms = new RoomManager(this, 10, 11);
 		

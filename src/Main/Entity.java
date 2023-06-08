@@ -36,6 +36,8 @@ public class Entity {
 	private boolean collisionOn = false; //whether the entity will use collision
 	private int actionLockCounter=0; //SOMEONE COMMENT THIS 
 	
+	private BufferedImage newItem;
+	private BufferedImage aSword, heartC;
 	
 	public Entity(GamePanel gp) //constructor for all Entity, just to access the gamePanel
 	{
@@ -483,5 +485,23 @@ public class Entity {
 	}
 	public void setKnockedDir(String knockedDir) {
 		this.knockedDir = knockedDir;
+	}
+	public BufferedImage getNewItem() {
+		return newItem;
+	}
+	public void setNewItem(BufferedImage newItem) {
+		this.newItem = newItem;
+	}
+	public BufferedImage getaSword() {
+		return aSword;
+	}
+	public void setaSword(BufferedImage aSword) {
+		this.aSword = aSword;
+	}
+	public BufferedImage getHeartC() {
+		return heartC;
+	}
+	public void setHeartC(BufferedImage heartC) {
+		this.heartC = heartC;
 	}
 }

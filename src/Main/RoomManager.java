@@ -5,6 +5,8 @@ import java.util.ArrayList;
 
 import object.Key;
 import object.Rupee;
+import object.HeartContainer;
+import object.StartSword;
 public class RoomManager {
 	
 	//A 2D arraylist of rooms
@@ -29,6 +31,8 @@ public class RoomManager {
 					tempRoom.addMobs(new Octorok(gp, 250, 250));
 					tempRoom.addItem(new Key(gp, 500, 350));
 					tempRoom.addItem(new Rupee(gp, 400, 350));
+					
+					tempRoom.addItem(new HeartContainer(gp, 250, 350));
 					tempRoom.setToCaveC(10);
 					tempRoom.setToCaveR(0);
 					temp.add(tempRoom);
@@ -101,6 +105,7 @@ public class RoomManager {
 					Room cave = new Room(gp, "cave");
 					cave.setCaveC(0);
 					cave.setCaveR(9);
+					cave.addItem(new StartSword(gp, 250, 250));
 					temp.add(cave);
 					
 				}
@@ -128,7 +133,7 @@ public class RoomManager {
 		}
 		
 		currentRoomRow = 9;
-		currentRoomColumn = 4;
+		currentRoomColumn = 0;
 		this.currentRoom = getRoomArray().get(currentRoomRow).get(currentRoomColumn);
 
 		this.gp = gp;

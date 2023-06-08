@@ -7,13 +7,14 @@ public class KeyHandler implements KeyListener
 {
 	private boolean upPressed, downPressed, leftPressed, rightPressed, swordPressed, bItem; //All booleans that determine if a key is pressed
 	private boolean on;
+	private GamePanel gp;
 	
-	public KeyHandler() //Calls the super constructor for the KeyListener class, and it turns on the ability to observe keystrokes
+	public KeyHandler(GamePanel gp) //Calls the super constructor for the KeyListener class, and it turns on the ability to observe keystrokes
 	{
 
 		super();
 		on = true;
-
+		this.gp = gp;
 	}
 
 	public void setOn(boolean on) //@param boolean to change whether it is on or off
@@ -40,27 +41,27 @@ public class KeyHandler implements KeyListener
 		if(on == true)
 		{
 
-			if(code==KeyEvent.VK_W)
+			if(code==KeyEvent.VK_W && !gp.getPlayer().isGotItem())
 			{
 				upPressed=true;
 			}
-			if(code==KeyEvent.VK_S)
+			if(code==KeyEvent.VK_S && !gp.getPlayer().isGotItem())
 			{
 				downPressed=true;
 			}
-			if(code==KeyEvent.VK_A)
+			if(code==KeyEvent.VK_A && !gp.getPlayer().isGotItem())
 			{
 				leftPressed=true;
 			}
-			if(code==KeyEvent.VK_D)
+			if(code==KeyEvent.VK_D && !gp.getPlayer().isGotItem())
 			{
 				rightPressed=true;
 			}
-			if(code==KeyEvent.VK_Q)
+			if(code==KeyEvent.VK_Q && gp.getPlayer().isHasSword()&& !gp.getPlayer().isGotItem() )
 			{
 				swordPressed=true;
 			}
-			if(code == KeyEvent.VK_B)
+			if(code == KeyEvent.VK_B && !gp.getPlayer().isGotItem())
 			{
 				bItem = true;
 			}
