@@ -17,7 +17,6 @@ public class Room {
 	private String str;
 	private ArrayList<Entity> mobs;
 	private ArrayList<ItemEntity> items;
-	private ArrayList<useableEntity> bombs;
 	private int caveR;
 	private int caveC;
 	private String type;
@@ -31,8 +30,6 @@ public class Room {
 		
 		getTileImage();
 		
-		tileLayout = new int[12][16];
-		
 		for(int i = 0; i<tileLayout.length; i++)
 		{
 			for(int j = 0; j<tileLayout[0].length; j++)
@@ -44,7 +41,6 @@ public class Room {
 		str = mapToStr(tileLayout);
 		mobs = new ArrayList<Entity>();
 		items = new ArrayList<ItemEntity>();
-		setBombs(new ArrayList<useableEntity>());
 		
 	}
 	public Room(GamePanel gp, String str)
@@ -69,7 +65,6 @@ public class Room {
 		tileLayout = strToMap(this.str);
 		mobs = new ArrayList<Entity>();
 		items = new ArrayList<ItemEntity>();
-		setBombs(new ArrayList<useableEntity>());
 	}
 	
 	public int[][] strToMap(String str)
@@ -310,11 +305,5 @@ public class Room {
 	}
 	public void setToCaveR(int toCaveR) {
 		this.toCaveR = toCaveR;
-	}
-	public ArrayList<useableEntity> getBombs() {
-		return bombs;
-	}
-	public void setBombs(ArrayList<useableEntity> bombs) {
-		this.bombs = bombs;
 	}
 }
