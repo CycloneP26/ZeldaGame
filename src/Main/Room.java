@@ -17,11 +17,7 @@ public class Room {
 	private String str;
 	private ArrayList<Entity> mobs;
 	private ArrayList<ItemEntity> items;
-	private int caveR;
-	private int caveC;
 	private String type;
-	private int toCaveC;
-	private int toCaveR;
 	public Room(GamePanel gp)
 	{
 		this.gp = gp;
@@ -30,8 +26,6 @@ public class Room {
 		
 		getTileImage();
 		
-		tileLayout = new int[12][16];
-		
 		for(int i = 0; i<tileLayout.length; i++)
 		{
 			for(int j = 0; j<tileLayout[0].length; j++)
@@ -39,7 +33,7 @@ public class Room {
 				tileLayout[i][j] = (int)(Math.random()*3);
 			}
 		}
-		setType("something");
+
 		str = mapToStr(tileLayout);
 		mobs = new ArrayList<Entity>();
 		items = new ArrayList<ItemEntity>();
@@ -50,23 +44,40 @@ public class Room {
 		this.gp = gp;
 		this.str = str;
 		
-		if(str.equals("cave"))
-		{
-			this.str = "111111111111111111111111111111111188888888888811118888888888881111888888888888111188888888888811118888888888881111888888888888111188888888888811118888888888881111111118811111111111111881111111";
-			setType("cave");
-		}
-		else
-		{
-			setType("something");
-		}
 		tile = new Tile[30];
 		tileLayout = new int[12][16];
 		getTileImage();
 		
-		
-		tileLayout = strToMap(this.str);
+		tileLayout = strToMap(str);
 		mobs = new ArrayList<Entity>();
 		items = new ArrayList<ItemEntity>();
+	}
+	
+	public Room(GamePanel gp, String str, String type)
+	{
+		this.gp = gp;
+		this.str = str;
+		this.type = type;
+		
+		mobs = new ArrayList<Entity>();
+		items = new ArrayList<ItemEntity>();
+		
+		mobs.add(new Octorok(gp, 250, 250));
+		
+		if(type.indexOf("cave") != -1)
+		{
+			str = "111111111111111111111111111111111188888888888811118888888888881111888888888888111188888888888811118888888888881111888888888888111188888888888811118888888888881111111118811111111111111881111111";
+			
+		}
+		
+		tile = new Tile[30];
+		tileLayout = new int[12][16];
+		getTileImage();
+		
+		tileLayout = strToMap(str);
+		
+		
+		
 	}
 	
 	public int[][] strToMap(String str)
@@ -277,35 +288,5 @@ public class Room {
 	}
 	public void setItems(ArrayList<ItemEntity> items) {
 		this.items = items;
-	}
-	public int getCaveR() {
-		return caveR;
-	}
-	public void setCaveR(int caveR) {
-		this.caveR = caveR;
-	}
-	public int getCaveC() {
-		return caveC;
-	}
-	public void setCaveC(int caveC) {
-		this.caveC = caveC;
-	}
-	public String getType() {
-		return type;
-	}
-	public void setType(String type) {
-		this.type = type;
-	}
-	public int getToCaveC() {
-		return toCaveC;
-	}
-	public void setToCaveC(int toCaveC) {
-		this.toCaveC = toCaveC;
-	}
-	public int getToCaveR() {
-		return toCaveR;
-	}
-	public void setToCaveR(int toCaveR) {
-		this.toCaveR = toCaveR;
 	}
 }

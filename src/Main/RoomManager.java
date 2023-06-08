@@ -25,13 +25,14 @@ public class RoomManager {
 			{
 				if(i==9 && j==0)
 				{
-					Room tempRoom = new Room(gp, "55555553355555555555j563355555555556333335555555556333333555555556333333375555555333333333333333553333333333335555333333333333555533333333333355553333333333335555555555555555555555555555555555");
+					Room tempRoom = new Room(gp, "55555553355555555555j563355555555556333335555555556333333555555556333333375555553333333333333333553333333333335555333333333333555533333333333355553333333333335555555555555555555555555555555555");
 					tempRoom.addMobs(new Octorok(gp, 250, 250));
 					tempRoom.addItem(new Key(gp, 500, 350));
 					tempRoom.addItem(new Rupee(gp, 400, 350));
-					tempRoom.setToCaveC(10);
-					tempRoom.setToCaveR(0);
 					temp.add(tempRoom);
+					
+//					Room tempRoom = new Room(gp, "hi", "cave");
+//					temp.add(tempRoom);
 				}
 				else if(i==9 && j==1)
 				{
@@ -42,12 +43,7 @@ public class RoomManager {
 				}
 				else if(i==9 && j==2)
 				{
-					Room tempRoom=new Room(gp,"1111111111111111a11111ba111111113a1111333333a11133a1113333333111333a113334333a113333ab33434333333333333334333c1133333333333331113333cd333333c111c11111dc1111111111111111111111111111111111111111");
-					tempRoom.addMobs(new Spider(gp,300,300));
-					tempRoom.addMobs(new Spider(gp,500,300));
-					tempRoom.addMobs(new Spider(gp,300,200));
-					tempRoom.addMobs(new Spider(gp,500,300));
-					temp.add(tempRoom);
+					temp.add(new Room(gp, "1111111111111111a11111ba111111113a1111333333a11133a1113333333111333a113334333a113333ab33434333333333333334333c1133333333333331113333cd333333c111c11111dc1111111111111111111111111111111111111111"));
 				}
 				else if(i==9 && j==3)
 				{
@@ -55,10 +51,7 @@ public class RoomManager {
 				}
 				else if(i==9 && j==4)
 				{
-					Room tempRoom=new Room(gp, "11111111111333111111111118133311111111b33333333311111b33333333331ba1b3333333333333333333333333331dc1d33hgggggggg11111d3e22222222111111de222222221111111e222222221111111e222222221111111e22222222");
-					tempRoom.addMobs(new Leever(gp,600,150));
-					tempRoom.addMobs(new Leever(gp,420,200));
-					temp.add(tempRoom);
+					temp.add(new Room(gp, "11111111111333111111111118133311111111b33333333311111b33333333331ba1b3333333333333333333333333331dc1d33hgggggggg11111d3e22222222111111de222222221111111e222222221111111e222222221111111e22222222"));
 				}
 				else if(i==9 && j==5)
 				{
@@ -92,24 +85,14 @@ public class RoomManager {
 				{
 					temp.add(new Room(gp, "939333939399399993933393939939993333333333333399333333333393333933933393933333333333333333933333339333939333333333333333339333393333333333333399999999999993339999999999999333999999999999933399"));
 				}
-				else if(i==0 && j==10)
-				{
-					Room cave = new Room(gp, "cave");
-					cave.setCaveC(0);
-					cave.setCaveR(9);
-					temp.add(cave);
-					
-				}
 				else if(i==0)
 				{
 					temp.add(new Room(gp, "111111111111111133333333333333333333433333334333333433333333333333334333333433333333333333333333333333333343333333334333333333333333343333333333333343333334333333333333333333331111111331111111"));
 				}
-				else if(j<10)
+				else if(j<9)
 				{
 					temp.add(new Room(gp, "111111100111111110000000000000011000000000000001100000000000000110000000000000010000000000000000000000000000000010000000000000011000000000000001100000000000000110000000000000011111111001111111"));
 				}
-				
-				
 			}
 			rooms.add(temp);
 		}
@@ -150,16 +133,6 @@ public class RoomManager {
 	public ArrayList<ArrayList<Room>> getRoomArray()
 	{
 		return rooms;
-	}
-	
-	public void setCurrentRoomRow(int c)
-	{
-		currentRoomRow = c;
-	}
-
-	public void setCurrentRoomCol(int c)
-	{
-		currentRoomColumn = c;
 	}
 	
 	public void update()
@@ -207,17 +180,9 @@ public class RoomManager {
 		}
 		else if(player.getY() + 40>gp.screenHeight)
 		{
-			
-			if(currentRoom.getType().equals("cave"))
+			if(isRoomAvailable(currentRoomRow+1, currentRoomColumn))
 			{
 				
-				currentRoomRow = currentRoom.getCaveR();
-				currentRoomColumn = currentRoom.getCaveC();
-				player.setY(250);
-				player.setX(250);
-			}
-			else if(isRoomAvailable(currentRoomRow+1, currentRoomColumn))
-			{
 				gp.getKeyHandler().setOn(false);
 				gp.getKeyHandler().setDownPressed(false);
 				
@@ -231,14 +196,12 @@ public class RoomManager {
 				currentRoomRow++;
 				cChecker.setCurRow(currentRoomRow);
 			}
-			
 		}
 		else if(player.getX()+40>gp.screenWidth)
 		{
-			System.out.println("hi");
 			if(isRoomAvailable(currentRoomRow, currentRoomColumn+1))
 			{
-				System.out.println("hi2");
+				
 				gp.getKeyHandler().setOn(false);
 				gp.getKeyHandler().setRightPressed(false);
 				
@@ -255,8 +218,6 @@ public class RoomManager {
 		}
 		gp.getKeyHandler().setOn(true);
 		currentRoom = getRoomArray().get(currentRoomRow).get(currentRoomColumn);
-		cChecker.setCurRow(currentRoomRow);
-		cChecker.setCurCol(currentRoomColumn);
 		
 	}
 	
@@ -313,13 +274,6 @@ public class RoomManager {
 			}
 			gp.getPlayer().setX((48*16)-(48*num));
 			break;
-		case "cave":
-			for(int i=0; i<num; i++)
-			{
-				str += "88";
-			}
-			str += rOne.getStr().substring(num*2);
-			break;
 		}
 		
 		
@@ -327,10 +281,15 @@ public class RoomManager {
 		return temp;
 	}
 
+	public void caveStart()
+	{
+		currentRoom = new Room(gp, "hi", "cave");
+	}
 	public Room getCurrentRoom()
 	{
 		return currentRoom;
 	}
+	
 	
 	public void setCurrentRoom(Room cRoom)
 	{
