@@ -43,31 +43,45 @@ public class Octorok extends Entity
 	}
 	public void setAction()
 	{
-		setActionLockCounter(getActionLockCounter()+1);
-		if(getActionLockCounter()==120)
+		
+		if(getKnocked())
 		{
-			Random random=new Random();
-			int i= random.nextInt(100)+1;
-			if(i<=25)
+			
+			setDirection(getKnockedDir());
+			setSpeed(10);
+			
+		}
+		else
+		{
+			
+			setSpeed(1);
+			setActionLockCounter(getActionLockCounter()+1);
+			if(getActionLockCounter()==120)
 			{
-				setDirection("up");
+				Random random=new Random();
+				int i= random.nextInt(100)+1;
+				if(i<=25)
+				{
+					setDirection("up");
+				}
+				if(i>25&&i<=50)
+				{
+					setDirection("down");
+				}
+				if(i>50&&i<=75)
+				{
+					setDirection("left");
+				}
+				if(i>75&&i<=100)
+				{
+					setDirection("right");
+				}
+				setActionLockCounter(0);
 			}
-			if(i>25&&i<=50)
-			{
-				setDirection("down");
-			}
-			if(i>50&&i<=75)
-			{
-				setDirection("left");
-			}
-			if(i>75&&i<=100)
-			{
-				setDirection("right");
-			}
-			setActionLockCounter(0);
+			
 		}
 	}
-	public void update()
+	public void update() //Updates the positions and animates entity 
 	{
 		setAction();
 		setCollisionOn(false);
@@ -88,8 +102,6 @@ public class Octorok extends Entity
 						setAction();
 					}
 				}
-
-				break;
 			case "down":
 				if(getX()>0&&getY()>0&&getX()<700&&getY()<500)
 				{
@@ -99,6 +111,7 @@ public class Octorok extends Entity
 					}
 					else
 					{
+						
 						setAction();
 					}
 				}
@@ -148,37 +161,6 @@ public class Octorok extends Entity
 				spriteNum=1;
 			}
 			spriteCounter=0;
-		}
-	}
-	public void draw(Graphics2D g2) 
-	{
-		BufferedImage image=null;
-
-		//getY()-getGp().getPlayer().getY()+getGp().getPlayer().getScreenY();
-		//if(getX()+getGp().getTileSize()>getGp().getPlayer().getX()-getGp().getPlayer().getScreenX() &&
-		  // getX()-getGp().getTileSize()<getGp().getPlayer().getX()+getGp().getPlayer().getScreenX()&&
-		  // getY()+getGp().getTileSize()>getGp().getPlayer().getY()-getGp().getPlayer().getScreenY()&&
-		  // getY()-getGp().getTileSize()<getGp().getPlayer().getY()+getGp().getPlayer().getScreenY())
-		{
-			switch(getDirection()) {
-			case "up":
-				if(spriteNum==1){image=getUp1();}
-				if(spriteNum==2){image=getUp2();}
-				break;
-			case "down":
-				if(spriteNum==1){image=getDown1();}
-				if(spriteNum==2){image=getDown2();}
-				break;
-			case "left":
-				if(spriteNum==1){image=getLeft1();}
-				if(spriteNum==2){image=getLeft2();}
-				break;
-			case "right":
-				if(spriteNum==1){image=getRight1();}
-				if(spriteNum==2){image=getRight2();}
-				break;
-			}
-			g2.drawImage(image,getX(),getY(),getGp().getTileSize(),getGp().getTileSize(),null);
 		}
 	}
 }
