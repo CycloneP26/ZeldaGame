@@ -11,40 +11,23 @@ import java.security.DrbgParameters;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
-/*
-The player class is used to create the Link entity that the player uses.This is done through using things 
-like the ActionListener to observe keystrokes that allow methods to choose the sprite/action that should 
-be drawn. The player's position and collision is also used in this class.
-@author Sachin Chhaya
-@author David Kostanyan 
 
-*/
 
 public class Player extends Entity implements ActionListener 
 {
-	//KeyHandler which scans the keystrokes
-	private KeyHandler keyH; 
-	//Be able to access the room that the player is in 
-	private RoomManager rooms; 
-	//Images for Link's movement 
-	private BufferedImage up1, up2, down1, down2, left1, left2, right1, right2; 
-	//Images for link's sword movement 
-	private BufferedImage swordUp,swordUp1,swordLeft,swordLeft1,swordRight,swordRight1,swordDown,swordDown1; 
-	private final int screenX; //SOMEONE COMMENT THIS 
-	private final int screenY; //AND THIS 
-	//Access the GamePanel 
-	private GamePanel gp; 
-	//amount of rupees
-	private int rupees = 0; 
-	//amount of keys 
-	private int keys = 0; 
 	
-	/*Constructor initializes all the fields that deal with position, and paths the images 
-	@param GamePanel to access and update the panel
-	@param KeyHandler to use the ActionListener and observe keystrokes
-	@param RoomManager to find collision and position of the player 
-	*/
-	public Player(GamePanel gp, KeyHandler keyH, RoomManager rooms) 
+	private KeyHandler keyH;
+	private RoomManager rooms;
+	private BufferedImage up1, up2, down1, down2, left1, left2, right1, right2;
+	private BufferedImage swordUp,swordUp1,swordLeft,swordLeft1,swordRight,swordRight1,swordDown,swordDown1;
+	private final int screenX;
+	private final int screenY;
+	private GamePanel gp;
+	private int rupees = 0;
+	private int keys = 0;
+	
+	
+	public Player(GamePanel gp, KeyHandler keyH, RoomManager rooms)
 	{
 		super(gp);
 		this.gp = gp;
@@ -78,7 +61,6 @@ public class Player extends Entity implements ActionListener
 			e2.printStackTrace();
 		}
 	}
-	//Sets the positions to default
 	public void setDefaultValue()
 	{		
 		setX(384);
@@ -87,10 +69,7 @@ public class Player extends Entity implements ActionListener
 		setDirection("down");
 	}
 	
-	/*Sets up and paths all the images for the player 
-	@throws IO Exception to properly utilize the images without errors 
-	*/
-	public void getPlayerImage() throws IOException 
+	public void getPlayerImage() throws IOException
 	{
 		
 		setUp1(setup("/player/linkMovingBack",getTileSize(),getTileSize()));
@@ -102,9 +81,6 @@ public class Player extends Entity implements ActionListener
 		setRight1(setup("/player/linkMovingRight",getTileSize(),getTileSize()));
 		setRight2(setup("/player/linkMovingRight1",getTileSize(),getTileSize()));
 	}
-	/*Sets up and paths all the images for the player attack images  
-	@throws IO Exception to properly utilize the images without errors 
-	*/
 	public void getPlayerAttackImage() throws IOException
 	{
 		setSwordUp(setup("/player/linkSwordUp1",getTileSize(),getTileSize()*2));
@@ -116,9 +92,6 @@ public class Player extends Entity implements ActionListener
 		setSwordRight1(setup("/player/linkSwordRight",getTileSize()*2,getTileSize()));
 		setSwordDown1(setup("/player/linkSwordDown",getTileSize(),getTileSize()*2));
 	}
-	/*Sets up and paths all the images for the player using item images  
-	@throws IO Exception to properly utilize the images without errors 
-	*/
 	public void getBItemImage() throws IOException
 	{
 		//if(something about which item is being used)
@@ -127,7 +100,6 @@ public class Player extends Entity implements ActionListener
 		setItemRight  (setup("/player/useItemRight",getTileSize(),getTileSize()));
 		setItemDown  (setup("/player/useItemDown",getTileSize(),getTileSize()));
 	}
-	//Works with the gameThread and updates a counter which animates the player according to the amount of ticks that are passed 
 	public void attacking()
 	{
 		spriteCounter++;
@@ -141,9 +113,9 @@ public class Player extends Entity implements ActionListener
 			spriteCounter=0;
 			attacking=false;
 		}
-	
+		
 	}
-	//Works with gameThread and updates the counter which changes the sprite according to the ticks that are passed
+	
 	public void item()
 	{
 		//Makes sure useItem animation turns off
@@ -163,7 +135,7 @@ public class Player extends Entity implements ActionListener
 			itemUse =false;
 		}
 	}
-	//Updates the player movements and checks the collisions 
+	
 	public void update()
 	{
 		//movement and attacking
@@ -176,10 +148,10 @@ public class Player extends Entity implements ActionListener
 			item();
 		}
 		else if(keyH.isUpPressed()==true||keyH.isDownPressed()==true
-			||keyH.isLeftPressed()==true
-			||keyH.isRightPressed()==true
-			||keyH.isSwordPressed()==true
-			||keyH.isbItem() == true)
+				||keyH.isLeftPressed()==true
+				||keyH.isRightPressed()==true
+				||keyH.isSwordPressed()==true
+				||keyH.isbItem() == true)//For now, bItem is only bomb, we need to finish UI to implement multiple items
 		{
 			if(keyH.isbItem() == true)
 			{
@@ -231,7 +203,6 @@ public class Player extends Entity implements ActionListener
 			setCollisionOn(false);
 			getGp().getCollision().checkTile(this);
 			int index = getGp().getCollision().checkObject(this, true);
-			int index2 = getGp().getCollision().checkFight(this, true);
 			pickUpObj(index);
 			
 			if(isCollisionOn() == false)
@@ -242,13 +213,13 @@ public class Player extends Entity implements ActionListener
 					
 					case "up":
 						
-//						if(!rooms.isRoomAvailable(rooms.getRoomRow() - 1, rooms.getRoomColumn()))
-//						{
+						if(!rooms.isRoomAvailable(rooms.getRoomRow() - 1, rooms.getRoomColumn()))
+						{
 							if(getY() > 0)
 							{
 								setY(getY()-getSpeed());
 							}
-						//}
+						}
 						else
 						{
 							
@@ -258,13 +229,13 @@ public class Player extends Entity implements ActionListener
 						break;
 					case "down":
 						
-//						if(!rooms.isRoomAvailable(rooms.getRoomRow() + 1, rooms.getRoomColumn()))
-//						{
+						if(!rooms.isRoomAvailable(rooms.getRoomRow() + 1, rooms.getRoomColumn()))
+						{
 							if(getY() < getGp().screenHeight - 50)
 							{
 								setY(getY()+getSpeed());
 							}
-//						}
+						}
 						else
 						{
 							
@@ -275,13 +246,13 @@ public class Player extends Entity implements ActionListener
 						break;
 					case "left":
 						
-//						if(!rooms.isRoomAvailable(rooms.getRoomRow(), rooms.getRoomColumn() - 1))
-//						{
+						if(!rooms.isRoomAvailable(rooms.getRoomRow(), rooms.getRoomColumn() - 1))
+						{
 							if(getX() > 0)
 							{
 								setX(getX()-getSpeed());
 							}
-						//}
+						}
 						else
 						{
 							
@@ -291,13 +262,13 @@ public class Player extends Entity implements ActionListener
 						
 						break;
 					case "right":
-//						if(!rooms.isRoomAvailable(rooms.getRoomRow(), rooms.getRoomColumn() + 1))
-//						{
+						if(!rooms.isRoomAvailable(rooms.getRoomRow(), rooms.getRoomColumn() + 1))
+						{
 							if(getX() < getGp().screenWidth - 45)
 							{
 								setX(getX()+getSpeed());
 							}
-//						}
+						}
 						else
 						{
 							
@@ -328,10 +299,7 @@ public class Player extends Entity implements ActionListener
 		
 	}
 	
-	/*Plays a sound when an item is picked up, and removes it from the screen
-	@param takes the index of the items array that is picked up 
-	*/
-	public void pickUpObj(int i) 
+	public void pickUpObj(int i)
 	{
 		if(i != -1)
 		{
@@ -351,10 +319,7 @@ public class Player extends Entity implements ActionListener
 			}
 		}
 	}
-	/*Draws the image according to what actions are being performed 
-	@param Graphics2D required to draw the images 
-	*/
-	public void draw(Graphics2D g2) 
+	public void draw(Graphics2D g2)
 	{
 		//animation
 		BufferedImage image=null;
@@ -453,12 +418,6 @@ public class Player extends Entity implements ActionListener
 			g2.drawImage(image,super.getX(),super.getY(),null);
 		}
 	}
-	/*
-	This method takes the image file path and the image's height and width to scale and intialize the image so it can be used as a Bufferedimage
-	@param String imagePath is used to determine the file location of the image
-	@param int width is used to determine the width of the BufferedImage
-	@param int height is used to determine the height of the BufferedImage 
-	*/
 	public BufferedImage setup(String imagePath,int width,int height)
 	{
 		UtilityTool uTool=new UtilityTool();
@@ -488,9 +447,6 @@ public class Player extends Entity implements ActionListener
 		return screenY;
 	}
 	
-	public boolean getAttacking()
-	{
-		return attacking;
-	}
+	
 
 }

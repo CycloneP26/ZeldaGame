@@ -10,68 +10,41 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 import object.ItemEntity;
-/*
-The GamePanel class creates a JPanel that is used to display the entire game. 
-The entire project is threaded and runs on this class. It uses runnable and a 
-GameThread to update the values of all the components. 
-@author Sachin Chhaya
-@author David Kostanyan
-@author Pranay Thatikonda
-@author Christopher Li 
-*/
+
 public class GamePanel extends JPanel implements Runnable
 {
-	//tile size before scale
-	final int originalTileSize=16; 
-	//scale of the tiles 
-	final int scale=3; 
-	//scaled tile size
-	final int tileSize=originalTileSize*scale; 
-	//#of tiles on width
+	final int originalTileSize=16;
+	final int scale=3;
+	final int tileSize=originalTileSize*scale;
 	final int maxScreenCol=16;
-	//#of tiles on height
-	final int maxScreenRow=12; 
-	//width of screen
-	final int screenWidth=tileSize*maxScreenCol; 
-	//width of height
+	final int maxScreenRow=12;
+	final int screenWidth=tileSize*maxScreenCol;
 	final int screenHeight=tileSize*maxScreenRow;
-	//how many times it updates per second
-	private int FPS = 60; 
+	private int FPS = 60;
+	private Timer timer;
 	
-	private Timer timer; //UTILIZATION UNKNOWN AS OF NOW
-	// height of the HUD panel
-    	private int hudHeight = 16 * 3; 
+    	private int hudHeight = 16 * 3; // height of the HUD panel
 	
-	//Creates a 2D array of rooms
-	private RoomManager rooms; 
-	//Observes the key movements
-	private KeyHandler keyH; 
-	//Checks collision of all entities
-	private CollisionChecker cChecker; 
-	//Creates sound 
+	
+	private RoomManager rooms;
+	private KeyHandler keyH;
+	private CollisionChecker cChecker;
 	private Sound sound = new Sound();
-	//Runtime Game loop 
-	private Thread gameThread; 
+	private Thread gameThread;
 	
 	//Entity and objects 
-	//Link field
-	private Player player; 
-	//Per room, the monsters that exist
-	private Entity mobs[]; 
-	//Per room, items that exist 
-	private ArrayList<ItemEntity> items; 
+	private Player player;
+	private Entity mobs[];
+	private ArrayList<ItemEntity> items;
 	
 	
-	/*
-	Creates the actual GamePanel that initializes all the fields that update 
-	with the GameThread
-	*/
-	public GamePanel() 
+	
+	public GamePanel()
 	{
 		
 		keyH=new KeyHandler();
 		
-		rooms = new RoomManager(this, 10, 11);
+		rooms = new RoomManager(this, 10, 9);
 		
 		player=new Player(this, keyH, rooms);
 		mobs=new Entity[30];
@@ -90,7 +63,7 @@ public class GamePanel extends JPanel implements Runnable
 		this.setFocusable(true);
 		
 	}
-	//Starts the game thread and runs the update methods
+	
 	public void startGameThread()
 	{
 		playMusic(0);
@@ -98,7 +71,7 @@ public class GamePanel extends JPanel implements Runnable
 		gameThread.start();
 		
 	}
-	//Makes the thread stop for s milliseconds
+	
 	public void waitThread(int s)
 	{
 		try {
@@ -122,7 +95,7 @@ public class GamePanel extends JPanel implements Runnable
 		return keyH;
 
 	}
-	//SOMEONE COMMENT THIS
+	
 	public void run()
 	{
 		double drawInterval=1000000000/FPS;
@@ -157,7 +130,7 @@ public class GamePanel extends JPanel implements Runnable
 	}
 	
 	
-	//Updates the positions and conditions of all entities 
+
 	public void update()
 	{
 		
@@ -199,8 +172,8 @@ public class GamePanel extends JPanel implements Runnable
     {
     	return screenWidth;
     }
-	//All the entities that must be rendered in each room is drawn here
-	public void paintComponent(Graphics g) //@param Graphics required to draw
+	
+	public void paintComponent(Graphics g)
 	{
 		
 		
@@ -230,33 +203,27 @@ public class GamePanel extends JPanel implements Runnable
 		g2.dispose();
 		
 	}
-	//Takes the index of the sound that is played and loops it
-	public void playMusic(int i) //@param Integer is used to choose the sound file within the list
+	public void playMusic(int i)
 	{
 		sound.setFile(i);
 		sound.play();
 		sound.loop();
 	}
-	//Stops the sound/music 
 	public void stopMusic()
 	{
 		sound.stop();
 	}
-	//Plays a sound but does not loop it 
-	public void playEffect(int i) //@param takes integer to choose the sound file
+	public void playEffect(int i)
 	{
 		sound.setFile(i);
 		sound.play();
 	}
-	public ArrayList<Entity> getMobs() {
-		return rooms.getCurrentRoom().getMobs();
+	public Entity[] getMobs() {
+		return mobs;
 	}
-	
-	public void setMobs(ArrayList<Entity> e)
-	{
-		rooms.getCurrentRoom().setMobs(e);
+	public void setMobs(Entity mobs[]) {
+		this.mobs = mobs;
 	}
-	
 	public ArrayList<ItemEntity> getItems() {
 		return items;
 	}

@@ -1,9 +1,8 @@
-  package Main;
+package Main;
 
 import java.util.ArrayList;
 
 import object.ItemEntity;
-import object.Rupee;
 
 public class CollisionChecker 
 {
@@ -48,13 +47,11 @@ public class CollisionChecker
 		int entityTopRow = entityTopY / gp.tileSize;
 		int entityBottomRow = entityBottomY / gp.tileSize;
 		
-		
+		int tileNum1;
+		int tileNum2;
 	
 		
 		Room curRoom =rooms.getRoomArray().get(curRow).get(curCol);
-		
-		int tileNum1 = curRoom.getTileLayout()[entityTopRow][entityLeftCol];;
-		int tileNum2 = curRoom.getTileLayout()[entityTopRow][entityRightCol];
 		
 		switch(entity.getDirection())
 		{
@@ -75,31 +72,7 @@ public class CollisionChecker
 				}
 				
 			}
-			if(curRoom.getTile()[tileNum1].getTraverse() == true || curRoom.getTile()[tileNum2].getTraverse() == true)
-			{
-				gp.getKeyHandler().setOn(false);
-				gp.getKeyHandler().setUpPressed(false);
-				int thisX = gp.getPlayer().getX();
-				int thisY = gp.getPlayer().getY();
-				for(int i=0; i<96; i++)
-				{
-					rooms.setCurrentRoom(rooms.getSwitchedRoom(curRoom, new Room(gp), i, "cave"));
-					gp.repaint();
-//					if(i%16==0)
-//					{
-//						gp.waitThread(1);
-//					}
-					gp.getPlayer().setX(gp.getPlayer().getX()+((362-thisX)/96));
-					gp.getPlayer().setY(gp.getPlayer().getY()+((518-thisY)/96));
-				}
-				rooms.setCurrentRoomCol(curRoom.getToCaveC());
-				rooms.setCurrentRoomRow(curRoom.getToCaveR());
-				gp.getPlayer().setX(362);
-				gp.getPlayer().setY(518);
-				//rooms.setCurrentRoom(rooms.getRoomArray().get(rooms.getCurrentRoom().getToCaveR()).get(rooms.getCurrentRoom().getToCaveC()));
-
-
-			}
+			
 			
 			break;
 		case "down":
@@ -107,19 +80,14 @@ public class CollisionChecker
 			entityBottomRow = (entityBottomY + entity.getSpeed()) / gp.tileSize;
 			if(entityBottomRow < 12 && entityRightCol < 16)
 			{
-				
+				System.out.println();
+				System.out.println("hi");
 				tileNum1 = curRoom.getTileLayout()[entityBottomRow][entityLeftCol];
 				tileNum2 = curRoom.getTileLayout()[entityBottomRow][entityRightCol];
 				if(curRoom.getTile()[tileNum1].getCollision() == true || curRoom.getTile()[tileNum2].getCollision() == true)
 				{
 					
 					entity.setCollisionOn(true);
-					
-				}
-				if(curRoom.getTile()[tileNum1].getTraverse() == true || curRoom.getTile()[tileNum2].getTraverse() == true)
-				{
-					
-					
 					
 				}
 				
@@ -170,108 +138,9 @@ public class CollisionChecker
 				
 		
 	}
-	
-	public int checkFight(Player e, boolean p) //Check if player is hitting any object, return index of the object 
+	public int checkEntity(Entity entity,Entity[]target)
 	{
-		int index = -1;
-		ArrayList<Entity> temp = gp.getRooms().getCurrentRoom().getMobs();
-		
-		for(int i = 0; i < temp.size(); i++)
-		{
-			if(temp.get(i) != null)
-			{
-				//get the entity's position 
-				e.getSolidArea().x = e.getX() + e.getSolidArea().x;
-				e.getSolidArea().y = e.getY() + e.getSolidArea().y;
-				
-				//Object position
-				temp.get(i).getSolidArea().x = temp.get(i).getX() + temp.get(i).getSolidArea().x;
-				temp.get(i).getSolidArea().y = temp.get(i).getY() + temp.get(i).getSolidArea().y;
-				switch(e.getDirection())
-				{
-				case "up":
-					
-					if(e.getSolidArea().intersects(temp.get(i).getSolidArea()))//checks if two rectangles are touching
-					{
-						if(e.getAttacking())
-						{
-							temp.get(i).setHealth(temp.get(i).getHealth()-1);
-							System.out.println("attack");
-						}
-						else
-						{
-							e.setHealth(e.getHealth()-1);
-							//e.getSolidArea().y += e.getSpeed();
-							System.out.println("hurt");
-						}
-					}
-					break;
-				case "down":
-					e.getSolidArea().y += e.getSpeed();
-					if(e.getSolidArea().intersects(temp.get(i).getSolidArea()))//checks if two rectangles are touching
-					{
-						if(e.getAttacking())
-						{
-							temp.get(i).setHealth(temp.get(i).getHealth()-1);
-							System.out.println("attack");
-						}
-						else
-						{
-							e.setHealth(e.getHealth()-1);
-							//e.getSolidArea().y += e.getSpeed();
-							System.out.println("hurt");
-						}
-					}
-					break;
-				case "left":
-					e.getSolidArea().x -= e.getSpeed();
-					if(e.getSolidArea().intersects(temp.get(i).getSolidArea()))//checks if two rectangles are touching
-					{
-						if(e.getAttacking())
-						{
-							temp.get(i).setHealth(temp.get(i).getHealth()-1);
-							System.out.println("attack");
-						}
-						else
-						{
-							e.setHealth(e.getHealth()-1);
-							//e.getSolidArea().y += e.getSpeed();
-							System.out.println("hurt");
-						}
-					}
-					break;
-				case "right":
-					e.getSolidArea().x += e.getSpeed();
-					if(e.getSolidArea().intersects(temp.get(i).getSolidArea()))//checks if two rectangles are touching
-					{
-						if(e.getAttacking())
-						{
-							temp.get(i).setHealth(temp.get(i).getHealth()-1);
-							System.out.println("attack");
-						}
-						else
-						{
-							e.setHealth(e.getHealth()-1);
-							//e.getSolidArea().y += e.getSpeed();
-							System.out.println("hurt");
-						}
-					}
-					break;
-				}
-			
-			e.getSolidArea().x = e.getSolidAreaDefX();
-			e.getSolidArea().y = e.getSolidAreaDefY();
-			temp.get(i).getSolidArea().x = temp.get(i).getSolidAreaDefX();
-			temp.get(i).getSolidArea().y = temp.get(i).getSolidAreaDefY();
-			}
-			if(temp.get(i).getHealth()<=0)
-			{
-				rooms.getCurrentRoom().addItem(new Rupee(gp, temp.get(i).getX(), temp.get(i).getY()));
-				temp.remove(i);
-			}
-		}
-		gp.setMobs(temp);
-		return index;
+		return 2;
 	}
 	public int checkObject(Entity e, boolean p) //Check if player is hitting any object, return index of the object 
 	{
@@ -358,4 +227,5 @@ public class CollisionChecker
 		gp.setItems(temp);
 		return index;
 	}
+	
 }

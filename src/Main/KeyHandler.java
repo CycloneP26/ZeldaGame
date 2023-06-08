@@ -5,10 +5,10 @@ import java.awt.event.KeyListener;
 
 public class KeyHandler implements KeyListener
 {
-	private boolean upPressed, downPressed, leftPressed, rightPressed, swordPressed, bItem; //All booleans that determine if a key is pressed
+	private boolean upPressed, downPressed, leftPressed, rightPressed, swordPressed, bItem;
 	private boolean on;
 	
-	public KeyHandler() //Calls the super constructor for the KeyListener class, and it turns on the ability to observe keystrokes
+	public KeyHandler()
 	{
 
 		super();
@@ -16,7 +16,7 @@ public class KeyHandler implements KeyListener
 
 	}
 
-	public void setOn(boolean on) //@param boolean to change whether it is on or off
+	public void setOn(boolean on)
 	{
 
 		this.on = on;
@@ -30,11 +30,9 @@ public class KeyHandler implements KeyListener
 		// TODO Auto-generated method stub
 		
 	}
-	/*
-	When a key is pressed, it changes the booleans that show which key is pressed
-	*/
+
 	@Override
-	public void keyPressed(KeyEvent e) //@param keystroke argument is passed 
+	public void keyPressed(KeyEvent e) 
 	{
 		int code=e.getKeyCode();
 		if(on == true)
@@ -68,9 +66,9 @@ public class KeyHandler implements KeyListener
 		}
 		
 	}
-	//When a keystroke is released, it makes the booleans false 
+
 	@Override
-	public void keyReleased(KeyEvent e) //@param takes the keystroke argument 
+	public void keyReleased(KeyEvent e) 
 	{
 		int code=e.getKeyCode();
 		if(code==KeyEvent.VK_W)
