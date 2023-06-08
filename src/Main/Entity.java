@@ -128,12 +128,7 @@ public class Entity {
 	{
 		BufferedImage image=null;
 
-		int screenX=100;//worldX-getGp().getPlayer().getX()+getGp().getPlayer().getScreenX();
-		int screenY=100;//worldY-getGp().getPlayer().getY()+getGp().getPlayer().getScreenY();
-		//if(worldX+getGp().getTileSize()>getGp().getPlayer().getX()-getGp().getPlayer().getScreenX() &&
-		  // worldX-getGp().getTileSize()<getGp().getPlayer().getX()+getGp().getPlayer().getScreenX()&&
-		  // worldY+getGp().getTileSize()>getGp().getPlayer().getY()-getGp().getPlayer().getScreenY()&&
-		  // worldY-getGp().getTileSize()<getGp().getPlayer().getY()+getGp().getPlayer().getScreenY())
+		
 		{
 			switch(getDirection()) {
 			case "up":
@@ -466,5 +461,13 @@ public class Entity {
 	}
 	public void setLeever2(BufferedImage leever2) {
 		Leever2 = leever2;
+	}
+	public boolean getItemUse()
+	{
+		return itemUse;
+	}
+	public void setItemUse(boolean use)
+	{
+		itemUse = use;
 	}
 }
