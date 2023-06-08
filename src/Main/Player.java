@@ -496,11 +496,13 @@ public class Player extends Entity implements ActionListener
 				keys++;
 				gp.getItems().set(i, null);
 				gp.playEffect(3);
+				Main.updateKeysCount(keys); // Update keys count in the HUD
 				break;
 			case "rupee":
 				gp.getItems().set(i, null);
 				gp.playEffect(2);
 				rupees++;
+				Main.updateRupeesCount(rupees); // Update rupees count in the HUD
 				break;
 			case "startSword":
 				gp.getItems().set(i, null);
@@ -560,6 +562,12 @@ public class Player extends Entity implements ActionListener
 					if(gp.getRooms().getCurrentRoom().getBombs().size()==0) 
 					{
 						gp.getRooms().getCurrentRoom().getBombs().add(new Bomb(gp));
+						System.out.println(gp.getRooms().getCurrentRoom().isSecret());
+						if(gp.getRooms().getCurrentRoom().isSecret())
+						{
+							System.out.println("secret :O");
+							gp.getRooms().getCurrentRoom().setSecretFound(true);
+						}
 					}
 					
 				}
