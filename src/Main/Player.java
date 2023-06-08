@@ -160,7 +160,7 @@ public class Player extends Entity implements ActionListener
 		{
 			spriteNum=1;
 			spriteCounter=0;
-			itemUse =false;
+			setItemUse(false);
 		}
 	}
 	//Updates the player movements and checks the collisions 
@@ -171,7 +171,7 @@ public class Player extends Entity implements ActionListener
 		{
 			attacking();
 		}
-		else if (itemUse == true)
+		else if (getItemUse())
 		{
 			item();
 		}
@@ -183,7 +183,7 @@ public class Player extends Entity implements ActionListener
 		{
 			if(keyH.isbItem() == true)
 			{
-				itemUse = true;
+				setItemUse(true);
 			}
 			if(keyH.isSwordPressed()==true)
 			{
@@ -195,7 +195,7 @@ public class Player extends Entity implements ActionListener
 			{
 				if (keyH.isbItem() == true)
 				{
-					itemUse = true;
+					setItemUse(true);
 				}
 				setSpeed(4);
 				setDirection("up");
@@ -204,7 +204,7 @@ public class Player extends Entity implements ActionListener
 			{
 				if (keyH.isbItem() == true)
 				{
-					itemUse = true;
+					setItemUse(true);
 				}
 				setSpeed(4);
 				setDirection("down");
@@ -213,7 +213,7 @@ public class Player extends Entity implements ActionListener
 			{
 				if (keyH.isbItem() == true)
 				{
-					itemUse = true;
+					setItemUse(true);
 				}
 				setSpeed(4);
 				setDirection("left");
@@ -222,7 +222,7 @@ public class Player extends Entity implements ActionListener
 			{
 				if (keyH.isbItem() == true)
 				{
-					itemUse = true;
+					setItemUse(true);
 				}
 				setSpeed(4);
 				setDirection("right");
@@ -241,15 +241,15 @@ public class Player extends Entity implements ActionListener
 					switch(getDirection())
 					{
 					
-					case "up":
+case "up":
 						
-//						if(!rooms.isRoomAvailable(rooms.getRoomRow() - 1, rooms.getRoomColumn()))
-//						{
+						if(!rooms.isRoomAvailable(rooms.getRoomRow() - 1, rooms.getRoomColumn()))
+						{
 							if(getY() > 0)
 							{
 								setY(getY()-getSpeed());
 							}
-						//}
+						}
 						else
 						{
 							
@@ -259,13 +259,13 @@ public class Player extends Entity implements ActionListener
 						break;
 					case "down":
 						
-//						if(!rooms.isRoomAvailable(rooms.getRoomRow() + 1, rooms.getRoomColumn()))
-//						{
+						if(!rooms.isRoomAvailable(rooms.getRoomRow() + 1, rooms.getRoomColumn()))
+						{
 							if(getY() < getGp().screenHeight - 50)
 							{
 								setY(getY()+getSpeed());
 							}
-//						}
+						}
 						else
 						{
 							
@@ -276,13 +276,13 @@ public class Player extends Entity implements ActionListener
 						break;
 					case "left":
 						
-//						if(!rooms.isRoomAvailable(rooms.getRoomRow(), rooms.getRoomColumn() - 1))
-//						{
+						if(!rooms.isRoomAvailable(rooms.getRoomRow(), rooms.getRoomColumn() - 1))
+						{
 							if(getX() > 0)
 							{
 								setX(getX()-getSpeed());
 							}
-						//}
+						}
 						else
 						{
 							
@@ -292,13 +292,13 @@ public class Player extends Entity implements ActionListener
 						
 						break;
 					case "right":
-//						if(!rooms.isRoomAvailable(rooms.getRoomRow(), rooms.getRoomColumn() + 1))
-//						{
+						if(!rooms.isRoomAvailable(rooms.getRoomRow(), rooms.getRoomColumn() + 1))
+						{
 							if(getX() < getGp().screenWidth - 45)
 							{
 								setX(getX()+getSpeed());
 							}
-//						}
+						}
 						else
 						{
 							
@@ -349,6 +349,10 @@ public class Player extends Entity implements ActionListener
 				gp.playEffect(2);
 				rupees++;
 				break;
+			case "heart":
+				gp.getItems().set(i, null);
+				gp.playEffect(3);
+				break;
 			}
 		}
 	}
@@ -363,12 +367,23 @@ public class Player extends Entity implements ActionListener
 		case "up":
 			if(attacking==false)
 			{
-				if(itemUse)
+				if(getItemUse())
 				{
+					
 					image = getItemUp();
+					if(gp.getRooms().getCurrentRoom().getBombs().size()==0) 
+					{
+						gp.getRooms().getCurrentRoom().getBombs().add(new Bomb(gp));
+					}
+					
 				}
 				else
 				{
+					
+					if(gp.getRooms().getCurrentRoom().getBombs().size()>0) 
+					{
+						gp.getRooms().getCurrentRoom().getBombs().remove(0);
+					}
 					if(spriteNum==1){image=getUp1();}
 					if(spriteNum==2){image=getUp2();}
 				}
@@ -385,12 +400,20 @@ public class Player extends Entity implements ActionListener
 				if(itemUse)
 				{
 					image = getItemDown();
+					if(gp.getRooms().getCurrentRoom().getBombs().size()==0) 
+					{
+						gp.getRooms().getCurrentRoom().getBombs().add(new Bomb(gp));
+					}
 
 				}
 				else
 				{
-				if(spriteNum==1){image=getDown1();}
-				if(spriteNum==2){image=getDown2();}
+					if(gp.getRooms().getCurrentRoom().getBombs().size()>0) 
+					{
+						gp.getRooms().getCurrentRoom().getBombs().remove(0);
+					}
+					if(spriteNum==1){image=getDown1();}
+					if(spriteNum==2){image=getDown2();}
 				}
 			}
 			if(attacking==true)
@@ -405,12 +428,20 @@ public class Player extends Entity implements ActionListener
 				if(itemUse)
 				{
 					image = getItemLeft();
+					if(gp.getRooms().getCurrentRoom().getBombs().size()==0) 
+					{
+						gp.getRooms().getCurrentRoom().getBombs().add(new Bomb(gp));
+					}
 
 				}
 				else 
 				{
-				if(spriteNum==1){image=getLeft1();}
-				if(spriteNum==2){image=getLeft2();}
+					if(gp.getRooms().getCurrentRoom().getBombs().size()>0) 
+					{
+						gp.getRooms().getCurrentRoom().getBombs().remove(0);
+					}
+					if(spriteNum==1){image=getLeft1();}
+					if(spriteNum==2){image=getLeft2();}
 				}
 			}
 			if(attacking==true)
@@ -424,12 +455,21 @@ public class Player extends Entity implements ActionListener
 			{
 				if(itemUse)
 				{
+					System.out.println("hi1sf");
 					image = getItemRight();
+					if(gp.getRooms().getCurrentRoom().getBombs().size()==0) 
+					{
+						gp.getRooms().getCurrentRoom().getBombs().add(new Bomb(gp));
+					}
 				}
 				else
 				{
-				if(spriteNum==1){image=getRight1();}
-				if(spriteNum==2){image=getRight2();}
+					if(gp.getRooms().getCurrentRoom().getBombs().size()>0) 
+					{
+						gp.getRooms().getCurrentRoom().getBombs().remove(0);
+					}
+					if(spriteNum==1){image=getRight1();}
+					if(spriteNum==2){image=getRight2();}
 				}
 			}
 			if(attacking==true)
