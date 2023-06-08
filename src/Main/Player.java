@@ -189,7 +189,6 @@ public class Player extends Entity implements ActionListener
 			{
 				setSpeed(0);
 				attacking=true;
-				gp.playEffect(1);
 			}
 			if(keyH.isUpPressed()==true)
 			{
