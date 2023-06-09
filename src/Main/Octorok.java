@@ -5,8 +5,17 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
+/*
+
+Octorok is an enemy entity that has random movement in all directions. It can interact with the character by 
+being hit and also hitting the character.
+@author David Kostanyan
+
+*/
+
 public class Octorok extends Entity
 {
+	//creats an Octorok object
 	public Octorok(GamePanel gp)
 	{
 		super(gp);
@@ -18,6 +27,7 @@ public class Octorok extends Entity
 		setSolidArea(new Rectangle(5, 5, 38, 38));
 	}
 	
+	//alternate creation for Octorok object
 	public Octorok(GamePanel gp, int x, int y)
 	{
 		super(gp);
@@ -29,10 +39,14 @@ public class Octorok extends Entity
 		setHealth(3);
 		setSolidArea(new Rectangle(5, 5, 38, 38));
 	}
+	
+	//overrides toString
 	public String toString()
 	{
-		return "Octorok";
+		return "Octorok"; //returns name of the class and entity
 	}
+	
+	//gets images for octorok in all directions
 	public void getBruhImage()
 	{
 		setUp1(setup("/mobs/OctorokUp",getTileSize(),getTileSize()));
@@ -44,6 +58,8 @@ public class Octorok extends Entity
 		setRight1(setup("/mobs/OctorokRight",getTileSize(),getTileSize()));
 		setRight2(setup("/mobs/OctorokRight1",getTileSize(),getTileSize()));
 	}
+	
+	//uses a random number generator to set a random direction for the octorok movement
 	public void setAction()
 	{
 		if(getKnocked())
@@ -84,6 +100,7 @@ public class Octorok extends Entity
 		}
 		
 	}
+	//updates the position of the entity
 	public void update()//Updates the positions and animates entity 
 	{
 		setAction();
@@ -164,9 +181,11 @@ public class Octorok extends Entity
 			{
 				spriteNum=1;
 			}
-			spriteCounter=0;
+			spriteCounter=0;    
 		}
 	}
+	//renders the entity on the screen
+	//@Para Graphics2D g2 is used to draw
 	public void draw(Graphics2D g2) 
 	{
 		BufferedImage image=null;
