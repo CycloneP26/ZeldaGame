@@ -41,18 +41,20 @@ public class Player extends Entity implements ActionListener
 	private int attackCounter = 0;
 	private int knockCounter = 0;
 	
-	private int bombCount = 0;
 	private boolean gotHeartC = false;
 	private boolean firstSword = false;
 	private boolean hasSword = false;
 	private boolean gotItem = false;
+	private int oriHealth;
+	private Main main;
+	private boolean done;
 	
 	/*Constructor initializes all the fields that deal with position, and paths the images 
 	@param GamePanel to access and update the panel
 	@param KeyHandler to use the ActionListener and observe keystrokes
 	@param RoomManager to find collision and position of the player 
 	*/
-	public Player(GamePanel gp, KeyHandler keyH, RoomManager rooms) 
+	public Player(GamePanel gp, KeyHandler keyH, RoomManager rooms, Main main) 
 	{
 		super(gp);
 		this.gp = gp;
@@ -60,6 +62,9 @@ public class Player extends Entity implements ActionListener
 		this.rooms = rooms;
 		this.screenX = 0;
 		this.screenY = 0;
+		setHealth(10);
+		oriHealth = 2;
+		this.main = main;
 		
 		setSolidArea(new Rectangle(8, 16, 32, 28));
 		setSolidAreaDefX(getSolidArea().x);
@@ -89,8 +94,8 @@ public class Player extends Entity implements ActionListener
 	//Sets the positions to default
 	public void setDefaultValue()
 	{		
-		setX(250);
-		setY(288);
+		setX(300);
+		setY(300);
 		setSpeed(4);
 		setDirection("down");
 	}
@@ -175,7 +180,7 @@ public class Player extends Entity implements ActionListener
 	public void knocked()
 	{
 		
-		setKnockCounter(getKnockCounter() + 1);
+		knockCounter++;
 		
 		setSpeed(10);
 		getGp().getCollision().checkKnockTile(this);
@@ -183,6 +188,9 @@ public class Player extends Entity implements ActionListener
 		
 		if(isCollisionOn() == false)
 		{
+			
+			
+			{
 				
 				switch(getKnockedDir())
 				{
@@ -221,7 +229,9 @@ public class Player extends Entity implements ActionListener
 					
 					break;
 				case "left":
-					if(!rooms.isRoomAvailable(rooms.getRoomRow(), rooms.getRoomColumn() - 1))
+					
+					System.out.println("asdfaasdf");
+					//if(!rooms.isRoomAvailable(rooms.getRoomRow(), rooms.getRoomColumn() - 1))
 //						{
 							if(getX() > 0)
 							{
@@ -232,7 +242,6 @@ public class Player extends Entity implements ActionListener
 						{
 							
 							setX(getX()-getSpeed());
-							
 						}
 						
 						break;
@@ -257,7 +266,10 @@ public class Player extends Entity implements ActionListener
 				
 			}
 			
-			if(knockCounter>7)
+				
+			}
+			
+			if(knockCounter==7)
 			{
 				setKnocked(false);
 				knockCounter = 0;
@@ -302,14 +314,18 @@ public class Player extends Entity implements ActionListener
 	public void update()
 	{
 		
+		
+		if(!done)
 		{
 			
-			
-			if(gp.getCollision().checkFight(this))
+			if(!getKnocked())
 			{
-				gp.playEffect(6);
+				
+				gp.getCollision().checkFight(this);
+				
 			}
 			
+							
 			//movement and attacking
 			if(getKnocked())
 			{
@@ -346,7 +362,6 @@ public class Player extends Entity implements ActionListener
 					{
 						setSpeed(0);
 						attacking=true;
-						gp.playEffect(1);
 					}
 					if(keyH.isUpPressed()==true)
 					{
@@ -483,6 +498,14 @@ public class Player extends Entity implements ActionListener
 				}
 			}
 		}
+		else
+		{
+			
+			
+			
+		}
+		System.out.println(getHealth());
+		
 	}
 	
 	
@@ -506,7 +529,7 @@ public class Player extends Entity implements ActionListener
 			case "rupee":
 				gp.getItems().set(i, null);
 				gp.playEffect(2);
-				rupees+=10;
+				rupees++;
 				Main.updateRupeesCount(rupees); // Update rupees count in the HUD
 				break;
 			case "startSword":
@@ -521,49 +544,16 @@ public class Player extends Entity implements ActionListener
 				firstSword = true;
 				break;
 			case "heart":
-				if(gp.getItems().get(i).isShop())
-				{
-					if(rupees > gp.getItems().get(i).getCost())
-					{
-						gp.getItems().set(i, null);
-						gp.playEffect(4);
-						rupees -= gp.getItems().get(i).getCost();
-						Main.updateRupeesCount(rupees);
-						keyH.setLeftPressed(false);
-						keyH.setRightPressed(false);
-						keyH.setDownPressed(false);
-						keyH.setUpPressed(false);
-						gotItem = true;
-						gotHeartC = true;
-					}
-				}
-				else
-				{
-					gp.getItems().set(i, null);
-					gp.playEffect(4);
-					keyH.setLeftPressed(false);
-					keyH.setRightPressed(false);
-					keyH.setDownPressed(false);
-					keyH.setUpPressed(false);
-					gotItem = true;
-					gotHeartC = true;
-				}
-				break;
-			case "bomb":
-				if(gp.getItems().get(i).isShop())
-				{
-					if(rupees > gp.getItems().get(i).getCost())
-					{
-						gp.getItems().set(i, null);
-						gp.playEffect(3);
-						bombCount += 4;
-					}
-				}
-				else
-				{
-					gp.getItems().set(i, null);
-					gp.playEffect(3);
-				}
+				gp.getItems().set(i, null);
+				setHealth(10);
+				main.heartUpdate();
+				gp.playEffect(4);
+				keyH.setLeftPressed(false);
+				keyH.setRightPressed(false);
+				keyH.setDownPressed(false);
+				keyH.setUpPressed(false);
+				gotItem = true;
+				gotHeartC = true;
 				break;
 			}
 		}
@@ -608,17 +598,11 @@ public class Player extends Entity implements ActionListener
 						{
 							System.out.println("secret :O");
 							int[] coords = gp.getRooms().getCurrentRoom().secretCoords(gp.getRooms().getCurrentRoom().getSecretRoom());
-							System.out.println("playerX: " + gp.getPlayer().getX());
-							System.out.println("playerY: " + gp.getPlayer().getY());
-							System.out.println("x = " + gp.getRooms().getCurrentRoom().getBombs().get(0).getX());
-							System.out.println("y = " + gp.getRooms().getCurrentRoom().getBombs().get(0).getY());
-							System.out.println("x+144 = " + (gp.getRooms().getCurrentRoom().getBombs().get(0).getX()+144));
-							System.out.println("y+144 = " + (gp.getRooms().getCurrentRoom().getBombs().get(0).getY()+144));
-							
-							if(gp.getRooms().getCurrentRoom().getBombs().get(0).getX()-48 <= coords[1]+48
-							&& gp.getRooms().getCurrentRoom().getBombs().get(0).getX()-48+144 >= coords[1]
-							&& gp.getRooms().getCurrentRoom().getBombs().get(0).getY()-144 <= coords[0]+48
-							&& gp.getRooms().getCurrentRoom().getBombs().get(0).getY() >= coords[0])
+							System.out.println(gp.getRooms().getCurrentRoom().getBombs().get(0).getX());
+							if(gp.getRooms().getCurrentRoom().getBombs().get(0).getX() <= coords[1]+48
+							&& gp.getRooms().getCurrentRoom().getBombs().get(0).getX()+144 >= coords[1]
+							&& gp.getRooms().getCurrentRoom().getBombs().get(0).getY() <= coords[0]+48
+							&& gp.getRooms().getCurrentRoom().getBombs().get(0).getY()+144 >= coords[0])
 							{
 								gp.getRooms().getCurrentRoom().setSecretFound(true);
 							}
@@ -660,15 +644,20 @@ public class Player extends Entity implements ActionListener
 						
 						if(gp.getRooms().getCurrentRoom().isSecret())
 						{
+							System.out.println("secret :O");
 							int[] coords = gp.getRooms().getCurrentRoom().secretCoords(gp.getRooms().getCurrentRoom().getSecretRoom());
-							if(gp.getRooms().getCurrentRoom().getBombs().get(0).getX()-48 <= coords[1]+48
-							&& gp.getRooms().getCurrentRoom().getBombs().get(0).getX()-48+144 >= coords[1]
-							&& gp.getRooms().getCurrentRoom().getBombs().get(0).getY()+48 <= coords[0]+48
-							&& gp.getRooms().getCurrentRoom().getBombs().get(0).getY()+48+144 >= coords[0])
+							System.out.println(gp.getRooms().getCurrentRoom().getBombs().get(0).getX());
+							if(gp.getRooms().getCurrentRoom().getBombs().get(0).getX() <= coords[1]+48
+							&& gp.getRooms().getCurrentRoom().getBombs().get(0).getX()+144 >= coords[1]
+							&& gp.getRooms().getCurrentRoom().getBombs().get(0).getY() <= coords[0]+48
+							&& gp.getRooms().getCurrentRoom().getBombs().get(0).getY()+144 >= coords[0])
 							{
 								gp.getRooms().getCurrentRoom().setSecretFound(true);
 							}
-							
+							else
+							{
+								System.out.println("failed");
+							}
 						}
 					}
 
@@ -702,16 +691,20 @@ public class Player extends Entity implements ActionListener
 						
 						if(gp.getRooms().getCurrentRoom().isSecret())
 						{
+							System.out.println("secret :O");
 							int[] coords = gp.getRooms().getCurrentRoom().secretCoords(gp.getRooms().getCurrentRoom().getSecretRoom());
 							System.out.println(gp.getRooms().getCurrentRoom().getBombs().get(0).getX());
-							if(gp.getRooms().getCurrentRoom().getBombs().get(0).getX()-144 <= coords[1]+48
-							&& gp.getRooms().getCurrentRoom().getBombs().get(0).getX() >= coords[1]
-							&& gp.getRooms().getCurrentRoom().getBombs().get(0).getY()-48 <= coords[0]+48
-							&& gp.getRooms().getCurrentRoom().getBombs().get(0).getY()-48+144 >= coords[0])
+							if(gp.getRooms().getCurrentRoom().getBombs().get(0).getX() <= coords[1]+48
+							&& gp.getRooms().getCurrentRoom().getBombs().get(0).getX()+144 >= coords[1]
+							&& gp.getRooms().getCurrentRoom().getBombs().get(0).getY() <= coords[0]+48
+							&& gp.getRooms().getCurrentRoom().getBombs().get(0).getY()+144 >= coords[0])
 							{
 								gp.getRooms().getCurrentRoom().setSecretFound(true);
 							}
-							
+							else
+							{
+								System.out.println("failed");
+							}
 						}
 					}
 
@@ -737,6 +730,7 @@ public class Player extends Entity implements ActionListener
 			{
 				if(itemUse)
 				{
+					System.out.println("hi1sf");
 					image = getItemRight();
 					if(gp.getRooms().getCurrentRoom().getBombs().size()==0) 
 					{
@@ -745,16 +739,20 @@ public class Player extends Entity implements ActionListener
 						
 						if(gp.getRooms().getCurrentRoom().isSecret())
 						{
+							System.out.println("secret :O");
 							int[] coords = gp.getRooms().getCurrentRoom().secretCoords(gp.getRooms().getCurrentRoom().getSecretRoom());
 							System.out.println(gp.getRooms().getCurrentRoom().getBombs().get(0).getX());
-							if(gp.getRooms().getCurrentRoom().getBombs().get(0).getX()+48 <= coords[1]+48
-							&& gp.getRooms().getCurrentRoom().getBombs().get(0).getX()+48+144 >= coords[1]
-							&& gp.getRooms().getCurrentRoom().getBombs().get(0).getY()-48 <= coords[0]+48
-							&& gp.getRooms().getCurrentRoom().getBombs().get(0).getY()-48+144 >= coords[0])
+							if(gp.getRooms().getCurrentRoom().getBombs().get(0).getX() <= coords[1]+48
+							&& gp.getRooms().getCurrentRoom().getBombs().get(0).getX()+144 >= coords[1]
+							&& gp.getRooms().getCurrentRoom().getBombs().get(0).getY() <= coords[0]+48
+							&& gp.getRooms().getCurrentRoom().getBombs().get(0).getY()+144 >= coords[0])
 							{
 								gp.getRooms().getCurrentRoom().setSecretFound(true);
 							}
-							
+							else
+							{
+								System.out.println("failed");
+							}
 						}
 					}
 				}
@@ -866,5 +864,16 @@ public class Player extends Entity implements ActionListener
 	public void setGotItem(boolean gotItem) {
 		this.gotItem = gotItem;
 	}
-
+	public void setDone(boolean done)
+	{
+		
+		this.done = done;
+		
+	}
+	public boolean getDone()
+	{
+		
+		return done;
+		
+	}
 }

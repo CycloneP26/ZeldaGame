@@ -3,21 +3,17 @@ package Main;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-/*
-Main class that creates the gamePanel and runs all the threading
-It also creates the HUD 
-@author David Kostanyan
-@author Ivan Xiao 
-*/
+
 public class Main extends JFrame {
-    //Label for the amount of keys 
     private static JLabel keysLabelStatic;
-    //Label for amount of rupees 
     private static JLabel rupeesLabelStatic;
-    //the amount of keys 
     private static int keysCount = 0;
-    //amount of rupees 
     private static int rupeesCount = 0;
+    private JPanel mainPanel;
+    private JPanel topPanel;
+    private GamePanel gamePanel;
+    private JLabel healthLabel;
+  
 
     public static void main(String[] args) {
         Main main = new Main();
@@ -29,16 +25,13 @@ public class Main extends JFrame {
         setSize(768, 774);
         setResizable(false);
         setTitle("The Legend of Zelda");
-        
-        //Main gamePanel 
-        GamePanel gamePanel = new GamePanel();
-        
-        //Background of HUD 
-        JPanel mainPanel = new JPanel(new BorderLayout());
+
+       gamePanel = new GamePanel(this);
+
+        mainPanel = new JPanel(new BorderLayout());
         mainPanel.setBackground(Color.BLACK);
-        
-        //Part of HUD 
-        JPanel topPanel = new JPanel(new BorderLayout());
+
+        topPanel = new JPanel(new BorderLayout());
         topPanel.setBackground(Color.BLACK);
         topPanel.setBorder(new EmptyBorder(16, 0, 0, 0));
 
@@ -85,12 +78,16 @@ public class Main extends JFrame {
         topPanel.add(rupeesAndKeysPanel, BorderLayout.CENTER);
 
         // Health Label
-        JLabel healthLabel = createHealthLabel();
+        
+        ImageIcon healthIcon = new ImageIcon(getClass().getResource("/objects/Heart.png"));
+        healthLabel = new JLabel("<html><div style='text-align: center;'><span style='vertical-align: text-bottom;'>-LIFE-</span><br><img src='" + healthIcon + "'></div></html>", JLabel.CENTER);
+        healthLabel.setForeground(Color.RED);
+        healthLabel.setFont(new Font("Courier New", Font.PLAIN, 36));
 
         topPanel.add(healthLabel, BorderLayout.EAST);
 
         mainPanel.add(topPanel, BorderLayout.NORTH);
-
+        
         JPanel bottomPanel = new JPanel();
         bottomPanel.setBackground(Color.BLACK);
         bottomPanel.setPreferredSize(new Dimension(768, 50)); // Adjust the preferred size according to your requirements
@@ -103,9 +100,25 @@ public class Main extends JFrame {
         setVisible(true);
 
         gamePanel.startGameThread();
+        
+        
+        
     }
 
-    //Creates a label that can store text 
+
+    public void heartUpdate()
+    {
+    	
+    	topPanel.remove(healthLabel);
+    	
+    	healthLabel = createHealthLabel();
+
+        topPanel.add(healthLabel, BorderLayout.EAST);
+
+        mainPanel.add(topPanel, BorderLayout.NORTH);
+    	
+    }
+    
     private JLabel createLabel(String text, String iconPath) {
         ImageIcon icon = new ImageIcon(getClass().getResource(iconPath));
         JLabel label = new JLabel(text, icon, JLabel.LEFT);
@@ -113,16 +126,38 @@ public class Main extends JFrame {
         label.setFont(new Font("Courier New", Font.PLAIN, 16));
         return label;
     }
-    //Creates the HealthLabel by aligning and creating a label
+
     private JLabel createHealthLabel() {
-        ImageIcon healthIcon = new ImageIcon(getClass().getResource("/objects/Heart.png"));
-        JLabel healthLabel = new JLabel("<html><div style='text-align: center;'><span style='vertical-align: text-bottom;'>-LIFE-</span><br><img src='" + healthIcon + "'></div></html>", JLabel.CENTER);
+    	
+    	ImageIcon healthIcon;
+    	
+    	if(gamePanel.getPlayer().getHealth() > 5 )
+    	{
+    		
+    		healthIcon = new ImageIcon(getClass().getResource("/objects/Heart.png"));
+    		
+    	}
+    	else if(gamePanel.getPlayer().getHealth() <=5 && gamePanel.getPlayer().getHealth() >0)
+    	{
+    		
+    		healthIcon = new ImageIcon(getClass().getResource("/objects/halfHeart.png"));
+    		
+    	}
+    	else
+    	{
+    		
+    		healthIcon = new ImageIcon(getClass().getResource("/objects/trans.png"));
+    		gamePanel.getPlayer().setDone(true);
+    		
+    	}
+        
+    	healthLabel = new JLabel("<html><div style='text-align: center;'><span style='vertical-align: text-bottom;'>-LIFE-</span><br><img src='" + healthIcon + "'></div></html>", JLabel.CENTER);
         healthLabel.setForeground(Color.RED);
         healthLabel.setFont(new Font("Courier New", Font.PLAIN, 36));
         return healthLabel;
     }
+    
 
-    //Creates the rectangular box 
     private JPanel createRectangularBox(Color color, int width, int height, String letter) {
         JPanel box = new JPanel(new BorderLayout());
         box.setOpaque(false); // Set the box panel to be transparent

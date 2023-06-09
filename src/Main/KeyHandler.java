@@ -2,36 +2,22 @@ package Main;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-/*
-This class handles all keystrokes that the user does and edits booleans that observe each keystroke. This is used by all the movement and actions in Player 
-@author David Kostanyan 
-@author Sachin Chhaya 
-*/
+
 public class KeyHandler implements KeyListener
 {
-	//All booleans that determine if a key is pressed
-	private boolean upPressed, downPressed, leftPressed, rightPressed, swordPressed, bItem; 
-	//Boolean that is the status of the KeyHandler 
+	private boolean upPressed, downPressed, leftPressed, rightPressed, swordPressed, bItem; //All booleans that determine if a key is pressed
 	private boolean on;
-	//GamePanel that is just initialized as the main GamePanel 
 	private GamePanel gp;
 	
-	/*Calls the super constructor for the KeyListener class, and it turns on the ability to observe keystrokes
-	@param GamePanel gp passed to set gp to the main GamePanel 
-	*/
-	public KeyHandler(GamePanel gp) 
+	public KeyHandler(GamePanel gp) //Calls the super constructor for the KeyListener class, and it turns on the ability to observe keystrokes
 	{
 
 		super();
 		on = true;
 		this.gp = gp;
 	}
-	
-	/*
-	Method that turns on or off the KeyHandler 
-	@param boolean to change whether it is on or off
-	*/
-	public void setOn(boolean on) 
+
+	public void setOn(boolean on) //@param boolean to change whether it is on or off
 	{
 
 		this.on = on;
@@ -47,10 +33,9 @@ public class KeyHandler implements KeyListener
 	}
 	/*
 	When a key is pressed, it changes the booleans that show which key is pressed
-	@param keystroke argument is passed
 	*/
 	@Override
-	public void keyPressed(KeyEvent e)  
+	public void keyPressed(KeyEvent e) //@param keystroke argument is passed 
 	{
 		int code=e.getKeyCode();
 		if(on == true)
@@ -84,11 +69,9 @@ public class KeyHandler implements KeyListener
 		}
 		
 	}
-	/*When a keystroke is released, it makes the booleans false 
-	@param takes the keystroke argument 
-	*/
+	//When a keystroke is released, it makes the booleans false 
 	@Override
-	public void keyReleased(KeyEvent e) 
+	public void keyReleased(KeyEvent e) //@param takes the keystroke argument 
 	{
 		int code=e.getKeyCode();
 		if(code==KeyEvent.VK_W)

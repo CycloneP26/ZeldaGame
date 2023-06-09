@@ -15,7 +15,7 @@ public class Octorok extends Entity
 		setDirection("down");
 		setSpeed(1);
 		getBruhImage();
-		setSolidArea(new Rectangle(5, 5, 38, 38));
+		setSolidArea(new Rectangle(5, 5, 42, 42));
 	}
 	
 	public Octorok(GamePanel gp, int x, int y)
@@ -27,7 +27,7 @@ public class Octorok extends Entity
 		setSpeed(1);
 		getBruhImage();
 		setHealth(3);
-		setSolidArea(new Rectangle(5, 5, 38, 38));
+		setSolidArea(new Rectangle(5, 5, 42, 42));
 	}
 	public String toString()
 	{
@@ -98,7 +98,7 @@ public class Octorok extends Entity
 				{
 					if(getY()-getSpeed()>0)
 					{
-						setY(getY()-2*getSpeed());
+						setY(getY()-getSpeed());
 					}
 					else
 					{
