@@ -23,7 +23,7 @@ public class Moblin extends Entity
 		getBruhImage();
 		setSolidArea(new Rectangle(5,5,38,38));
 	}
-`	//Alternate Moblin object creation
+	//Alternate Moblin object creation
 	public Moblin(GamePanel gp, int x, int y)
 	{
 		super(gp);
