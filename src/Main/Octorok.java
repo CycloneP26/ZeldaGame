@@ -5,8 +5,15 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
+
+/*
+Octorok is an enemy entity class that implements its own movement, can be attacked by the player, has collision with tiles, and can damage the player
+@author David Kostanyan
+*/
 public class Octorok extends Entity
 {
+
+//Creates Octorok
 	public Octorok(GamePanel gp)
 	{
 		super(gp);
@@ -17,7 +24,8 @@ public class Octorok extends Entity
 		getBruhImage();
 		setSolidArea(new Rectangle(5, 5, 38, 38));
 	}
-	
+
+//Separate Constructor for Octorok
 	public Octorok(GamePanel gp, int x, int y)
 	{
 		super(gp);
@@ -29,10 +37,15 @@ public class Octorok extends Entity
 		setHealth(3);
 		setSolidArea(new Rectangle(5, 5, 38, 38));
 	}
+
+//To string
 	public String toString()
 	{
 		return "Octorok";
+		//returns the name for the entity
 	}
+
+//gets the images for the different octorok images
 	public void getBruhImage()
 	{
 		setUp1(setup("/mobs/OctorokUp",getTileSize(),getTileSize()));
@@ -44,6 +57,7 @@ public class Octorok extends Entity
 		setRight1(setup("/mobs/OctorokRight",getTileSize(),getTileSize()));
 		setRight2(setup("/mobs/OctorokRight1",getTileSize(),getTileSize()));
 	}
+//Uses a random number generator to set random movement for Octorok
 	public void setAction()
 	{
 		if(getKnocked())
@@ -167,6 +181,7 @@ public class Octorok extends Entity
 			spriteCounter=0;
 		}
 	}
+//renders the octorok onto the screen
 	public void draw(Graphics2D g2) 
 	{
 		BufferedImage image=null;
