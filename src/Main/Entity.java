@@ -10,6 +10,7 @@ Entity is the overarching superclass for all the enemies, the player, and many c
 It uses update and draw methods to change and animate the sprites
 @author David Kostanyan
 @author Sachin Chhaya 
+@author Christopher Li 
 */
 public class Entity {
 	//Be able to access the main GamePanel to add components
