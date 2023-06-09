@@ -1,3 +1,0 @@
-# ZeldaGame
-CSA Project
-Zelda
