@@ -9,8 +9,15 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
+/*
+
+Zora is an enemy entity that spawns in the water
+@author David Kostanyan
+
+*/
 public class Zora extends Entity
 {
+	//Creates a Zora object
 	public Zora(GamePanel gp)
 	{
 		super(gp);
@@ -28,7 +35,7 @@ public class Zora extends Entity
 		getImage();
 		setSolidArea(new Rectangle(5,5,42,42));
 	}
-
+	//Alternate creation for Zora object
 	public Zora(GamePanel gp, int x, int y)
 	{
 		super(gp);
@@ -40,10 +47,12 @@ public class Zora extends Entity
 		setHealth(3);
 		getImage();
 	}
+	//overwrites toString
 	public String toString()
 	{
-		return "BlueMoblin";
+		return "Zora"; //returns the name of the class
 	}
+	//gets images for the zora
 	public void getImage()
 	{
 		setZoraSand(setup("/mobs/ZoraSand",getTileSize(),getTileSize()));
@@ -51,6 +60,7 @@ public class Zora extends Entity
 		setZoraUp(setup("/mobs/ZoraUp",getTileSize(),getTileSize()));
 		setZoraDown(setup("/mobs/ZoraDown",getTileSize(),getTileSize()));
 	}
+	//uses a random number gen to get a random direction for the zora
 	public void setAction()
 	{
 		setActionLockCounter(getActionLockCounter()+1);
@@ -71,6 +81,7 @@ public class Zora extends Entity
 			setActionLockCounter(0);
 		}
 	}
+	//updates the zora properties for its movement
 	public void update() //Updates the positions and animates entity 
 	{
 		setAction();
@@ -126,6 +137,7 @@ public class Zora extends Entity
 			spriteCounter=0;
 		}
 	}
+	//renders the zora
 	public void draw(Graphics2D g2) //@param Graphics2D is taken to draw the images
 	{
 		BufferedImage image=null;
