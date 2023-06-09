@@ -1,6 +1,10 @@
 package Main;
 
-
+/*
+This class takes the rooms and turns them into a large map that consists of all the rooms. It also compiles all the mobs, items, entities, etc that are in each room and handles movement between rooms
+@author Pranay Thatikonda
+@author David Kostanyan
+*/
 import java.util.ArrayList;
 
 import object.Key;
@@ -13,13 +17,21 @@ public class RoomManager {
 	
 	//A 2D arraylist of rooms
 	private ArrayList<ArrayList<Room>> rooms = new ArrayList<ArrayList<Room>>();
+	//The gamepanel that this is in
 	private GamePanel gp;
+	//the index of the row that the current room is in in the arraylist
 	private int currentRoomRow;
+	//the index of the column that the current room is in in the arraylist
 	private int currentRoomColumn;
+	//the current room that the player is in
 	private Room currentRoom;
 	
 	
-	
+	/*Creates the roomManager and the places that the players and mobs interact
+	@param gp is the gamepanel that it is in
+	@param r is the number of rows of rooms
+	@param c is the number of columns of rooms
+	*/
 	public RoomManager(GamePanel gp, int r, int c)
 	{
 		for(int i=0; i<r; i++)
@@ -255,32 +267,6 @@ public class RoomManager {
 		this.gp = gp;
 	}
 	
-	public RoomManager(GamePanel gp, int r, int c, String[][] maps)
-	{
-		for(int i=0; i<r; i++)
-		{
-			ArrayList<Room> temp = new ArrayList<Room>();
-			for(int j = 0; j<c; j++)
-			{
-				if(maps[r][c].equals("X"))
-				{
-					temp.add(null);
-				}
-				else
-				{
-					temp.add(new Room(gp, maps[r][c]));
-				}
-				
-			}
-			rooms.add(temp);
-		}
-		
-		currentRoomRow = 1;
-		currentRoomColumn = 1;
-		this.currentRoom = getRoomArray().get(currentRoomRow).get(currentRoomColumn);
-		this.gp = gp;
-	}
-	
 	public ArrayList<ArrayList<Room>> getRoomArray()
 	{
 		return rooms;
@@ -295,7 +281,10 @@ public class RoomManager {
 	{
 		currentRoomColumn = c;
 	}
-	
+	/* This method handles updating the current room
+	If the player moves off the screen, it checks if the room is available and then moves the player
+	It also does the animation for the switching rooms
+	*/
 	public void update()
 	{
 		
@@ -408,6 +397,14 @@ public class RoomManager {
 		
 	}
 	
+	/*This method helps in the animation of the switching rooms
+	@param rOne is the room that the player is coming from
+	@param rTwo is the room that the player is going to
+	@param num is the stage that the animation is in, 1-16 for left and right, 1-12 for up and down
+	@param direction is the direction that the player is going in
+	@return Room is the room that has a layout that is between rOne and rTwo using some string manipulation
+	how far between it is is based off of num
+	*/
 	public Room getSwitchedRoom(Room rOne, Room rTwo, int num, String direction)
 	{
 		int subNum = 0;
@@ -505,7 +502,11 @@ public class RoomManager {
 		return currentRoomColumn;
 		
 	}
-	
+	/*Checks if the room that the player is going to is available or not
+	@param row is the row of the room that the method is checking
+	@param column is the column of the room that the method is checking
+	@return boolean returns true if the room exists and can be entered or false if the room doesn't exist
+	*/
 	public boolean isRoomAvailable(int row, int column)
 	{
 		if(row<0)
