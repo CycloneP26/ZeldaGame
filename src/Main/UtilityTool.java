@@ -3,7 +3,9 @@ package Main;
  
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-
+/*
+This class crops the BufferedImages so that it fits within the 16x16 tiles 
+*/
 public class UtilityTool {
 	public BufferedImage scaleImage(BufferedImage original, int width, int height) {
 		// Scale image
