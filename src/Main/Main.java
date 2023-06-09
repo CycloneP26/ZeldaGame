@@ -8,6 +8,7 @@ Main class that creates the gamePanel and runs all the threading
 It also creates the HUD 
 @author David Kostanyan
 @author Ivan Xiao 
+@author Christopher Li 
 */
 public class Main extends JFrame {
     //Label for the amount of keys 
