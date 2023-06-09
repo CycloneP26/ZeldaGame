@@ -11,7 +11,7 @@ import javax.swing.Timer;
 
 public class Spider extends Entity implements ActionListener
 {
-	private Stopwatch stop=new Stopwatch();
+	
 	private Timer timer;
 	private boolean jumping=false;
 	private int jumpCounter=0;
