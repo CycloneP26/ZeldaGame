@@ -497,8 +497,12 @@ public class Player extends Entity implements ActionListener
 					if(rupees > gp.getItems().get(i).getCost())
 					{
 						gp.getItems().set(i, null);
+						for(int j = 0; j < gp.getItems().size(); j++)
+						{
+							gp.getItems().set(j, null);
+						}
 						gp.playEffect(4);
-						rupees -= gp.getItems().get(i).getCost();
+						rupees -= 20;
 						Main.updateRupeesCount(rupees);
 						keyH.setLeftPressed(false);
 						keyH.setRightPressed(false);
@@ -526,8 +530,14 @@ public class Player extends Entity implements ActionListener
 					if(rupees > gp.getItems().get(i).getCost())
 					{
 						gp.getItems().set(i, null);
+						for(int j = 0; j < gp.getItems().size(); j++)
+						{
+							gp.getItems().set(j, null);
+						}
 						gp.playEffect(3);
 						bombCount += 4;
+						rupees -= 10;
+						Main.updateRupeesCount(rupees);
 					}
 				}
 				else
