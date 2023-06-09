@@ -47,5 +47,4 @@ public class Rupee extends ItemEntity
 		setWorldX(x);
 		setWorldY(y);
 	}
-	
 }

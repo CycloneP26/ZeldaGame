@@ -18,6 +18,7 @@ public class Room {
 	private ArrayList<Entity> mobs;
 	private ArrayList<ItemEntity> items;
 	private ArrayList<useableEntity> bombs;
+	private ArrayList<ItemEntity> fires;
 	private int caveR;
 	private int caveC;
 	private String type;
@@ -47,6 +48,7 @@ public class Room {
 		str = mapToStr(tileLayout);
 		mobs = new ArrayList<Entity>();
 		items = new ArrayList<ItemEntity>();
+		fires = new ArrayList<ItemEntity>();
 		setBombs(new ArrayList<useableEntity>());
 		
 	}
@@ -72,6 +74,7 @@ public class Room {
 		tileLayout = strToMap(this.str);
 		mobs = new ArrayList<Entity>();
 		items = new ArrayList<ItemEntity>();
+		fires = new ArrayList<ItemEntity>();
 		setBombs(new ArrayList<useableEntity>());
 	}
 	
@@ -272,18 +275,6 @@ public class Room {
 			}
 		}
 	}
-	
-	public int[] secretCoords(String str1)
-	{
-		int[] retArr = new int[2];
-		int blockX = (str1.indexOf("j")/16)*48;
-		int blockY = (str1.indexOf("j")%16)*48;
-		retArr[0] = blockX;
-		retArr[1] = blockY;
-		System.out.println(blockX + ", " + blockY);
-		return retArr;
-	}
-	
 	public String getStr() {
 		return str;
 	}
@@ -350,5 +341,10 @@ public class Room {
 	public void setSecretFound(boolean secretFound) {
 		this.secretFound = secretFound;
 	}
-	
+	public void addFires(ItemEntity i) {
+		fires.add(i);
+	}
+	public ArrayList<ItemEntity> getFires() {
+		return fires;
+	}
 }
