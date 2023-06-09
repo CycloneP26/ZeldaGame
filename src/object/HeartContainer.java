@@ -30,6 +30,7 @@ public class HeartContainer extends ItemEntity
 	Constructor to create a heart container that is not within a shop 
 	@param GamePanel gp, access the main GamePanel
 	@param int x,y position 
+	
 	*/
 	public HeartContainer(GamePanel gp, int x, int y)
 	{
@@ -50,6 +51,7 @@ public class HeartContainer extends ItemEntity
 	Constructor to create a heart container that is used in a shop 
 	@param GamePanel gp, access the main GamePanel
 	@param int x,y position 
+	@param boolean shop to verify it is being purchases with rupees
 	*/
 	public HeartContainer(GamePanel gp, int x, int y, boolean shop)
 	{
