@@ -5,10 +5,17 @@ import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
 import java.util.Random;
-
+/*
+This class creates an enemy called Armos that attacks the enemy, and they emerge from a dormant stature
+@author David Kostanyan 
+*/
 public class Armos extends Entity
 {
-
+	/*
+	Creates an Armos with a set location and access to the main GamePanel
+	@param GamePanel gp, access the main gamePanel 
+	@param int x,y position of the enemy
+	*/
 	public Armos(GamePanel gp,int x,int y) 
 	{
 		super(gp);
@@ -21,6 +28,7 @@ public class Armos extends Entity
 		setSolidArea(new Rectangle(0,0,42,42));
 		getImage();
 	}
+	//Sets up and paths images for the Armos 
 	public void getImage()
 	{
 		setArmosFrozen(setup("/mobs/ArmosFrozen",getTileSize(),getTileSize()));
@@ -29,6 +37,7 @@ public class Armos extends Entity
 		setArmosUp(setup("/mobs/ArmosUp",getTileSize(),getTileSize()));
 		setArmosUp1(setup("/mobs/ArmosUp1",getTileSize(),getTileSize()));
 	}
+	//Creates the movement patterns for the Armos and randomizes their direction
 	public void setAction()
 	{
 		setActionLockCounter(getActionLockCounter()+1);
@@ -59,9 +68,9 @@ public class Armos extends Entity
 			setActionLockCounter(0);
 		}
 	}
-
+	//Is it colliding with player
 	boolean colliding=false;
-	boolean inBounds=getX()>0&&getX()<768&&getY()>0&&getY()<576;
+	//Updates the movement and position of the armos 
 	public void update()
 	{
 		setAction();
@@ -153,7 +162,10 @@ public class Armos extends Entity
 
 
 	}
-
+	/*
+	Draws the armo according to what the spriteNum is in the update method
+	@param Graphics2D g2 is required to draw 
+	*/
 	public void draw(Graphics2D g2)
 		{
 			BufferedImage image=null;
