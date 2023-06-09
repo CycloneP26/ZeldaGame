@@ -25,6 +25,10 @@ public class Sound
 		soundURL[1] = getClass().getResource("/sound/SwordSlash.wav");
 		soundURL[2] = getClass().getResource("/sound/LOZ_Get_Rupee.wav");
 		soundURL[3] = getClass().getResource("/sound/LOZ_Get_Heart.wav");
+		soundURL[4] = getClass().getResource("/sound/LOZ_Get_Item.wav");
+		soundURL[5] = getClass().getResource("/sound/LOZ_Enemy_Hit.wav");
+		soundURL[6] = getClass().getResource("/sound/LOZ_Link_Hurt.wav");
+		
 	}
 	/*
 	setFile takes an index parameter that is used to set the clip that is going to be played 

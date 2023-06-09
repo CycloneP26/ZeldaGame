@@ -7,6 +7,8 @@ import object.Key;
 import object.Rupee;
 import object.HeartContainer;
 import object.StartSword;
+import object.Item_Bomb;
+import object.Fire;
 public class RoomManager {
 	
 	//A 2D arraylist of rooms
@@ -107,6 +109,9 @@ public class RoomManager {
 					cave.setCaveC(0);
 					cave.setCaveR(9);
 					cave.addItem(new StartSword(gp, 250, 250));
+					cave.addFires(new Fire(gp, 200, 250));
+					cave.addFires(new Fire(gp, 500, 250));
+					cave.addItem(new StartSword(gp, 350, 250));
 					temp.add(cave);
 					
 				}
@@ -116,6 +121,8 @@ public class RoomManager {
 					Room cave = new Room(gp, "cave");
 					cave.setCaveC(4);
 					cave.setCaveR(9);
+					cave.addItem(new HeartContainer(gp, 350, 250, true));
+					cave.addItem(new Item_Bomb(gp, 250, 250, true));
 					temp.add(cave);
 					
 				}

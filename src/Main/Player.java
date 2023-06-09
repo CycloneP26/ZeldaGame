@@ -41,6 +41,7 @@ public class Player extends Entity implements ActionListener
 	private int attackCounter = 0;
 	private int knockCounter = 0;
 	
+	private int bombCount = 0;
 	private boolean gotHeartC = false;
 	private boolean firstSword = false;
 	private boolean hasSword = false;
@@ -304,7 +305,10 @@ public class Player extends Entity implements ActionListener
 		{
 			
 			
-			gp.getCollision().checkFight(this);
+			if(gp.getCollision().checkFight(this))
+			{
+				gp.playEffect(6);
+			}
 			
 			//movement and attacking
 			if(getKnocked())
@@ -342,6 +346,7 @@ public class Player extends Entity implements ActionListener
 					{
 						setSpeed(0);
 						attacking=true;
+						gp.playEffect(1);
 					}
 					if(keyH.isUpPressed()==true)
 					{
@@ -501,7 +506,7 @@ public class Player extends Entity implements ActionListener
 			case "rupee":
 				gp.getItems().set(i, null);
 				gp.playEffect(2);
-				rupees++;
+				rupees+=10;
 				Main.updateRupeesCount(rupees); // Update rupees count in the HUD
 				break;
 			case "startSword":
@@ -516,14 +521,49 @@ public class Player extends Entity implements ActionListener
 				firstSword = true;
 				break;
 			case "heart":
-				gp.getItems().set(i, null);
-				gp.playEffect(4);
-				keyH.setLeftPressed(false);
-				keyH.setRightPressed(false);
-				keyH.setDownPressed(false);
-				keyH.setUpPressed(false);
-				gotItem = true;
-				gotHeartC = true;
+				if(gp.getItems().get(i).isShop())
+				{
+					if(rupees > gp.getItems().get(i).getCost())
+					{
+						gp.getItems().set(i, null);
+						gp.playEffect(4);
+						rupees -= gp.getItems().get(i).getCost();
+						Main.updateRupeesCount(rupees);
+						keyH.setLeftPressed(false);
+						keyH.setRightPressed(false);
+						keyH.setDownPressed(false);
+						keyH.setUpPressed(false);
+						gotItem = true;
+						gotHeartC = true;
+					}
+				}
+				else
+				{
+					gp.getItems().set(i, null);
+					gp.playEffect(4);
+					keyH.setLeftPressed(false);
+					keyH.setRightPressed(false);
+					keyH.setDownPressed(false);
+					keyH.setUpPressed(false);
+					gotItem = true;
+					gotHeartC = true;
+				}
+				break;
+			case "bomb":
+				if(gp.getItems().get(i).isShop())
+				{
+					if(rupees > gp.getItems().get(i).getCost())
+					{
+						gp.getItems().set(i, null);
+						gp.playEffect(3);
+						bombCount += 4;
+					}
+				}
+				else
+				{
+					gp.getItems().set(i, null);
+					gp.playEffect(3);
+				}
 				break;
 			}
 		}

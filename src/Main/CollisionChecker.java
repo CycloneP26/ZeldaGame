@@ -414,6 +414,7 @@ case "down":
 						temp.get(i).setHealth(temp.get(i).getHealth() - 1);
 						temp.get(i).setKnocked(true);
 						temp.get(i).setKnockedDir("up");
+						gp.playEffect(5);
 					}
 					break;
 				case "down":
@@ -425,6 +426,7 @@ case "down":
 						temp.get(i).setHealth(temp.get(i).getHealth() - 1);
 						temp.get(i).setKnocked(true);
 						temp.get(i).setKnockedDir("down");
+						gp.playEffect(5);
 					}
 					break;
 				case "left":
@@ -436,7 +438,7 @@ case "down":
 						temp.get(i).setHealth(temp.get(i).getHealth() - 1);
 						temp.get(i).setKnocked(true);
 						temp.get(i).setKnockedDir("left");
-						
+						gp.playEffect(5);
 					}
 					break;
 				case "right":
@@ -448,6 +450,7 @@ case "down":
 						temp.get(i).setHealth(temp.get(i).getHealth() - 1);
 						temp.get(i).setKnocked(true);
 						temp.get(i).setKnockedDir("right");
+						gp.playEffect(5);
 					}
 					break;
 				}
