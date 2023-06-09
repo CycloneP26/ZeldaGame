@@ -8,12 +8,15 @@ import java.util.Random;
 
 import javax.swing.Timer;
 
-
+/* The spider class is a mob that has a similar functionality to all the other mobs, except for the fact it has 8 directions.
+ * It jumps from place to place.
+ * @authors: David Kostanyan
+ */
 public class Spider extends Entity implements ActionListener
 {
-	
-	private Timer timer;
+	//variable that determines if the spider is jumping
 	private boolean jumping=false;
+	//variable that locks the animation of the spider
 	private int jumpCounter=0;
 
 	public Spider(GamePanel gp)
@@ -25,9 +28,9 @@ public class Spider extends Entity implements ActionListener
 		setSpeed(1);
 		setHealth(5);
 		getBruhImage();
-		timer=new Timer(25,this);
+		
 	}
-
+	//constructs the spider with the x and y coordinate and the gamepanel jframe
 	public Spider(GamePanel gp, int x, int y)
 	{
 		super(gp);
@@ -43,11 +46,14 @@ public class Spider extends Entity implements ActionListener
 	{
 		return "Spider";
 	}
+	//sets the image of the spider to the png files
 	public void getBruhImage()
 	{
 		setSpiderStill(setup("/mobs/SpiderStill",getTileSize(),getTileSize()));
 		setSpiderJump(setup("/mobs/SpiderJump",getTileSize(),getTileSize()));
 	}
+	//randomizes the direction of the spider, as well as locks the movements
+	//also makes it so the spider is not jumping, allowing it to animate when it stands still
 	public void setAction()
 	{
 		setActionLockCounter(getActionLockCounter()+1);
@@ -103,8 +109,7 @@ public class Spider extends Entity implements ActionListener
 		}
 	}
 
-	boolean colliding=false;
-	boolean inBounds=getX()>0&&getX()<768&&getY()>0&&getY()<576;
+	//method that updates the location of the spider
 	public void update()
 	{
 		setAction();
@@ -117,13 +122,16 @@ public class Spider extends Entity implements ActionListener
 			case "downRight":
 				jumping=true;
 				setSpeed(3);
+				//if in bounds, move
 				if(getX()>0&&getX()<700&&getY()>0&&getY()<500)
 				{
+					//if its not about to collide with a border, move
 					if(getX()>0&&getX()+getSpeed()<700&&getY()>0&&getY()+getSpeed()<500)
 					{
 						setX(getX()+getSpeed());
 						setY(getY()+getSpeed());
 					}
+					//before collision with border randomly switch to another direction
 					else
 					{
 						setAction();
@@ -286,6 +294,7 @@ public class Spider extends Entity implements ActionListener
 				break;
 			}
 		}
+		//animates the spider by making a loop of animation
 		spriteCounter++;
 		if(spriteCounter>12)
 		{
@@ -299,6 +308,7 @@ public class Spider extends Entity implements ActionListener
 			}
 			spriteCounter=0;
 		}
+		//loop that determines the interval in which the spider jumps
 		if(jumping)
 		{
 			jumpCounter++;
@@ -310,7 +320,7 @@ public class Spider extends Entity implements ActionListener
 		}
 
 	}
-
+	//draws the animations
 	public void draw(Graphics2D g2)
 		{
 			BufferedImage image=null;
