@@ -6,8 +6,13 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
+/*
+Moblin is an enemy entity that can damage and be damaged by the player. Has its own movement.
+@author David Kostanyan
+*/
 public class Moblin extends Entity
 {
+	//Creates a Moblin object
 	public Moblin(GamePanel gp)
 	{
 		super(gp);
@@ -18,7 +23,7 @@ public class Moblin extends Entity
 		getBruhImage();
 		setSolidArea(new Rectangle(5,5,38,38));
 	}
-
+`	//Alternate Moblin object creation
 	public Moblin(GamePanel gp, int x, int y)
 	{
 		super(gp);
@@ -30,10 +35,12 @@ public class Moblin extends Entity
 		setSolidArea(new Rectangle(5,5,42,42));
 		setHealth(3);
 	}
+	//overrides toString() and calls for a return
 	public String toString()
 	{
-		return "Octorok";
+		return "Octorok"; //returns the name of the entity
 	}
+	//gets the images for the entity movement
 	public void getBruhImage()
 	{
 		setHoglinUp(setup("/mobs/HoglinUp",getTileSize(),getTileSize()));
@@ -45,6 +52,7 @@ public class Moblin extends Entity
 		setHoglinRight(setup("/mobs/HoglinRight",getTileSize(),getTileSize()));
 		setHoglinRight1(setup("/mobs/HoglinRight1",getTileSize(),getTileSize()));
 	}
+	//uses a random number generator to determine the movement of the entity
 	public void setAction()
 	{
 		setActionLockCounter(getActionLockCounter()+1);
@@ -71,6 +79,7 @@ public class Moblin extends Entity
 			setActionLockCounter(0);
 		}
 	}
+	//updates the position of the entity based on the direction chosen in setAction()
 	public void update() //Updates the positions and animates entity 
 	{
 		setAction();
@@ -157,6 +166,7 @@ public class Moblin extends Entity
 			spriteCounter=0;
 		}
 	}
+	//renders the entity on the screen
 	public void draw(Graphics2D g2) //@param Graphics2D is taken to draw the images
 	{
 		BufferedImage image=null;
