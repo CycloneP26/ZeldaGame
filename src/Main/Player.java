@@ -38,13 +38,20 @@ public class Player extends Entity implements ActionListener
 	private int rupees = 0; 
 	//amount of keys 
 	private int keys = 0; 
+	//SpriteCounter for attack 
 	private int attackCounter = 0;
+	//SpriteCounter for knocking
 	private int knockCounter = 0;
 	
+	//Amount of bombs
 	private int bombCount = 0;
+	//Boolean to see if a heart container was picked up
 	private boolean gotHeartC = false;
+	//Boolean if the first sword item was picked up
 	private boolean firstSword = false;
+	//Boolean if Player has a sword 
 	private boolean hasSword = false;
+	//Boolean if Player received a major item 
 	private boolean gotItem = false;
 	
 	/*Constructor initializes all the fields that deal with position, and paths the images 
@@ -171,7 +178,9 @@ public class Player extends Entity implements ActionListener
 		}
 	
 	}
-	
+	/*Called whenever the player gets hit by the Entity
+	Moved opposite direction from where u were knocked
+	*/
 	public void knocked()
 	{
 		
@@ -286,7 +295,7 @@ public class Player extends Entity implements ActionListener
 			setItemUse(false);
 		}
 	}
-	
+	//Updates the image of player when they get a major item
 	public void gotItem()
 	{
 		spriteCounter++;
@@ -299,6 +308,9 @@ public class Player extends Entity implements ActionListener
 		}
 	}
 	
+	/*Updates the players movement and booleans that decide how Link will be drawn
+	Checks the collision of the player with all entities and items and updates positions and values 
+	*/
 	public void update()
 	{
 		
@@ -594,7 +606,7 @@ public class Player extends Entity implements ActionListener
 		switch(getDirection()) {
 		case "up":
 			if(attacking==false)
-			{
+			{	//Draw itemUse/Bomb 
 				if(getItemUse())
 				{
 					
