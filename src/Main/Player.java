@@ -46,16 +46,13 @@ public class Player extends Entity implements ActionListener
 	private boolean firstSword = false;
 	private boolean hasSword = false;
 	private boolean gotItem = false;
-	private int oriHealth;
-	private Main main;
-	private boolean done;
 	
 	/*Constructor initializes all the fields that deal with position, and paths the images 
 	@param GamePanel to access and update the panel
 	@param KeyHandler to use the ActionListener and observe keystrokes
 	@param RoomManager to find collision and position of the player 
 	*/
-	public Player(GamePanel gp, KeyHandler keyH, RoomManager rooms, Main main) 
+	public Player(GamePanel gp, KeyHandler keyH, RoomManager rooms) 
 	{
 		super(gp);
 		this.gp = gp;
@@ -63,9 +60,6 @@ public class Player extends Entity implements ActionListener
 		this.rooms = rooms;
 		this.screenX = 0;
 		this.screenY = 0;
-		setHealth(10);
-		oriHealth = 2;
-		this.main = main;
 		
 		setSolidArea(new Rectangle(8, 16, 32, 28));
 		setSolidAreaDefX(getSolidArea().x);
@@ -95,7 +89,7 @@ public class Player extends Entity implements ActionListener
 	//Sets the positions to default
 	public void setDefaultValue()
 	{		
-		setX(350);
+		setX(250);
 		setY(288);
 		setSpeed(4);
 		setDirection("down");
@@ -194,10 +188,14 @@ public class Player extends Entity implements ActionListener
 				{
 				
 				case "up":
+					
+//					if(!rooms.isRoomAvailable(rooms.getRoomRow() - 1, rooms.getRoomColumn()))
+//					{
 						if(getY() > 0)
 						{
 							setY(getY()-getSpeed());
 						}
+					//}
 					else
 					{
 						
@@ -206,10 +204,14 @@ public class Player extends Entity implements ActionListener
 					}
 					break;
 				case "down":
+					
+//					if(!rooms.isRoomAvailable(rooms.getRoomRow() + 1, rooms.getRoomColumn()))
+//					{
 						if(getY() < getGp().screenHeight - 50)
 						{
 							setY(getY()+getSpeed());
 						}
+//					}
 					else
 					{
 						
@@ -219,10 +221,13 @@ public class Player extends Entity implements ActionListener
 					
 					break;
 				case "left":
+					if(!rooms.isRoomAvailable(rooms.getRoomRow(), rooms.getRoomColumn() - 1))
+//						{
 							if(getX() > 0)
 							{
 								setX(getX()-getSpeed());
 							}
+						//}
 						else
 						{
 							
@@ -232,23 +237,34 @@ public class Player extends Entity implements ActionListener
 						
 						break;
 					case "right":
+//						if(!rooms.isRoomAvailable(rooms.getRoomRow(), rooms.getRoomColumn() + 1))
+//						{
 							if(getX() < getGp().screenWidth - 45)
 							{
 								setX(getX()+getSpeed());
 							}
+//						}
 						else
 						{
+							
 							setX(getX()+getSpeed());
+							
 						}
+						
 						break;
+					
 					}
+				
 			}
-		if(knockCounter>7)
-		{
-			setKnocked(false);
-			knockCounter = 0;
+			
+			if(knockCounter>7)
+			{
+				setKnocked(false);
+				knockCounter = 0;
+			}
+			
 		}
-	}
+	
 	//Works with gameThread and updates the counter which changes the sprite according to the ticks that are passed
 	
 	public void item()
@@ -286,13 +302,12 @@ public class Player extends Entity implements ActionListener
 	public void update()
 	{
 		
-		if(!done)
 		{
 			
 			
-			if(!getKnocked())
+			if(gp.getCollision().checkFight(this))
 			{
-				gp.getCollision().checkFight(this);
+				gp.playEffect(6);
 			}
 			
 			//movement and attacking
@@ -300,7 +315,6 @@ public class Player extends Entity implements ActionListener
 			{
 				
 				knocked();
-				gp.playEffect(6);
 				
 			}
 			else
@@ -383,10 +397,14 @@ public class Player extends Entity implements ActionListener
 							{
 							
 							case "up":
+								
+//								if(!rooms.isRoomAvailable(rooms.getRoomRow() - 1, rooms.getRoomColumn()))
+//								{
 									if(getY() > 0)
 									{
 										setY(getY()-getSpeed());
 									}
+								//}
 								else
 								{
 									
@@ -395,10 +413,14 @@ public class Player extends Entity implements ActionListener
 								}
 								break;
 							case "down":
+								
+//								if(!rooms.isRoomAvailable(rooms.getRoomRow() + 1, rooms.getRoomColumn()))
+//								{
 									if(getY() < getGp().screenHeight - 50)
 									{
 										setY(getY()+getSpeed());
 									}
+//								}
 								else
 								{
 									
@@ -408,10 +430,14 @@ public class Player extends Entity implements ActionListener
 								
 								break;
 							case "left":
+								
+//								if(!rooms.isRoomAvailable(rooms.getRoomRow(), rooms.getRoomColumn() - 1))
+//								{
 									if(getX() > 0)
 									{
 										setX(getX()-getSpeed());
 									}
+								//}
 								else
 {
 									
@@ -421,10 +447,13 @@ public class Player extends Entity implements ActionListener
 								
 								break;
 							case "right":
+//								if(!rooms.isRoomAvailable(rooms.getRoomRow(), rooms.getRoomColumn() + 1))
+//								{
 									if(getX() < getGp().screenWidth - 45)
 									{
 										setX(getX()+getSpeed());
 									}
+//								}
 								else
 								{
 									
@@ -463,6 +492,7 @@ public class Player extends Entity implements ActionListener
 	*/
 	public void pickUpObj(int i) 
 	{
+		ArrayList items = gp.getRooms().getCurrentRoom().getItems();
 		if(i != -1)
 		{
 			String objName = gp.getItems().get(i).getName();
@@ -497,8 +527,12 @@ public class Player extends Entity implements ActionListener
 					if(rupees > gp.getItems().get(i).getCost())
 					{
 						gp.getItems().set(i, null);
+						for(int j = 0; j < gp.getItems().size(); j++)
+						{
+							gp.getItems().set(j, null);
+						}
 						gp.playEffect(4);
-						rupees -= gp.getItems().get(i).getCost();
+						rupees -= 20;
 						Main.updateRupeesCount(rupees);
 						keyH.setLeftPressed(false);
 						keyH.setRightPressed(false);
@@ -526,8 +560,14 @@ public class Player extends Entity implements ActionListener
 					if(rupees > gp.getItems().get(i).getCost())
 					{
 						gp.getItems().set(i, null);
+						for(int j = 0; j < items.size(); j++)
+						{
+							gp.getItems().set(j, null);
+						}
 						gp.playEffect(3);
 						bombCount += 4;
+						rupees -= 10;
+						Main.updateRupeesCount(rupees);
 					}
 				}
 				else
@@ -836,18 +876,6 @@ public class Player extends Entity implements ActionListener
 	}
 	public void setGotItem(boolean gotItem) {
 		this.gotItem = gotItem;
-	}
-	public int getOriHealth() {
-		return oriHealth;
-	}
-	public void setOriHealth(int oriHealth) {
-		this.oriHealth = oriHealth;
-	}
-	public boolean getDone() {
-		return done;
-	}
-	public void setDone(boolean done) {
-		this.done = done;
 	}
 
 }
