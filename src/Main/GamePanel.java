@@ -125,7 +125,7 @@ public class GamePanel extends JPanel implements Runnable
 		return keyH;
 
 	}
-	//SOMEONE COMMENT THIS
+	//Uses GameThread to run the game by updating in intervals 
 	public void run()
 	{
 		double drawInterval=1000000000/FPS;
@@ -193,32 +193,6 @@ public class GamePanel extends JPanel implements Runnable
 			}
 		}
 	}
-	
-	public Player getPlayer()
-	{
-		
-		return player;
-		
-	}
-	public int getTileSize()
-    {
-    	return tileSize;
-    }
-    
-    public int getHudHeight()
-    {
-    	return hudHeight;
-    }
-    
-    public int getScreenHeight()
-    {
-    	return screenHeight;
-    }
-    
-    public int getScreenWidth()
-    {
-    	return screenWidth;
-    }
 	//All the entities that must be rendered in each room is drawn here
 	public void paintComponent(Graphics g) //@param Graphics required to draw
 	{
@@ -286,6 +260,33 @@ public class GamePanel extends JPanel implements Runnable
 		sound.setFile(i);
 		sound.play();
 	}
+	public Player getPlayer()
+	{
+		
+		return player;
+		
+	}
+	public int getTileSize()
+ 	 {
+    		return tileSize;
+ 	 }
+    
+    public int getHudHeight()
+    {
+    	return hudHeight;
+    }
+    
+    public int getScreenHeight()
+    {
+    	return screenHeight;
+    }
+    
+    public int getScreenWidth()
+    {
+    	return screenWidth;
+    }
+	
+	
 	public ArrayList<Entity> getMobs() {
 		return rooms.getCurrentRoom().getMobs();
 	}
