@@ -3,9 +3,12 @@ package Main;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
+
+
 public class OctorokProjectile extends Projectile
 {
 	private GamePanel gp;
+	
 	public OctorokProjectile(GamePanel gp) 
 	{
 		super(gp);
