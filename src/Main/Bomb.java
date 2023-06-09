@@ -8,6 +8,8 @@ import javax.imageio.ImageIO;
 /*
 The bomb class sets up the images and life span of the bomb item, that the player can use.
 This is done through extending useableEntity class with a setup method.
+@author Pranay Thatikonda
+@author Sachin Chhaya 
 */
 public class Bomb extends useableEntity  
 {
