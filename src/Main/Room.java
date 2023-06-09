@@ -283,7 +283,6 @@ public class Room {
 		int blockY = (str1.indexOf("j")%16)*48;
 		retArr[0] = blockX;
 		retArr[1] = blockY;
-		System.out.println(blockX + ", " + blockY);
 		return retArr;
 	}
 	

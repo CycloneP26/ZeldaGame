@@ -3,41 +3,47 @@ package Main;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-/*
-Main class that creates the gamePanel and runs all the threading
-It also creates the HUD 
-@author David Kostanyan
-@author Ivan Xiao 
-*/
-public class Main extends JFrame {
-    //Label for the amount of keys 
-    private static JLabel keysLabelStatic;
-    //Label for amount of rupees 
-    private static JLabel rupeesLabelStatic;
-    //the amount of keys 
-    private static int keysCount = 0;
-    //amount of rupees 
-    private static int rupeesCount = 0;
 
+//The Main class makes the entire frame, and the hud. 
+//it uses various methods and drawings to make the hud and change the things that can be changed
+//@author Ivan Xiao
+
+public class Main extends JFrame {
+    private static JLabel keysLabelStatic;
+    private static JLabel rupeesLabelStatic;
+    private static int keysCount = 0;
+    private static int rupeesCount = 0;
+    private static int heartCount = 3; //# of hearts
+    private JLabel healthLabel; //#health label
+    private static boolean hasSword = false;
+    
+    /**
+     * The main method creates an instance of the Main class and runs the game.
+     *
+     * @param args Command-line arguments
+     */
+    
     public static void main(String[] args) {
         Main main = new Main();
         main.runGame();
     }
 
+    /**
+     * The runGame method sets up the main frame, size, and the HUD panels.
+     * It adds the game panel and other components to the frame.
+     */
+    
     public void runGame() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(768, 774);
         setResizable(false);
         setTitle("The Legend of Zelda");
-        
-        //Main gamePanel 
+
         GamePanel gamePanel = new GamePanel();
-        
-        //Background of HUD 
+
         JPanel mainPanel = new JPanel(new BorderLayout());
         mainPanel.setBackground(Color.BLACK);
-        
-        //Part of HUD 
+
         JPanel topPanel = new JPanel(new BorderLayout());
         topPanel.setBackground(Color.BLACK);
         topPanel.setBorder(new EmptyBorder(16, 0, 0, 0));
@@ -105,7 +111,15 @@ public class Main extends JFrame {
         gamePanel.startGameThread();
     }
 
-    //Creates a label that can store text 
+    /**
+     * Creates a JLabel with the specified text and icon.
+     * Sets the font size, font color, and alignment.
+     *
+     * @param text     The text to display
+     * @param iconPath The path to the icon image
+     * @return The created JLabel
+     */
+    
     private JLabel createLabel(String text, String iconPath) {
         ImageIcon icon = new ImageIcon(getClass().getResource(iconPath));
         JLabel label = new JLabel(text, icon, JLabel.LEFT);
@@ -113,7 +127,12 @@ public class Main extends JFrame {
         label.setFont(new Font("Courier New", Font.PLAIN, 16));
         return label;
     }
-    //Creates the HealthLabel by aligning and creating a label
+
+    /**
+     * Creates the health label with heart icons.
+     * Aligns the hearts in place.
+     */
+    
     private JLabel createHealthLabel() {
         ImageIcon healthIcon = new ImageIcon(getClass().getResource("/objects/Heart.png"));
         JLabel healthLabel = new JLabel("<html><div style='text-align: center;'><span style='vertical-align: text-bottom;'>-LIFE-</span><br><img src='" + healthIcon + "'></div></html>", JLabel.CENTER);
@@ -121,8 +140,63 @@ public class Main extends JFrame {
         healthLabel.setFont(new Font("Courier New", Font.PLAIN, 36));
         return healthLabel;
     }
+    
+    /**
+     * Updates the health count and updates the health label accordingly.
+     *
+     * @param health The new health count
+     */
+    public void updateHealth(int health) {
+        heartCount = health;
+        updateHealthLabel(heartCount);
+    }
+    
+    /**
+     * Generates the HTML string for displaying heart icons based on the count.
+     *
+     * @param count      The number of hearts
+     * @param heartIcon  The heart icon
+     * @return The HTML string with heart icons
+     */
+    private String getHeartHtmlString(int count, ImageIcon heartIcon) {
+        StringBuilder heartHtml = new StringBuilder();
+        for (int i = 0; i < count; i++) {
+            heartHtml.append("<img class='heart-icon' src='").append(heartIcon).append("'>");
+        }
+        return heartHtml.toString();
+    }
+    
+    /**
+     * Updates the health label based on the health count.
+     *
+     * @param health The current health count
+     */
+    public void updateHealthLabel(int health) {
+        heartCount = health;
 
-    //Creates the rectangular box 
+        if (heartCount >= 0) {
+            healthLabel.setText("<html><div style='text-align: center;'>-LIFE-<br>" +
+                    getHeartHtmlString(heartCount, new ImageIcon(getClass().getResource("/objects/Heart.png"))) +
+                    "</div></html>");
+        } else {
+            heartCount = 0;
+            String heartHtml = "<html><div style='text-align: center;'>-LIFE-<br>";
+            heartHtml += getHeartHtmlString(heartCount, new ImageIcon(getClass().getResource("/objects/Heart.png")));
+            heartHtml += "<br><span class='heart-icon'></span></div></html>";
+            healthLabel.setText(heartHtml);
+        }
+    }
+
+    /**
+     * Creates a rectangular box panel with the specified color, width, height, and letter.
+     * Adds a border, label, and image to the box panel.
+     *
+     * @param color  The color of the box panel
+     * @param width  The width of the box panel
+     * @param height The height of the box panel
+     * @param letter The letter to display
+     * @return The created rectangular box panel
+     */
     private JPanel createRectangularBox(Color color, int width, int height, String letter) {
         JPanel box = new JPanel(new BorderLayout());
         box.setOpaque(false); // Set the box panel to be transparent
@@ -159,12 +233,20 @@ public class Main extends JFrame {
         return box;
     }
 
-
+    /**
+     * Updates the keys count and the keys label.
+     *
+     * @param count The new keys count
+     */
     public static void updateKeysCount(int count) {
         keysCount = count;
         keysLabelStatic.setText("KEYS: " + keysCount);
     }
-
+    /**
+     * Updates the rupees count and the rupees label.
+     *
+     * @param count The new rupees count
+     */
     public static void updateRupeesCount(int count) {
         rupeesCount = count;
         rupeesLabelStatic.setText("RUPEES: " + rupeesCount);

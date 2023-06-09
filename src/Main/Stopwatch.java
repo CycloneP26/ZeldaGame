@@ -14,7 +14,6 @@ public class Stopwatch
 	{
 		public void run()
 		{
-			System.out.println(i);
 			i++;
 			if(i==3)
 			{
