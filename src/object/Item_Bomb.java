@@ -5,10 +5,17 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import Main.GamePanel;
-
+/*
+Creates a bomb item that can be picked up and added to the "inventory"
+@author Sachin Chhaya 
+*/
 public class Item_Bomb extends ItemEntity 
 {
-
+	/*
+	Constructor that creates a bomb at a given location
+	@param GamePanel gp, access the main GamePanel
+	@param int x,y position 
+	*/
 	public Item_Bomb(GamePanel gp, int x, int y) {
 		super(gp);
 		setName("bomb");
@@ -23,6 +30,12 @@ public class Item_Bomb extends ItemEntity
 		setWorldX(x);
 		setWorldY(y);
 	}
+	/*
+	Constructor that creates a bomb in a shop to be used 
+	@param GamePanel gp, access the main GamePanel
+	@param int x,y position 
+	@param boolean shop to verify if this will require rupees to access 
+	*/
 	public Item_Bomb(GamePanel gp, int x, int y, boolean shop) {
 		super(gp);
 		setName("bomb");
