@@ -5,7 +5,9 @@ import java.util.ArrayList;
 
 import object.Key;
 import object.Rupee;
+import object.Fire;
 import object.HeartContainer;
+import object.Item_Bomb;
 import object.StartSword;
 public class RoomManager {
 	
@@ -106,7 +108,9 @@ public class RoomManager {
 					Room cave = new Room(gp, "cave");
 					cave.setCaveC(0);
 					cave.setCaveR(9);
-					cave.addItem(new StartSword(gp, 250, 250));
+					cave.addFires(new Fire(gp, 200, 250));
+					cave.addFires(new Fire(gp, 500, 250));
+					cave.addItem(new StartSword(gp, 350, 250));
 					temp.add(cave);
 					
 				}
@@ -116,6 +120,8 @@ public class RoomManager {
 					Room cave = new Room(gp, "cave");
 					cave.setCaveC(4);
 					cave.setCaveR(9);
+					cave.addItem(new HeartContainer(gp, 350, 250, true));
+					cave.addItem(new Item_Bomb(gp, 250, 250, true));
 					temp.add(cave);
 					
 				}
@@ -128,13 +134,12 @@ public class RoomManager {
 					temp.add(new Room(gp, "111111100111111110000000000000011000000000000001100000000000000110000000000000010000000000000000000000000000000010000000000000011000000000000001100000000000000110000000000000011111111001111111"));
 				}
 				
-				
 			}
 			rooms.add(temp);
 		}
 		
-		currentRoomRow = 9;
-		currentRoomColumn = 4;
+		currentRoomRow = 2;
+		currentRoomColumn = 10;
 		this.currentRoom = getRoomArray().get(currentRoomRow).get(currentRoomColumn);
 
 		this.gp = gp;
@@ -193,16 +198,9 @@ public class RoomManager {
 			Room secretRoom = new Room(gp, ogRoom.getSecretRoom());
 			secretRoom.setToCaveC(ogRoom.getToCaveC());
 			secretRoom.setToCaveR(ogRoom.getToCaveR());
-			for(int i = 0; i<ogRoom.getMobs().size(); i++)
-			{
-				secretRoom.getMobs().add(ogRoom.getMobs().get(i));
-			}
-			for(int i = 0; i<ogRoom.getItems().size(); i++)
-			{
-				secretRoom.getItems().add(ogRoom.getItems().get(i));
-			}
 			rooms.get(currentRoomRow).remove(currentRoomColumn);
 			rooms.get(currentRoomRow).add(currentRoomColumn, secretRoom);
+			
 		}
 		if(player.getY()<0)
 		{

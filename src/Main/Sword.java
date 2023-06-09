@@ -23,6 +23,7 @@ public class Sword extends Entity
 			gp.getCollision().checkSword(this);
 			
 			
+			
 		}
 		
 		if(getDirection() == "right")
@@ -53,9 +54,8 @@ public class Sword extends Entity
 			setSolidArea(new Rectangle(0, 0, 19, 30));
 			gp.getCollision().checkSword(this);
 			
+			
 		}
-		
-		
 	}
 	
 }
