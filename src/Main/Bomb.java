@@ -5,12 +5,17 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-
+/*
+The bomb class sets up the images and life span of the bomb item, that the player can use.
+This is done through extending useableEntity class with a setup method.
+*/
 public class Bomb extends useableEntity  
 {
+	//Be able to access the gamePanel 
 	private GamePanel gp;
 	
-	
+	//Sets up the images and calls the super constructor for the GamePanel
+	//@param GamePanel gp to be able to get the tile size 
 	public Bomb(GamePanel gp) 
 	{
 		super(gp);
