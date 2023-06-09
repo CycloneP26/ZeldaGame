@@ -5,19 +5,37 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-
+/*
+This class is the superClass for all useable items that the player has (We only have one item as of now)
+It has its own draw and update method because these items have its own animations
+@author Sachin Chhaya
+@author Pranay Thatikonda 
+*/
 public class useableEntity 
 {
+	//Coordinates 
 	private int x;
 	private int y;
+	//Access the GamePanel 
 	private GamePanel gp;
+	//Images for the bomb phases 
 	private BufferedImage bPhase1, bPhase2, bPhase3;
+	//Sprite counter for the update method
 	private int spriteCounter = 0;
+	//Sprite num to change which image will be used 
 	private int spriteNum = 0;
+	//Boolean to check if it changes size 
 	private boolean spriteJumpOne;
+	//Boolean to check if bomb is places 
 	private boolean placed;
+	//Life span of the bomb 
 	private int lifeSpan = 0;
+	//speed 
 	private int thisSpeed;
+	/*
+	Superconstructor for the useableEntity that starts the x and y to where the player is 
+	@param GamePanel gp passes to access the main GamePanel 
+	*/
 	public useableEntity(GamePanel gp)
 	{
 		this.setGp(gp);
@@ -28,7 +46,9 @@ public class useableEntity
 		placed = false;
 	}
 
-	
+	/*
+	This is the update method that changes the bomb according to how much time has passed 
+	*/
 	public void updateBomb()
 	{
 		spriteCounter++;
@@ -48,6 +68,10 @@ public class useableEntity
 			}
 		}
 	}
+	/*
+	draws the images for the item, which is mainly used by bomb
+	Depends on the direction of the 
+	*/
 	public void drawItem(Graphics2D g2)
 	{
 		BufferedImage image = null;
@@ -199,6 +223,12 @@ public class useableEntity
 			
 		}
 	}
+	/*
+	image pathing so is works properly with gamePanel
+	@param String imagePath to path the image
+	@param int width is the width of the image
+	@param int height is the height of the image 
+	*/
 	
 	public BufferedImage setup(String imagePath,int width,int height)
 	{
@@ -213,7 +243,7 @@ public class useableEntity
 		{
 			e.printStackTrace();
 		}
-		return image;
+		return image; //returns the image after it is pathed correctly
 	}
 	public int getX() {
 		return x;
