@@ -3,9 +3,17 @@ package Main;
 import java.awt.Rectangle;
 import java.util.Random;
 
+/*
+
+Octorok is an enemy entity that has random movement in all directions. It can interact with the character by 
+being hit and also hitting the character.
+@author David Kostanyan
+
+*/
+
 public class BlueOctorok extends Entity
 {
-
+	//creats an Octorok object
 	public BlueOctorok(GamePanel gp)
 	{
 		super(gp);
@@ -17,7 +25,8 @@ public class BlueOctorok extends Entity
 
 		getBruhImage();
 	}
-
+	
+	//alternate creation for Octorok object
 	public BlueOctorok(GamePanel gp, int x, int y)
 	{
 		super(gp);
@@ -30,10 +39,14 @@ public class BlueOctorok extends Entity
 		setHealth(3);
 
 	}
+	
+	//overrides toString
 	public String toString()
 	{
-		return "Octorok";
+		return "Octorok"; //returns name of the class and entity
 	}
+	
+	//gets images for octorok in all directions
 	public void getBruhImage()
 	{
 		setUp1(setup("/mobs/BlueOctorokUp",getTileSize(),getTileSize()));
@@ -45,6 +58,7 @@ public class BlueOctorok extends Entity
 		setRight1(setup("/mobs/BlueOctorokRight",getTileSize(),getTileSize()));
 		setRight2(setup("/mobs/BlueOctorokRight1",getTileSize(),getTileSize()));
 	}
+	//uses a random number generator to set a random direction for the octorok movement
 	public void setAction()
 	{
 		setActionLockCounter(getActionLockCounter()+1);
@@ -71,6 +85,7 @@ public class BlueOctorok extends Entity
 			setActionLockCounter(0);
 		}
 	}
+	//updates the position of the entity
 	public void update() //Updates the positions and animates entity 
 	{
 		setAction();
