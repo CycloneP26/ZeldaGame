@@ -26,7 +26,6 @@ public class Room {
 	private boolean secret;
 	private boolean secretFound;
 	private String secretRoom;
-	private ArrayList<ItemEntity> fires;
 	public Room(GamePanel gp)
 	{
 		this.gp = gp;
@@ -48,7 +47,6 @@ public class Room {
 		str = mapToStr(tileLayout);
 		mobs = new ArrayList<Entity>();
 		items = new ArrayList<ItemEntity>();
-		fires = new ArrayList<ItemEntity>();
 		setBombs(new ArrayList<useableEntity>());
 		
 	}
@@ -74,7 +72,6 @@ public class Room {
 		tileLayout = strToMap(this.str);
 		mobs = new ArrayList<Entity>();
 		items = new ArrayList<ItemEntity>();
-		fires = new ArrayList<ItemEntity>();
 		setBombs(new ArrayList<useableEntity>());
 	}
 	
@@ -352,12 +349,6 @@ public class Room {
 	}
 	public void setSecretFound(boolean secretFound) {
 		this.secretFound = secretFound;
-	}
-	public void addFires(ItemEntity i) {
-		fires.add(i);
-	}
-	public ArrayList<ItemEntity> getFires() {
-		return fires;
 	}
 	
 }

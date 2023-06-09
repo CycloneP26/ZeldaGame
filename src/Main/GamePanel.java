@@ -61,25 +61,22 @@ public class GamePanel extends JPanel implements Runnable
 	//Per room, items that exist 
 	private ArrayList<ItemEntity> items; 
 	
-	private ArrayList<ItemEntity> fires;
-	
 	
 	/*
 	Creates the actual GamePanel that initializes all the fields that update 
 	with the GameThread
 	*/
-	public GamePanel() 
+	public GamePanel(Main main) 
 	{
 		
 		keyH=new KeyHandler(this);
 		
 		rooms = new RoomManager(this, 10, 11);
 		
-		player=new Player(this, keyH, rooms);
+		player=new Player(this, keyH, rooms, main);
 		mobs=new Entity[30];
 		items = new ArrayList<ItemEntity>();
-		setFires(new ArrayList<ItemEntity>());
-		cChecker = new CollisionChecker(this, rooms, rooms.getRoomRow(), rooms.getRoomColumn());
+		cChecker = new CollisionChecker(this, rooms, rooms.getRoomRow(), rooms.getRoomColumn(), main);
 
 		
 		int panelWidth = screenWidth;
@@ -101,6 +98,8 @@ public class GamePanel extends JPanel implements Runnable
 		gameThread.start();
 		
 	}
+	
+	
 	//Makes the thread stop for s milliseconds
 	public void waitThread(int s)
 	{
@@ -125,7 +124,7 @@ public class GamePanel extends JPanel implements Runnable
 		return keyH;
 
 	}
-	//Uses GameThread to run the game by updating in intervals 
+	//SOMEONE COMMENT THIS
 	public void run()
 	{
 		double drawInterval=1000000000/FPS;
@@ -184,15 +183,33 @@ public class GamePanel extends JPanel implements Runnable
 				rooms.getCurrentRoom().getBombs().get(i).updateBomb();
 			}
 		}
-		
-		for(int i = 0; i < rooms.getCurrentRoom().getFires().size(); i++)
-		{
-			if(rooms.getCurrentRoom().getFires().get(i) != null)
-			{
-				rooms.getCurrentRoom().getFires().get(i).update();
-			}
-		}
 	}
+	
+	public Player getPlayer()
+	{
+		
+		return player;
+		
+	}
+	public int getTileSize()
+    {
+    	return tileSize;
+    }
+    
+    public int getHudHeight()
+    {
+    	return hudHeight;
+    }
+    
+    public int getScreenHeight()
+    {
+    	return screenHeight;
+    }
+    
+    public int getScreenWidth()
+    {
+    	return screenWidth;
+    }
 	//All the entities that must be rendered in each room is drawn here
 	public void paintComponent(Graphics g) //@param Graphics required to draw
 	{
@@ -206,7 +223,6 @@ public class GamePanel extends JPanel implements Runnable
 		player.draw(g2);
 		ArrayList<Entity> mobs = rooms.getCurrentRoom().getMobs();
 		ArrayList<ItemEntity> items = rooms.getCurrentRoom().getItems();
-		fires = rooms.getCurrentRoom().getFires();
 		for(int i = 0; i < items.size(); i++)
 		{
 			if(items.get(i) != null)
@@ -214,15 +230,6 @@ public class GamePanel extends JPanel implements Runnable
 				items.get(i).draw(g2);
 			}
 		}
-		
-		for(int i = 0; i < fires.size(); i++)
-		{
-			if(fires.get(i) != null)
-			{
-				fires.get(i).drawFire(g2);
-			}
-		}
-		
 		for(int i=0; i<mobs.size();i++)
 		{
 			if(mobs.get(i)!=null)
@@ -260,33 +267,6 @@ public class GamePanel extends JPanel implements Runnable
 		sound.setFile(i);
 		sound.play();
 	}
-	public Player getPlayer()
-	{
-		
-		return player;
-		
-	}
-	public int getTileSize()
- 	 {
-    		return tileSize;
- 	 }
-    
-    public int getHudHeight()
-    {
-    	return hudHeight;
-    }
-    
-    public int getScreenHeight()
-    {
-    	return screenHeight;
-    }
-    
-    public int getScreenWidth()
-    {
-    	return screenWidth;
-    }
-	
-	
 	public ArrayList<Entity> getMobs() {
 		return rooms.getCurrentRoom().getMobs();
 	}
@@ -305,11 +285,5 @@ public class GamePanel extends JPanel implements Runnable
 	public RoomManager getRooms()
 	{
 		return rooms;
-	}
-	public ArrayList<ItemEntity> getFires() {
-		return fires;
-	}
-	public void setFires(ArrayList<ItemEntity> fires) {
-		this.fires = fires;
 	}
 }

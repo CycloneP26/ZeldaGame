@@ -5,76 +5,49 @@ import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 import java.io.IOException;
 import java.awt.Graphics2D;
-/*
-Entity is the overarching superclass for all the enemies, the player, and many components that are drawn on the screen
-It uses update and draw methods to change and animate the sprites
-@author David Kostanyan
-@author Sachin Chhaya 
-*/
+
 public class Entity {
-	//Be able to access the main GamePanel to add components
-	private GamePanel gp;   
-	//position of entity 
-	private int worldX,worldY; 
-	//speed of the entity 
-	private int speed; 
-	//all images for Link's movement 
-	private BufferedImage up1, up2, down1, down2, left1, left2, right1, right2; 
-	//images for sword movement 
-	private BufferedImage swordUp,swordUp1,swordLeft,swordLeft1,swordRight,swordRight1, 
+	private GamePanel gp;   //Be able to access the main GamePanel to add components
+	private int worldX,worldY; //position of entity 
+	private int speed; //speed of the entity 
+	private BufferedImage up1, up2, down1, down2, left1, left2, right1, right2; //all images for Link's movement 
+	private BufferedImage swordUp,swordUp1,swordLeft,swordLeft1,swordRight,swordRight1, //images for sword movement 
 	swordDown,swordDown1, itemUp, itemDown, itemRight, itemLeft;
-	//Images for Octorok
-	private BufferedImage OctorokUp,OctorokUp1,OctorokDown,OctorokDown1,OctorokLeft,OctorokLeft1,OctorokRight,OctorokRight1; 
-	//Images for Spider 
+	private BufferedImage OctorokUp,OctorokUp1,OctorokDown,OctorokDown1,OctorokLeft,OctorokLeft1,OctorokRight,OctorokRight1; //Images for Octorok
 	private BufferedImage SpiderStill,SpiderJump;
-	//Images for Leever 
 	private BufferedImage LeeverSand, LeeverEmerge, LeeverEmerge2, Leever1, Leever2;
-	//Image for Rock 
 	private BufferedImage Rock;
-	//Direction that the entity is facing
-	private String direction; 
-	//health of the entity 
-	private int health; 
-	//Boolean whether the entity is knocked 
+	private String direction; //Direction that the entity is facing
+	private String direction2;
+	private int health; //health of the entity 
 	private boolean knocked;
-	//Direction that it is being knocked in 
 	private String knockedDir;
-	//default area of entity to check collision
-	private int solidAreaDefX, solidAreaDefY; 
-	//Updates with game thread to animate
-	public int spriteCounter=0; 
-	//Updates with spriteCounter 
-	public int spriteNum=1; 
 	
-	//I KNOW PUBLIC VARIABLES 
+	private int solidAreaDefX, solidAreaDefY; //default area of entity to check collision
+	
+	public int spriteCounter=0; //Updates with game thread to animate
+	public int spriteNum=1; //Updates with spriteCounter 
+	
 	boolean attacking=false; 
 	boolean bomb = false;
 	boolean itemUse = false;
-	 //area of entity to check collision
-	private Rectangle solidArea=new Rectangle(0,0,48,48);
-	//whether the entity will use collision
-	private boolean collisionOn = false; 
-	//For-loop counter that restricts movement 
-	private int actionLockCounter=0; 
-	//Image for link when he gets a newItem
+	
+	private Rectangle solidArea=new Rectangle(0,0,48,48); //area of entity to check collision
+	private boolean collisionOn = false; //whether the entity will use collision
+	private int actionLockCounter=0; //SOMEONE COMMENT THIS 
+	
 	private BufferedImage newItem;
-	//Images for the picked up sword and heart
 	private BufferedImage aSword, heartC;
 	
-	/*constructor for all Entity, just to access the gamePanel
-	@param GamePanel gp to access the main GamePanel
-	*/
-	public Entity(GamePanel gp) 
+	public Entity(GamePanel gp) //constructor for all Entity, just to access the gamePanel
 	{
 		this.setGp(gp);
 	}
-	//Calling actionlock counter 
 	public void setAction()
 	{
 
 	}
-	//Updates the positions and animates entity 
-	public void update()
+	public void update() //Updates the positions and animates entity 
 	{
 		setAction();
 		collisionOn=false;
@@ -155,11 +128,7 @@ public class Entity {
 			spriteCounter=0;
 		}
 	}
-	/*
-	Draws the entity and especially Link 
-	@param Graphics2D is taken to draw the images
-	*/
-	public void draw(Graphics2D g2) 
+	public void draw(Graphics2D g2) //@param Graphics2D is taken to draw the images
 	{
 		BufferedImage image=null;
 
@@ -185,27 +154,6 @@ public class Entity {
 			}
 			g2.drawImage(image,worldX,worldY,gp.getTileSize(),gp.getTileSize(),null);
 		}
-	}
-	/*
-	image pathing so is works properly with gamePanel
-	@param String imagePath to path the image
-	@param int width is the width of the image
-	@param int height is the height of the image 
-	*/
-	public BufferedImage setup(String imagePath,int width,int height) 
-	{
-		UtilityTool uTool=new UtilityTool();
-		BufferedImage image=null;
-		try
-		{
-			image=ImageIO.read(getClass().getResourceAsStream(imagePath+".png"));
-			image=uTool.scaleImage(image,width,height);
-		}
-		catch(IOException e)
-		{
-			e.printStackTrace();
-		}
-		return image; //returns the image after it is pathed correctly
 	}
 	public int getTileSize()
 	{
@@ -416,7 +364,21 @@ public class Entity {
 	public void setCollisionOn(boolean collisionOn) {
 		this.collisionOn = collisionOn;
 	}
-	
+	public BufferedImage setup(String imagePath,int width,int height) //image pathing so is works properly with gamePanel
+	{
+		UtilityTool uTool=new UtilityTool();
+		BufferedImage image=null;
+		try
+		{
+			image=ImageIO.read(getClass().getResourceAsStream(imagePath+".png"));
+			image=uTool.scaleImage(image,width,height);
+		}
+		catch(IOException e)
+		{
+			e.printStackTrace();
+		}
+		return image; //returns the image after it is pathed correctly
+	}
 	public GamePanel getGp() {
 		return gp;
 	}
