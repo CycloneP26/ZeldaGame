@@ -89,7 +89,6 @@ public class Room {
 				if(str.substring(count, count+1) != "\n" || str.substring(count, count+1) != "\r")
 				{
 					
-					//retArray[i][j]+=Integer.parseInt(str.substring(count, count+1));
 					retArray[i][j]+= convertToNum(str.substring(count, count+1));
 					
 				}

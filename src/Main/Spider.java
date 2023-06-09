@@ -59,19 +59,16 @@ public class Spider extends Entity implements ActionListener
 			{
 				setDirection("up");
 				jumping=false;
-				setDirection2("b");
 			}
 			if(i>25&&i<=50)
 			{
 				setDirection("down");
 				jumping=false;
-				setDirection2("b");
 			}
 			if(i>50&&i<=75)
 			{
 				setDirection("left");
 				jumping=false;
-				setDirection2("b");
 			}
 			if(i>75&&i<=100)
 			{

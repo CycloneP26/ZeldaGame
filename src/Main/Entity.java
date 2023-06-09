@@ -10,7 +10,6 @@ Entity is the overarching superclass for all the enemies, the player, and many c
 It uses update and draw methods to change and animate the sprites
 @author David Kostanyan
 @author Sachin Chhaya 
-@author Christopher Li 
 */
 public class Entity {
 	//Be able to access the main GamePanel to add components
@@ -26,10 +25,16 @@ public class Entity {
 	swordDown,swordDown1, itemUp, itemDown, itemRight, itemLeft;
 	//Images for Octorok
 	private BufferedImage OctorokUp,OctorokUp1,OctorokDown,OctorokDown1,OctorokLeft,OctorokLeft1,OctorokRight,OctorokRight1; 
+	private BufferedImage HoglinDown, HoglinDown1, HoglinLeft, HoglinLeft1, HoglinRight, HoglinRight1, HoglinUp, HoglinUp1;
+	private BufferedImage BlueHoglinDown, BlueHoglinDown1, BlueHoglinLeft, BlueHoglinLeft1, BlueHoglinRight, BlueHoglinRight1, BlueHoglinUp, BlueHoglinUp1;
 	//Images for Spider 
 	private BufferedImage SpiderStill,SpiderJump;
 	//Images for Leever 
 	private BufferedImage LeeverSand, LeeverEmerge, LeeverEmerge2, Leever1, Leever2;
+	//Images for Armos
+	private BufferedImage ArmosFrozen,ArmosDown,ArmosDown1,ArmosUp,ArmosUp1;
+	//Images for Zoras
+	private BufferedImage ZoraSand, ZoraSandEmerge, ZoraUp, ZoraDown;
 	//Image for Rock 
 	private BufferedImage Rock;
 	//Direction that the entity is facing
@@ -462,12 +467,6 @@ public class Entity {
 	public void setSpiderJump(BufferedImage spiderJump) {
 		SpiderJump = spiderJump;
 	}
-	public String getDirection2() {
-		return direction2;
-	}
-	public void setDirection2(String direction2) {
-		this.direction2 = direction2;
-	}
 
 	public BufferedImage getRock() {
 		return Rock;
@@ -542,5 +541,155 @@ public class Entity {
 	}
 	public void setHeartC(BufferedImage heartC) {
 		this.heartC = heartC;
+	}
+	public BufferedImage getHoglinDown() {
+		return HoglinDown;
+	}
+	public void setHoglinDown(BufferedImage hoglinDown) {
+		HoglinDown = hoglinDown;
+	}
+	public BufferedImage getHoglinDown1() {
+		return HoglinDown1;
+	}
+	public void setHoglinDown1(BufferedImage hoglinDown1) {
+		HoglinDown1 = hoglinDown1;
+	}
+	public BufferedImage getHoglinLeft() {
+		return HoglinLeft;
+	}
+	public void setHoglinLeft(BufferedImage hoglinLeft) {
+		HoglinLeft = hoglinLeft;
+	}
+	public BufferedImage getHoglinLeft1() {
+		return HoglinLeft1;
+	}
+	public void setHoglinLeft1(BufferedImage hoglinLeft1) {
+		HoglinLeft1 = hoglinLeft1;
+	}
+	public BufferedImage getBlueHoglinDown() {
+		return BlueHoglinDown;
+	}
+	public void setBlueHoglinDown(BufferedImage blueHoglinDown) {
+		BlueHoglinDown = blueHoglinDown;
+	}
+	public BufferedImage getBlueHoglinDown1() {
+		return BlueHoglinDown1;
+	}
+	public void setBlueHoglinDown1(BufferedImage blueHoglinDown1) {
+		BlueHoglinDown1 = blueHoglinDown1;
+	}
+	public BufferedImage getBlueHoglinLeft() {
+		return BlueHoglinLeft;
+	}
+	public void setBlueHoglinLeft(BufferedImage blueHoglinLeft) {
+		BlueHoglinLeft = blueHoglinLeft;
+	}
+	public BufferedImage getArmosFrozen() {
+		return ArmosFrozen;
+	}
+	public void setArmosFrozen(BufferedImage armosFrozen) {
+		ArmosFrozen = armosFrozen;
+	}
+	public BufferedImage getZoraSand() {
+		return ZoraSand;
+	}
+	public void setZoraSand(BufferedImage zoraSand) {
+		ZoraSand = zoraSand;
+	}
+	public BufferedImage getArmosDown() {
+		return ArmosDown;
+	}
+	public void setArmosDown(BufferedImage armosDown) {
+		ArmosDown = armosDown;
+	}
+	public BufferedImage getZoraSandEmerge() {
+		return ZoraSandEmerge;
+	}
+	public void setZoraSandEmerge(BufferedImage zoraSandEmerge) {
+		ZoraSandEmerge = zoraSandEmerge;
+	}
+	public BufferedImage getArmosDown1() {
+		return ArmosDown1;
+	}
+	public void setArmosDown1(BufferedImage armosDown1) {
+		ArmosDown1 = armosDown1;
+	}
+	public BufferedImage getArmosUp() {
+		return ArmosUp;
+	}
+	public void setArmosUp(BufferedImage armosUp) {
+		ArmosUp = armosUp;
+	}
+	public BufferedImage getArmosUp1() {
+		return ArmosUp1;
+	}
+	public void setArmosUp1(BufferedImage armosUp1) {
+		ArmosUp1 = armosUp1;
+	}
+	public BufferedImage getZoraUp() {
+		return ZoraUp;
+	}
+	public void setZoraUp(BufferedImage zoraUp) {
+		ZoraUp = zoraUp;
+	}
+	public BufferedImage getZoraDown() {
+		return ZoraDown;
+	}
+	public void setZoraDown(BufferedImage zoraDown) {
+		ZoraDown = zoraDown;
+	}
+	public BufferedImage getHoglinRight() {
+		return HoglinRight;
+	}
+	public void setHoglinRight(BufferedImage hoglinRight) {
+		HoglinRight = hoglinRight;
+	}
+	public BufferedImage getBlueHoglinLeft1() {
+		return BlueHoglinLeft1;
+	}
+	public void setBlueHoglinLeft1(BufferedImage blueHoglinLeft1) {
+		BlueHoglinLeft1 = blueHoglinLeft1;
+	}
+	public BufferedImage getHoglinRight1() {
+		return HoglinRight1;
+	}
+	public void setHoglinRight1(BufferedImage hoglinRight1) {
+		HoglinRight1 = hoglinRight1;
+	}
+	public BufferedImage getHoglinUp() {
+		return HoglinUp;
+	}
+	public void setHoglinUp(BufferedImage hoglinUp) {
+		HoglinUp = hoglinUp;
+	}
+	public BufferedImage getHoglinUp1() {
+		return HoglinUp1;
+	}
+	public void setHoglinUp1(BufferedImage hoglinUp1) {
+		HoglinUp1 = hoglinUp1;
+	}
+	public BufferedImage getBlueHoglinRight() {
+		return BlueHoglinRight;
+	}
+	public void setBlueHoglinRight(BufferedImage blueHoglinRight) {
+		BlueHoglinRight = blueHoglinRight;
+	}
+	public BufferedImage getBlueHoglinRight1() {
+		return BlueHoglinRight1;
+	}
+	public void setBlueHoglinRight1(BufferedImage blueHoglinRight1) {
+		BlueHoglinRight1 = blueHoglinRight1;
+	}
+	public BufferedImage getBlueHoglinUp() {
+		return BlueHoglinUp;
+	}
+	public void setBlueHoglinUp(BufferedImage blueHoglinUp) {
+		BlueHoglinUp = blueHoglinUp;
+	}
+	public BufferedImage getBlueHoglinUp1() {
+		return BlueHoglinUp1;
+	}
+	public void setBlueHoglinUp1(BufferedImage blueHoglinUp1) {
+		BlueHoglinUp1 = blueHoglinUp1;
 	}
 }

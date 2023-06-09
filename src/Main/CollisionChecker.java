@@ -9,6 +9,7 @@ This class uses methods to check if an entity or object is colliding with anothe
  @author Christopher Li
  @author Sachin Chhaya
  @author David Kostanyan
+ @author Pranay Thatikonda
 */
 public class CollisionChecker 
 {
@@ -20,22 +21,25 @@ public class CollisionChecker
 	private int curRow;
 	//the column of the current in the 2d ArrayList 
 	private int curCol;
+	//the main method
+	private Main main;
 	
 	/*
 	Constructor for the Collision Checker that initializes the gamePanel, rooms, row and column 
 	@param GamePanel gp used to access and initialize GamePanel
 	@param RoomManager to access and initialize the rooms 
 	@param int curRow, to access the current room row
-	@param curCol, to access the current room column 
+	@param curCol, to access the current room column
+	@param main, to access the main method 
 	*/
-	public CollisionChecker(GamePanel gp, RoomManager rooms, int curRow, int curCol)
+	public CollisionChecker(GamePanel gp, RoomManager rooms, int curRow, int curCol, Main main)
 	{
 		
 		this.gp = gp;
 		this.rooms = rooms;
 		this.curRow = curRow;
 		this.curCol = curCol;
-		
+		this.main = main;
 		
 	}
 	
@@ -97,8 +101,6 @@ public class CollisionChecker
 				{
 					gp.getKeyHandler().setOn(false);
 					gp.getKeyHandler().setUpPressed(false);
-					int thisX = gp.getPlayer().getX();
-					int thisY = gp.getPlayer().getY();
 					for(int i=0; i<48; i++)
 					{
 						rooms.setCurrentRoom(rooms.getSwitchedRoom(curRoom, new Room(gp), i, "cave"));
@@ -128,12 +130,6 @@ public class CollisionChecker
 				{
 					
 					entity.setCollisionOn(true);
-					
-				}
-				if(curRoom.getTile()[tileNum1].getTraverse() == true || curRoom.getTile()[tileNum2].getTraverse() == true)
-				{
-					
-					
 					
 				}
 				
@@ -202,7 +198,6 @@ public class CollisionChecker
 		int entityTopRow = entityTopY / gp.tileSize;
 		int entityBottomRow = entityBottomY / gp.tileSize;
 		
-		System.out.println(entity.getSolidArea().y);
 		
 		int tileNum1;
 		int tileNum2;
@@ -214,11 +209,11 @@ public class CollisionChecker
 		{
 		
 		case "up":
-			
+
+			entityTopRow = (entityTopY - entity.getSpeed()) / gp.tileSize;
 			if(entityRightCol < 16)
 			{
 				
-				entityTopRow = (entityTopY - entity.getSpeed()) / gp.tileSize;
 				tileNum1 = curRoom.getTileLayout()[entityTopRow][entityLeftCol];
 				tileNum2 = curRoom.getTileLayout()[entityTopRow][entityRightCol];
 				if(curRoom.getTile()[tileNum1].getCollision() == true || curRoom.getTile()[tileNum2].getCollision() == true)
@@ -258,10 +253,10 @@ case "down":
 			break;
 			
 		case "left":
-			
+
+			entityLeftCol = (entityLeftX - entity.getSpeed()) / gp.tileSize;
 			if(entityBottomRow < 12)
 			{
-				entityLeftCol = (entityLeftX - entity.getSpeed()) / gp.tileSize;
 				tileNum1 = curRoom.getTileLayout()[entityTopRow][entityLeftCol];
 				tileNum2 = curRoom.getTileLayout()[entityBottomRow][entityLeftCol];
 				if(curRoom.getTile()[tileNum1].getCollision() == true || curRoom.getTile()[tileNum2].getCollision() == true)
@@ -306,7 +301,6 @@ case "down":
 	*/
 	public boolean checkFight(Player e) 
 	{
-		int index = -1;
 		ArrayList<Entity> temp = gp.getRooms().getCurrentRoom().getMobs();
 		
 		for(int i = 0; i < temp.size(); i++)
@@ -340,7 +334,7 @@ case "down":
 							e.setHealth(e.getHealth()-1);
 							e.setKnocked(true);
 							e.setKnockedDir("down");
-							System.out.println("hurt");
+							main.heartUpdate();
 							e.getSolidArea().x = x;
 							e.getSolidArea().y = y;
 							temp.get(i).getSolidArea().x = mobX;
@@ -356,7 +350,7 @@ case "down":
 							e.setHealth(e.getHealth()-1);
 							e.setKnocked(true);
 							e.setKnockedDir("up");
-							System.out.println("hurt");
+							main.heartUpdate();
 							e.getSolidArea().x = x;
 							e.getSolidArea().y = y;
 							temp.get(i).getSolidArea().x = mobX;
@@ -372,7 +366,7 @@ case "down":
 							e.setHealth(e.getHealth()-1);
 							e.setKnocked(true);
 							e.setKnockedDir("right");
-							System.out.println("hurt");
+							main.heartUpdate();
 							e.getSolidArea().x = x;
 							e.getSolidArea().y = y;
 							temp.get(i).getSolidArea().x = mobX;
@@ -388,7 +382,7 @@ case "down":
 							e.setHealth(e.getHealth()-1);
 							e.setKnocked(true);
 							e.setKnockedDir("left");
-							System.out.println("hurt");
+							main.heartUpdate();
 							e.getSolidArea().x = x;
 							e.getSolidArea().y = y;
 							temp.get(i).getSolidArea().x = mobX;

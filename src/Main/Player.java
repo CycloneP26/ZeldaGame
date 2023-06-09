@@ -38,28 +38,24 @@ public class Player extends Entity implements ActionListener
 	private int rupees = 0; 
 	//amount of keys 
 	private int keys = 0; 
-	//SpriteCounter for attack 
 	private int attackCounter = 0;
-	//SpriteCounter for knocking
 	private int knockCounter = 0;
 	
-	//Amount of bombs
 	private int bombCount = 0;
-	//Boolean to see if a heart container was picked up
 	private boolean gotHeartC = false;
-	//Boolean if the first sword item was picked up
 	private boolean firstSword = false;
-	//Boolean if Player has a sword 
 	private boolean hasSword = false;
-	//Boolean if Player received a major item 
 	private boolean gotItem = false;
+	private int oriHealth;
+	private Main main;
+	private boolean done;
 	
 	/*Constructor initializes all the fields that deal with position, and paths the images 
 	@param GamePanel to access and update the panel
 	@param KeyHandler to use the ActionListener and observe keystrokes
 	@param RoomManager to find collision and position of the player 
 	*/
-	public Player(GamePanel gp, KeyHandler keyH, RoomManager rooms) 
+	public Player(GamePanel gp, KeyHandler keyH, RoomManager rooms, Main main) 
 	{
 		super(gp);
 		this.gp = gp;
@@ -67,6 +63,9 @@ public class Player extends Entity implements ActionListener
 		this.rooms = rooms;
 		this.screenX = 0;
 		this.screenY = 0;
+		setHealth(10);
+		oriHealth = 2;
+		this.main = main;
 		
 		setSolidArea(new Rectangle(8, 16, 32, 28));
 		setSolidAreaDefX(getSolidArea().x);
@@ -96,7 +95,7 @@ public class Player extends Entity implements ActionListener
 	//Sets the positions to default
 	public void setDefaultValue()
 	{		
-		setX(250);
+		setX(350);
 		setY(288);
 		setSpeed(4);
 		setDirection("down");
@@ -178,9 +177,7 @@ public class Player extends Entity implements ActionListener
 		}
 	
 	}
-	/*Called whenever the player gets hit by the Entity
-	Moved opposite direction from where u were knocked
-	*/
+	
 	public void knocked()
 	{
 		
@@ -197,14 +194,10 @@ public class Player extends Entity implements ActionListener
 				{
 				
 				case "up":
-					
-//					if(!rooms.isRoomAvailable(rooms.getRoomRow() - 1, rooms.getRoomColumn()))
-//					{
 						if(getY() > 0)
 						{
 							setY(getY()-getSpeed());
 						}
-					//}
 					else
 					{
 						
@@ -213,14 +206,10 @@ public class Player extends Entity implements ActionListener
 					}
 					break;
 				case "down":
-					
-//					if(!rooms.isRoomAvailable(rooms.getRoomRow() + 1, rooms.getRoomColumn()))
-//					{
 						if(getY() < getGp().screenHeight - 50)
 						{
 							setY(getY()+getSpeed());
 						}
-//					}
 					else
 					{
 						
@@ -230,13 +219,10 @@ public class Player extends Entity implements ActionListener
 					
 					break;
 				case "left":
-					if(!rooms.isRoomAvailable(rooms.getRoomRow(), rooms.getRoomColumn() - 1))
-//						{
 							if(getX() > 0)
 							{
 								setX(getX()-getSpeed());
 							}
-						//}
 						else
 						{
 							
@@ -246,34 +232,23 @@ public class Player extends Entity implements ActionListener
 						
 						break;
 					case "right":
-//						if(!rooms.isRoomAvailable(rooms.getRoomRow(), rooms.getRoomColumn() + 1))
-//						{
 							if(getX() < getGp().screenWidth - 45)
 							{
 								setX(getX()+getSpeed());
 							}
-//						}
 						else
 						{
-							
 							setX(getX()+getSpeed());
-							
 						}
-						
 						break;
-					
 					}
-				
 			}
-			
-			if(knockCounter>7)
-			{
-				setKnocked(false);
-				knockCounter = 0;
-			}
-			
+		if(knockCounter>7)
+		{
+			setKnocked(false);
+			knockCounter = 0;
 		}
-	
+	}
 	//Works with gameThread and updates the counter which changes the sprite according to the ticks that are passed
 	
 	public void item()
@@ -295,7 +270,7 @@ public class Player extends Entity implements ActionListener
 			setItemUse(false);
 		}
 	}
-	//Updates the image of player when they get a major item
+	
 	public void gotItem()
 	{
 		spriteCounter++;
@@ -308,18 +283,16 @@ public class Player extends Entity implements ActionListener
 		}
 	}
 	
-	/*Updates the players movement and booleans that decide how Link will be drawn
-	Checks the collision of the player with all entities and items and updates positions and values 
-	*/
 	public void update()
 	{
 		
+		if(!done)
 		{
 			
 			
-			if(gp.getCollision().checkFight(this))
+			if(!getKnocked())
 			{
-				gp.playEffect(6);
+				gp.getCollision().checkFight(this);
 			}
 			
 			//movement and attacking
@@ -327,6 +300,7 @@ public class Player extends Entity implements ActionListener
 			{
 				
 				knocked();
+				gp.playEffect(6);
 				
 			}
 			else
@@ -409,14 +383,10 @@ public class Player extends Entity implements ActionListener
 							{
 							
 							case "up":
-								
-//								if(!rooms.isRoomAvailable(rooms.getRoomRow() - 1, rooms.getRoomColumn()))
-//								{
 									if(getY() > 0)
 									{
 										setY(getY()-getSpeed());
 									}
-								//}
 								else
 								{
 									
@@ -425,14 +395,10 @@ public class Player extends Entity implements ActionListener
 								}
 								break;
 							case "down":
-								
-//								if(!rooms.isRoomAvailable(rooms.getRoomRow() + 1, rooms.getRoomColumn()))
-//								{
 									if(getY() < getGp().screenHeight - 50)
 									{
 										setY(getY()+getSpeed());
 									}
-//								}
 								else
 								{
 									
@@ -442,14 +408,10 @@ public class Player extends Entity implements ActionListener
 								
 								break;
 							case "left":
-								
-//								if(!rooms.isRoomAvailable(rooms.getRoomRow(), rooms.getRoomColumn() - 1))
-//								{
 									if(getX() > 0)
 									{
 										setX(getX()-getSpeed());
 									}
-								//}
 								else
 {
 									
@@ -459,13 +421,10 @@ public class Player extends Entity implements ActionListener
 								
 								break;
 							case "right":
-//								if(!rooms.isRoomAvailable(rooms.getRoomRow(), rooms.getRoomColumn() + 1))
-//								{
 									if(getX() < getGp().screenWidth - 45)
 									{
 										setX(getX()+getSpeed());
 									}
-//								}
 								else
 								{
 									
@@ -606,7 +565,7 @@ public class Player extends Entity implements ActionListener
 		switch(getDirection()) {
 		case "up":
 			if(attacking==false)
-			{	//Draw itemUse/Bomb 
+			{
 				if(getItemUse())
 				{
 					
@@ -877,6 +836,18 @@ public class Player extends Entity implements ActionListener
 	}
 	public void setGotItem(boolean gotItem) {
 		this.gotItem = gotItem;
+	}
+	public int getOriHealth() {
+		return oriHealth;
+	}
+	public void setOriHealth(int oriHealth) {
+		this.oriHealth = oriHealth;
+	}
+	public boolean getDone() {
+		return done;
+	}
+	public void setDone(boolean done) {
+		this.done = done;
 	}
 
 }

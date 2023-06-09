@@ -68,18 +68,18 @@ public class GamePanel extends JPanel implements Runnable
 	Creates the actual GamePanel that initializes all the fields that update 
 	with the GameThread
 	*/
-	public GamePanel() 
+	public GamePanel(Main main) 
 	{
 		
 		keyH=new KeyHandler(this);
 		
 		rooms = new RoomManager(this, 10, 11);
 		
-		player=new Player(this, keyH, rooms);
+		player=new Player(this, keyH, rooms, main);
 		mobs=new Entity[30];
 		items = new ArrayList<ItemEntity>();
 		setFires(new ArrayList<ItemEntity>());
-		cChecker = new CollisionChecker(this, rooms, rooms.getRoomRow(), rooms.getRoomColumn());
+		cChecker = new CollisionChecker(this, rooms, rooms.getRoomRow(), rooms.getRoomColumn(), main);
 
 		
 		int panelWidth = screenWidth;
