@@ -4,15 +4,30 @@ import java.util.ArrayList;
 
 import object.ItemEntity;
 import object.Rupee;
-
+/*
+This class uses methods to check if an entity or object is colliding with another entity or object
+ @author Christopher Li
+ @author Sachin Chhaya
+ @author David Kostanyan
+*/
 public class CollisionChecker 
 {
-
+	//Access the main GamePanel
 	private GamePanel gp;
+	//Access each room 
 	private RoomManager rooms;
+	//The row of the current room in the 2d ArrayList
 	private int curRow;
+	//the column of the current in the 2d ArrayList 
 	private int curCol;
 	
+	/*
+	Constructor for the Collision Checker that initializes the gamePanel, rooms, row and column 
+	@param GamePanel gp used to access and initialize GamePanel
+	@param RoomManager to access and initialize the rooms 
+	@param int curRow, to access the current room row
+	@param curCol, to access the current room column 
+	*/
 	public CollisionChecker(GamePanel gp, RoomManager rooms, int curRow, int curCol)
 	{
 		
@@ -34,7 +49,11 @@ public class CollisionChecker
 		curCol = n;
 	}
 	
-	
+	/*
+	Check tile 
+	Checks two tiles in the direction that the entity is facing to see if those tiles have collision on
+	@param Entity entity is passed to check the collision tiles for any entity that is passed 
+	*/
 	public void checkTile(Entity entity)
 	{
 		
@@ -53,10 +72,11 @@ public class CollisionChecker
 		
 		Room curRoom =rooms.getRoomArray().get(curRow).get(curCol);
 		
+		//The two tiles 
 		int tileNum1;
 		int tileNum2;
 		
-		switch(entity.getDirection())
+		switch(entity.getDirection()) 
 		{
 		
 		case "up":
@@ -165,7 +185,10 @@ public class CollisionChecker
 		
 	}
 	
-	
+	/*
+	Checks the two tiles in the direction that the entity is being knocked in, sees if there is collision
+	@param Entity entity passed to choose what entity is being checked 
+	*/
 	public void checkKnockTile(Entity entity)
 	{
 		
@@ -277,8 +300,11 @@ case "down":
 		
 	}
 	
-	
-	public boolean checkFight(Player e) //Check if player is hitting any object, return index of the object 
+	/*
+	Checks if the player and an entity has collided and returns a boolean depending of if that happened
+	@param Player e, passed to check the main player's collision with entities 
+	*/
+	public boolean checkFight(Player e) 
 	{
 		int index = -1;
 		ArrayList<Entity> temp = gp.getRooms().getCurrentRoom().getMobs();
@@ -319,7 +345,7 @@ case "down":
 							e.getSolidArea().y = y;
 							temp.get(i).getSolidArea().x = mobX;
 							temp.get(i).getSolidArea().y = mobY;
-							
+							//Collided, so true
 							return true;
 					}
 					break;
@@ -335,7 +361,7 @@ case "down":
 							e.getSolidArea().y = y;
 							temp.get(i).getSolidArea().x = mobX;
 							temp.get(i).getSolidArea().y = mobY;
-							
+							//Collided, so true
 							return true;
 					}
 					break;
@@ -351,7 +377,7 @@ case "down":
 							e.getSolidArea().y = y;
 							temp.get(i).getSolidArea().x = mobX;
 							temp.get(i).getSolidArea().y = mobY;
-							
+							//Collided, so true
 							return true;
 					}
 					break;
@@ -367,7 +393,7 @@ case "down":
 							e.getSolidArea().y = y;
 							temp.get(i).getSolidArea().x = mobX;
 							temp.get(i).getSolidArea().y = mobY;
-							
+							//Collided, so true
 							return true;
 					}
 					break;
@@ -384,10 +410,14 @@ case "down":
 			}
 		}
 		gp.setMobs(temp);
+		//return false because no entity collided 
 		return false;
 	}
-	
-	public int checkSword(Sword sword) //Check if player is hitting any object, return index of the object 
+	/*
+	Check if the player's sword has collided with an entity
+	@param Sword sword passed to find the position and collision area of the sword
+	*/
+	public int checkSword(Sword sword) 
 	{
 		int index = -1;
 		ArrayList<Entity> temp = gp.getRooms().getCurrentRoom().getMobs();
@@ -470,9 +500,12 @@ case "down":
 		return index;
 	}
 	
-	//gp.getRooms().getCurrentRoom().addItem(new Rupee(gp, temp.get(i).getX(), temp.get(i).getY()));
-				
-	public int checkObject(Entity e, boolean p) //Check if player is hitting any object, return index of the object 
+	/*
+	Check if player is hitting any object, return index of the object
+	@param Entity e passed to check what entity is being checked to interact
+	@param boolean p, passed true if it is the main player
+	*/
+	public int checkObject(Entity e, boolean p) 
 	{
 		int index = -1;
 		ArrayList<ItemEntity> temp = new ArrayList<ItemEntity>();
@@ -555,6 +588,7 @@ case "down":
 			}
 		}
 		gp.setItems(temp);
+		//returns index of the item that is collided with, -1 if nothing
 		return index;
 	}
 }
