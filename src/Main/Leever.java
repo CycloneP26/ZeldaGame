@@ -30,7 +30,7 @@ public class Leever extends Entity {
 		setY(y);
 		setDirection("left");
 		setSpeed(1);
-		setHealth(101001);
+		setHealth(5);
 		getImage();
 	}
 	//Paths and initializes the images that this monster uses 
