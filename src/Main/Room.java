@@ -1,6 +1,9 @@
 package Main;
 
-
+/*
+Room is a class that represents each room in the game
+@author Pranay Thatikonda
+*/
 import java.awt.Graphics2D;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,23 +13,42 @@ import javax.imageio.ImageIO;
 import object.ItemEntity;
 public class Room {
 	
-	
+	//A field for the gamepanel
 	private GamePanel gp;
+	//an array that holds all the different types of tiles
 	private Tile[] tile;
+	//a 2d array that holds the layout of the tiles, representing the tiles with numbers
 	private int[][] tileLayout;
+	//a string that represents the layout of the tiles, with numbers and chars representing tiles
 	private String str;
+	//an arraylist of all the mobs
 	private ArrayList<Entity> mobs;
+	//an arraylist of all the items
 	private ArrayList<ItemEntity> items;
+	//an arraylist of all the bombs
 	private ArrayList<useableEntity> bombs;
+	//If its a cave, this is the row of the room that the cave is connected to 
 	private int caveR;
+	//If its a cave, this is the column of the room that the cave is connected to 
 	private int caveC;
+	//If its a cave, the type is cave otherwise its "something"
 	private String type;
+	//If its connected to a cave, this is the column that the cave is at
 	private int toCaveC;
+	//If its connected to a cave, this is the row that the cave is at
 	private int toCaveR;
+	//if it has a secret
 	private boolean secret;
+	//if the secret has been found
 	private boolean secretFound;
+	//A string representing the room after the secret has been found
 	private String secretRoom;
+	//an arraylist of all the fire
 	private ArrayList<ItemEntity> fires;
+	/*
+	The constructor for the room
+	@param gp is the gamepanel that the room is in
+	*/
 	public Room(GamePanel gp)
 	{
 		this.gp = gp;
@@ -52,6 +74,11 @@ public class Room {
 		setBombs(new ArrayList<useableEntity>());
 		
 	}
+	/*
+	The constructor for the room
+	@param gp is the gamepanel that the room is in
+	@param str is the string that represents the tilelayout
+	*/
 	public Room(GamePanel gp, String str)
 	{
 		this.gp = gp;
@@ -77,7 +104,10 @@ public class Room {
 		fires = new ArrayList<ItemEntity>();
 		setBombs(new ArrayList<useableEntity>());
 	}
-	
+	/*
+	This method converts the string to a tileLayout 2d array
+	@param str is the string that represents the tiles
+	*/
 	public int[][] strToMap(String str)
 	{
 		int[][] retArray = new int[12][16];
@@ -100,7 +130,10 @@ public class Room {
 		
 		return retArray;
 	}
-
+	/*
+	This method converts the 2d array map to a string
+	@param map is the 2d array that represents the tiles
+	*/
 	public String mapToStr(int[][] map)
 	{
 		String retStr = "";
@@ -113,7 +146,9 @@ public class Room {
 		}
 		return retStr;
 	}
-	
+	/*
+	This method assigns each index in the tile array a tile
+	*/
 	public void getTileImage()
 	{
 		try
@@ -222,7 +257,11 @@ public class Room {
 		return tileLayout;
 		
 	}
-	
+	/*
+	This converts characters in the string to numbers
+	@param s is the character
+	@return int is the index of that letter in the tile array
+	*/
 	public int convertToNum(String s)
 	{
 		char c = s.charAt(0);
@@ -263,7 +302,10 @@ public class Room {
 	{
 		return tile;
 	}
-	
+	/*
+	What draws the room
+	@param g2 required to draw things to the gamepanel
+	*/
 	public void draw(Graphics2D g2)
 	{
 		for(int i = 0; i<tileLayout.length; i++)
@@ -274,7 +316,11 @@ public class Room {
 			}
 		}
 	}
-	
+	/*
+	The x and y for the secret block, if the room has one
+	@param str1 is the string representation of the tiles in the secret room
+	@return the first index in the int[] is the y and the second is the x
+	*/
 	public int[] secretCoords(String str1)
 	{
 		int[] retArr = new int[2];
